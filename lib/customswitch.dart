@@ -1,6 +1,7 @@
 library custom_switch;
 
 import 'package:flutter/material.dart';
+import 'package:radreviews/size_config.dart';
 
 class CustomSwitch extends StatefulWidget {
   final bool value;
@@ -48,8 +49,8 @@ class _CustomSwitchState extends State<CustomSwitch>
                 : widget.onChanged(false);
           },
           child: Container(
-            width: 70.0,
-            height: 30.0,
+            width: 17.85 * SizeConfig.widthMultiplier,
+            height: 3.94 * SizeConfig.heightMultiplier,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: _circleAnimation.value == Alignment.centerLeft
@@ -76,8 +77,8 @@ class _CustomSwitchState extends State<CustomSwitch>
                   Align(
                     alignment: _circleAnimation.value,
                     child: Container(
-                      width: 28.0,
-                      height: 29.0,
+                      width: 7.14 *SizeConfig.widthMultiplier,
+                      height: 3.68 *SizeConfig.heightMultiplier,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,

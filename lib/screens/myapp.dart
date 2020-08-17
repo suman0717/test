@@ -87,8 +87,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 loaderColor: Color(0xff1b0e97),
                 photoSize: 150.0,
-//                navigateAfterSeconds:_sharedPrefUserExists==true?curaccountStatus=='Active'?Home():Success(): XDSignIn(),
-                navigateAfterSeconds:_sharedPrefUserExists==true?Home(): XDSignIn(),
+                navigateAfterSeconds:_sharedPrefUserExists==true?curaccountStatus=='Active'?Home():Success(): XDSignIn(),
               );
             },
           );

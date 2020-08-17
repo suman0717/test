@@ -421,15 +421,15 @@ class _SettingsState extends State<Settings> {
                             padding: const EdgeInsets.only(top:18.0),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                              Text(
-                              'Feedback Follow Up:',
-                              style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 13,
-                                color: const Color(0xff707070),
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                                Text(
+                                  'Feedback Follow Up:',
+                                  style: TextStyle(
+                                    fontFamily: 'Manrope',
+                                    fontSize: 13,
+                                    color: const Color(0xff707070),
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
                                 CustomSwitch(
                                   activeColor: kshadeColor1,
                                   value: followUpEnabled,

@@ -751,68 +751,118 @@ class _HomeState extends State<Home> {
       bool _validate = validateMobile(mob);
       if(_validate==true){
         print(loc);
-//        setState(() {
-//          _isWaiting = true;
-//        });
-//
-//      String _tempMobile = '61' + mob.substring(1, mob.length);
-//      print(kURLBase +
-//          'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-//      http.Response response = await http.get(kURLBase +
-//          'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-//      var _smsString = response.body;
-//      String _smsID = jsonDecode(_smsString)['SMSID'];
-//      print(_smsString);
-//      print(_smsID);
-//      setState(() {
-//        _unMaskedMobile = '';
-//
-//        selectedlocation = null;
-//        _isWaiting = false;
-//      });
-//      Flushbar(
-//        titleText: Text(
-//          'Request Sent',
-//          style: TextStyle(
-//            fontFamily: 'Manrope',
-//            fontSize: 2.0 * SizeConfig.heightMultiplier,
-//            color: const Color(0xffffffff),
-//            fontWeight: FontWeight.w600,
-//          ),
-//          textAlign: TextAlign.left,
-//        ),
-//        messageText: Text(
-//          'You successfully sent your feedback request.',
-//          style: TextStyle(
-//            fontFamily: 'Manrope',
-//            fontSize: 1.3 * SizeConfig.heightMultiplier,
-//            color: const Color(0xffffffff),
-//            fontWeight: FontWeight.w300,
-//          ),
-//          textAlign: TextAlign.left,
-//        ),
-//        padding: EdgeInsets.symmetric(
-//            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-//        icon: Icon(
-//          Icons.check,
-//          size: 3.94 * SizeConfig.heightMultiplier,
-//          color: Colors.white,
-//        ),
-//        duration: Duration(seconds: 3),
-//        flushbarPosition: FlushbarPosition.TOP,
-//        borderColor: Colors.transparent,
-//        shouldIconPulse: false,
-//        maxWidth: 91.8 * SizeConfig.widthMultiplier,
-//        boxShadows: [
-//          BoxShadow(
-//            color: Colors.black.withOpacity(0.3),
-//            spreadRadius: 1 * SizeConfig.heightMultiplier,
-//            blurRadius: 2 * SizeConfig.heightMultiplier,
-//            offset: Offset(0, 10), // changes position of shadow
-//          ),
-//        ],
-//        backgroundColor: kshadeColor1,
-//      ).show(context);
+        setState(() {
+          _isWaiting = true;
+        });
+
+      String _tempMobile = '61' + mob.substring(1, mob.length);
+      print(kURLBase +
+          'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+      http.Response response = await http.get(kURLBase +
+          'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+      var _smsString = response.body;
+      String _smsID = jsonDecode(_smsString)['SMSID'];
+      print(_smsString);
+      print(_smsID);
+      if(_smsID!=null){
+        setState(() {
+          _unMaskedMobile = '';
+          ctrlMobile.text = '';
+          selectedlocation = null;
+          _isWaiting = false;
+        });
+        Flushbar(
+        titleText: Text(
+          'Request Sent',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 2.0 * SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        messageText: Text(
+          'You successfully sent your feedback request.',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 1.3 * SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w300,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        padding: EdgeInsets.symmetric(
+            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+        icon: Icon(
+          Icons.check,
+          size: 3.94 * SizeConfig.heightMultiplier,
+          color: Colors.white,
+        ),
+        duration: Duration(seconds: 3),
+        flushbarPosition: FlushbarPosition.TOP,
+        borderColor: Colors.transparent,
+        shouldIconPulse: false,
+        maxWidth: 91.8 * SizeConfig.widthMultiplier,
+        boxShadows: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            spreadRadius: 1 * SizeConfig.heightMultiplier,
+            blurRadius: 2 * SizeConfig.heightMultiplier,
+            offset: Offset(0, 10), // changes position of shadow
+          ),
+        ],
+        backgroundColor: kshadeColor1,
+      ).show(context);
+      }
+      else {
+        setState(() {
+          _isWaiting = false;
+        });
+        Flushbar(
+          titleText: Text(
+            'Failed !',
+            style: TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 2.0 * SizeConfig.heightMultiplier,
+              color: const Color(0xffffffff),
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.left,
+          ),
+          messageText: Text(
+            'Something went wrong.',
+            style: TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 1.3 * SizeConfig.heightMultiplier,
+              color: const Color(0xffffffff),
+              fontWeight: FontWeight.w300,
+            ),
+            textAlign: TextAlign.left,
+          ),
+          padding: EdgeInsets.symmetric(
+              vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+          icon: Icon(
+            Icons.clear,
+            size: 3.94 * SizeConfig.heightMultiplier,
+            color: Colors.white,
+          ),
+          duration: Duration(seconds: 3),
+          flushbarPosition: FlushbarPosition.TOP,
+          borderColor: Colors.transparent,
+          shouldIconPulse: false,
+          maxWidth: 91.8 * SizeConfig.widthMultiplier,
+          boxShadows: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 1 * SizeConfig.heightMultiplier,
+              blurRadius: 2 * SizeConfig.heightMultiplier,
+              offset: Offset(0, 10), // changes position of shadow
+            ),
+          ],
+          backgroundColor: kshadeColor1,
+        ).show(context);
+      }
       }
     }
     else if (termsAndConsdditions==false){

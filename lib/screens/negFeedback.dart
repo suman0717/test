@@ -55,7 +55,7 @@ class _NegFeedbackState extends State<NegFeedback> {
       _waiting=true;
     });
     var data = await http.get(
-        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=8251529&Ticked1=All&Name=All');
+        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=All&Name=All');
     var jsonData = json.decode(data.body);
     if(jsonData['response'] != null){
       filterNameList=['All'];
@@ -112,9 +112,9 @@ class _NegFeedbackState extends State<NegFeedback> {
       _waiting=true;
     });
     print('Filtered');
-    print(kURLBase+'REST/REVIEWS/App_NegFeedback?Client=8251529&Ticked1=$filterAction&Name=$filterName');
+    print(kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=$filterAction&Name=$filterName');
     var data = await http.get(
-        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=8251529&Ticked1=$filterAction&Name=$filterName');
+        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=$filterAction&Name=$filterName');
     try{var jsonData = json.decode(data.body);
     if(jsonData['response'] != null){
       print('not null');
@@ -167,7 +167,7 @@ class _NegFeedbackState extends State<NegFeedback> {
 
   void Logout() async {
     print(locationListTemp.length);
-    locationListTemp = ['test1', 'test2', 'test3'];
+    locationListTemp = ['No Location'];
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     print(locationListTemp.length);
     print(sharedPreferences.get('curuser'));
@@ -406,7 +406,7 @@ class _NegFeedbackState extends State<NegFeedback> {
               ),
             ),
             Container(padding: EdgeInsets.symmetric(horizontal: 10.0),
-              height: 10.5 * SizeConfig.heightMultiplier,
+              height: 11.0 * SizeConfig.heightMultiplier,
               child: Row(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
