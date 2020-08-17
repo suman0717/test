@@ -687,33 +687,43 @@ class _SignupState extends State<Signup> {
                                       termsAndCondition = newvalue;
                                     });
                                   }),
-                              Text(
-                                'I agree to RAD Reviews Terms.  ',
+                          GestureDetector(onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TandC(kURLTerms),
+                              ),
+                            );
+                          },
+                            child: Text.rich(
+                              TextSpan(
                                 style: TextStyle(
                                   fontFamily: 'Manrope',
                                   fontSize: 1.7 * SizeConfig.heightMultiplier,
                                   color: const Color(0xff363636),
                                 ),
-                                textAlign: TextAlign.left,
-                              ),
-                              GestureDetector(onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TandC(kURLTerms),
+                                children: [
+                                  TextSpan(
+                                    text: 'I agree to ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
-                                );
-                              },
-                                child: Text(
-                                  '(See)',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 1.7 * SizeConfig.heightMultiplier,
-                                    color: Colors.blue,
+                                  TextSpan(
+                                    text: 'RAD Reviews Terms.',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 1.7 * SizeConfig.heightMultiplier,
+                                        color: Colors.blue,
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
+                                  ),
+                                ],
                               ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+
                             ],
                           ),
                         ),

@@ -2,13 +2,10 @@ import 'package:radreviews/alert.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:flutter/material.dart';
-import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
 import 'package:radreviews/size_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class BottomBar extends StatefulWidget {
