@@ -88,19 +88,22 @@ class _XDSignInState extends State<XDSignIn> {
     if(curaccountStatus=='Active'){
       http.Response _locationResponse = await http.get(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
       try{var _locationData = _locationResponse.body;
+
       print(_locationData);
+
       List _localData = jsonDecode(_locationData)["response"];
-      print(_localData.length);
-      _len = _localData.length;
-      print(_localData);
+
+      if(_localData !=null){_len = _localData.length;}
+
       if (_localData != null) {
+        print('test4');
         locationListTemp = [];
 //        TODO Implement length
         for (int i = 0; i < _len; i++) {
           var _lodata = _localData[i];
           locationListTemp.add(_lodata["Location_Name"]);
         }
-      } else {
+      } else {print('test5');
         locationListTemp = [];
         print(locationListTemp);
         var _localData = jsonDecode(_locationData);

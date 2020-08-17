@@ -121,619 +121,617 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
 
-    return ModalProgressHUD(inAsyncCall: _waiting,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: [
-            PopupMenuButton(
-              offset: Offset(0, 200),
-              icon: Icon(Icons.more_horiz),
-              onSelected: (value) {
-                if(value==1){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
-                }
-                else if(value==2){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
-                }
-                else if(value==3){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
-                }
-                else if(value==4){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SMSSent(),
-                    ),
-                  );
-                }
-                else if(value==5){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NegFeedback(),
-                    ),
-                  );
-                }
-                else if(value==6){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TandC(kURLTerms),
-                    ),
-                  );
-                }
-                else if(value==7){
-                  Logout();
-                };
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          PopupMenuButton(
+            offset: Offset(0, 200),
+            icon: Icon(Icons.more_horiz),
+            onSelected: (value) {
+              if(value==1){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
+              }
+              else if(value==2){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
+              }
+              else if(value==3){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
+              }
+              else if(value==4){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SMSSent(),
                   ),
-                  value: 1,
-                ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'My Account',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                );
+              }
+              else if(value==5){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NegFeedback(),
                   ),
-                  value: 2,
-                ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback Stats',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                );
+              }
+              else if(value==6){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TandC(kURLTerms),
                   ),
-                  value: 3,
-                ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback SMS Sent',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                );
+              }
+              else if(value==7){
+                Logout();
+              };
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text(
+                  'Settings',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 4,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback Negative',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                value: 1,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'My Account',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 5,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'Terms & Conditions',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                value: 2,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback Stats',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 6,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(height: 1,
-                  child: PopupMenuDivider(height: 1,
-                  ),),
-                PopupMenuItem(
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+                value: 3,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback SMS Sent',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 7,
+                  textAlign: TextAlign.left,
                 ),
-              ],
-            ),
-          ],
-        ),
-        floatingActionButton: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-            color: kshadeColor1,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
+                value: 4,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback Negative',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                value: 5,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'Terms & Conditions',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                value: 6,
+              ),
+              PopupMenuItem(height: 1,
+                child: PopupMenuDivider(height: 1,
+                ),),
+              PopupMenuItem(
+                child: Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                value: 7,
               ),
             ],
           ),
-          child: IconButton(
-            iconSize: 4 * SizeConfig.heightMultiplier,
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
+        ],
+      ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+          color: kshadeColor1,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1 * SizeConfig.heightMultiplier,
+              blurRadius: 2 * SizeConfig.heightMultiplier,
+              offset: Offset(0, 10), // changes position of shadow
             ),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Home()));
-            },
-          ),
+          ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomBar(),
-        body: ModalProgressHUD(
-          inAsyncCall: _waiting,
-          color: Color(0xff3ba838),
-          opacity: 0.1,
-          child: Column(
-            children: [
-              Container(
-                height: 12.25 * SizeConfig.heightMultiplier,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment(1.15, -0.25),
-                    end: Alignment(-1.08, -0.32),
-                    colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
-                    stops: [0.0, 1.0],
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'SETTINGS',
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontSize: 1.9 * SizeConfig.heightMultiplier,
-                        color: const Color(0xffffffff),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 3.3 * SizeConfig.heightMultiplier,
-                    ),
-                  ],
+        child: IconButton(
+          iconSize: 4 * SizeConfig.heightMultiplier,
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Home()));
+          },
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomBar(),
+      body: ModalProgressHUD(
+        inAsyncCall: _waiting,
+        color: Color(0xff3ba838),
+        opacity: 0.1,
+        child: Column(
+          children: [
+            Container(
+              height: 12.25 * SizeConfig.heightMultiplier,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(1.15, -0.25),
+                  end: Alignment(-1.08, -0.32),
+                  colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
+                  stops: [0.0, 1.0],
                 ),
               ),
-              Expanded(
-                child: Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(6.35 * SizeConfig.widthMultiplier, 2.63 * SizeConfig.heightMultiplier, 6.35 * SizeConfig.widthMultiplier, 0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Settings',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 18,
-                              color: const Color(0xff363636),
-                              fontWeight: FontWeight.w500,
-                              height: 0.2 * SizeConfig.heightMultiplier,
-                            ),
-                            textAlign: TextAlign.left,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'SETTINGS',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+                      color: const Color(0xffffffff),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 3.3 * SizeConfig.heightMultiplier,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6.35 * SizeConfig.widthMultiplier, 2.63 * SizeConfig.heightMultiplier, 6.35 * SizeConfig.widthMultiplier, 0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 18,
+                            color: const Color(0xff363636),
+                            fontWeight: FontWeight.w500,
+                            height: 0.2 * SizeConfig.heightMultiplier,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Feedback Template',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 1.7 * SizeConfig.heightMultiplier,
-                                    color: const Color(0xffa1a1a1),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.help_outline,
-                                      color: kshadeColor1,
-                                      size: 2.25 * SizeConfig.heightMultiplier,
-                                    ),
-                                    onPressed: () {
-                                      showFeedbackTemplateInfo();
-                                    })
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: TextFormField(maxLines: 7,
-                                controller: ctrlFeedbackTemp,
-                                validator: (String value){
-                              if(value.isEmpty){
-                                return 'Feedback Template can\'t be null';
-                              }
-                                },
-                                textAlign: TextAlign.center,
-                                onChanged: (value) {
-                                  feedbackTemp = value;
-                                },
+                          textAlign: TextAlign.left,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Feedback Template',
                                 style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 1.84 * SizeConfig.heightMultiplier),
-                                decoration: kTextFieldDecorationNoback.copyWith(
-                                  hintText: '',
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 1.5 * SizeConfig.heightMultiplier,
-                                      horizontal: 20.0),
-                                )),
-                            width: 68.2 * SizeConfig.widthMultiplier,
-//                            height: 5.65 * SizeConfig.heightMultiplier,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top:18.0),
-                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Feedback Follow Up:',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 13,
-                                    color: const Color(0xff707070),
+                                  fontFamily: 'Manrope',
+                                  fontSize: 1.7 * SizeConfig.heightMultiplier,
+                                  color: const Color(0xffa1a1a1),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.help_outline,
+                                    color: kshadeColor1,
+                                    size: 2.25 * SizeConfig.heightMultiplier,
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                CustomSwitch(
-                                  activeColor: kshadeColor1,
-                                  value: followUpEnabled,
-                                  onChanged: (value) {
-                                    print("VALUE : $value");
-                                    setState(() {
-                                      followUpEnabled = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
+                                  onPressed: () {
+                                    showFeedbackTemplateInfo();
+                                  })
+                            ],
                           ),
-                          Visibility(visible: followUpEnabled,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top:18.0),
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Feedback Follow Up Days',
-                                        style: TextStyle(
-                                          fontFamily: 'Manrope',
-                                          fontSize: 13,
-                                          color: const Color(0xff707070),
-                                        ),
-                                        textAlign: TextAlign.left,
+                        ),
+                        Container(
+                          child: TextFormField(maxLines: 7,
+                              controller: ctrlFeedbackTemp,
+                              validator: (String value){
+                            if(value.isEmpty){
+                              return 'Feedback Template can\'t be null';
+                            }
+                              },
+                              textAlign: TextAlign.center,
+                              onChanged: (value) {
+                                feedbackTemp = value;
+                              },
+                              style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 1.84 * SizeConfig.heightMultiplier),
+                              decoration: kTextFieldDecorationNoback.copyWith(
+                                hintText: '',
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 1.5 * SizeConfig.heightMultiplier,
+                                    horizontal: 20.0),
+                              )),
+                          width: 68.2 * SizeConfig.widthMultiplier,
+//                            height: 5.65 * SizeConfig.heightMultiplier,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:18.0),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Feedback Follow Up:',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 13,
+                                  color: const Color(0xff707070),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              CustomSwitch(
+                                activeColor: kshadeColor1,
+                                value: followUpEnabled,
+                                onChanged: (value) {
+                                  print("VALUE : $value");
+                                  setState(() {
+                                    followUpEnabled = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Visibility(visible: followUpEnabled,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top:18.0),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Feedback Follow Up Days',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 13,
+                                        color: const Color(0xff707070),
                                       ),
-                                      Container(
-                                        width: 110.0,
-                                        foregroundDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(30.0),
-                                          border: Border.all(
-                                            color: Color(0xffe8e8e8),
-                                            width: 2.0,
-                                          ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Container(
+                                      width: 110.0,
+                                      foregroundDecoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30.0),
+                                        border: Border.all(
+                                          color: Color(0xffe8e8e8),
+                                          width: 2.0,
                                         ),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                textAlign: TextAlign.center,
-                                                decoration: InputDecoration(
-                                                  contentPadding: EdgeInsets.all(8.0),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.transparent, width: 2.0),
-                                                  ),
+                                      ),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: TextFormField(
+                                              textAlign: TextAlign.center,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(8.0),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Colors.transparent, width: 1.0),
                                                 ),
-                                                controller: ctrlFeedbackFollowDays,
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Colors.transparent, width: 2.0),
+                                                ),
+                                              ),
+                                              controller: ctrlFeedbackFollowDays,
 
-                                                keyboardType: TextInputType.numberWithOptions(
-                                                  decimal: false,
-                                                  signed: true,
-                                                ),
-                                                inputFormatters: <TextInputFormatter>[
-                                                  WhitelistingTextInputFormatter.digitsOnly
+                                              keyboardType: TextInputType.numberWithOptions(
+                                                decimal: false,
+                                                signed: true,
+                                              ),
+                                              inputFormatters: <TextInputFormatter>[
+                                                WhitelistingTextInputFormatter.digitsOnly
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:  EdgeInsets.only(right:18.0),
+                                            child: Container(
+                                              height: 38.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.keyboard_arrow_up,
+                                                      size: 18.0,
+                                                    ),
+                                                    onTap: () {
+                                                      int currentValue = int.parse(ctrlFeedbackFollowDays.text);
+                                                      setState(() {
+                                                        currentValue++;
+                                                        ctrlFeedbackFollowDays.text = (currentValue)
+                                                            .toString(); // incrementing value
+                                                      });
+                                                    },
+                                                  ),
+                                                  InkWell(
+                                                    child: Icon(
+                                                      Icons.keyboard_arrow_down,
+                                                      size: 18.0,
+                                                    ),
+                                                    onTap: () {
+                                                      currentValue = int.parse(ctrlFeedbackFollowDays.text);
+                                                      setState(() {
+                                                        print("Setting state");
+                                                        currentValue--;
+                                                        ctrlFeedbackFollowDays.text =
+                                                            (currentValue > 0 ? currentValue : 0)
+                                                                .toString(); // decrementing value
+                                                      });
+                                                    },
+                                                  ),
+
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding:  EdgeInsets.only(right:18.0),
-                                              child: Container(
-                                                height: 38.0,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    InkWell(
-                                                      child: Icon(
-                                                        Icons.keyboard_arrow_up,
-                                                        size: 18.0,
-                                                      ),
-                                                      onTap: () {
-                                                        int currentValue = int.parse(ctrlFeedbackFollowDays.text);
-                                                        setState(() {
-                                                          currentValue++;
-                                                          ctrlFeedbackFollowDays.text = (currentValue)
-                                                              .toString(); // incrementing value
-                                                        });
-                                                      },
-                                                    ),
-                                                    InkWell(
-                                                      child: Icon(
-                                                        Icons.keyboard_arrow_down,
-                                                        size: 18.0,
-                                                      ),
-                                                      onTap: () {
-                                                        currentValue = int.parse(ctrlFeedbackFollowDays.text);
-                                                        setState(() {
-                                                          print("Setting state");
-                                                          currentValue--;
-                                                          ctrlFeedbackFollowDays.text =
-                                                              (currentValue > 0 ? currentValue : 0)
-                                                                  .toString(); // decrementing value
-                                                        });
-                                                      },
-                                                    ),
-
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 8.0, top: 20),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Feedback Follow Up Template',
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Feedback Follow Up Template',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 1.7 * SizeConfig.heightMultiplier,
+                                        color: const Color(0xffa1a1a1),
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.help_outline,
+                                          color: kshadeColor1,
+                                          size: 2.25 * SizeConfig.heightMultiplier,
+                                        ),
+                                        onPressed: () {
+                                          showFeedbackTemplateInfo();
+                                        })
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: TextFormField(maxLines: 7,
+                                    controller: ctrlFeedbackFollowUp,
+                                    validator: (String value){
+                                      if(value.isEmpty){
+                                        return 'Feedback Follow Up Template can\'t be null';
+                                      }
+                                    },
+                                    textAlign: TextAlign.center,
+                                    onChanged: (value) {
+                                      feedbackFollowTemp = value;
+                                    },
+                                    style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 1.84 * SizeConfig.heightMultiplier),
+                                    decoration: kTextFieldDecorationNoback.copyWith(
+                                      hintText: '',
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 1.5 * SizeConfig.heightMultiplier,
+                                          horizontal: 20.0),
+                                    )),
+//                                  width: 68.2 * SizeConfig.widthMultiplier,
+//                            height: 5.65 * SizeConfig.heightMultiplier,
+                              ),
+                            ],
+                          ),),
+                        SizedBox(height: 4 * SizeConfig.heightMultiplier,),
+                        Row(mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 53.2 * SizeConfig.widthMultiplier,
+                              height: 5.65 * SizeConfig.heightMultiplier,
+                              child: RaisedButton(
+                                onPressed: () async {
+                                  if(_formKey.currentState.validate()){
+                                    print('done');
+                                    setState(() {
+                                      _waiting = true;
+                                    });
+                                    print(kURLBase +'REST/REVIEWS/App_UpdateTemplate?SMSFeedbackWording=$feedbackTemp&SMSFeedback_Followup_Wording=$feedbackFollowTemp&FeedBack_FollowUP=$followUpEnabled&Feedback_FollowUp_Days=${ctrlFeedbackFollowDays.text}&CUID=$curClientUserID');
+                                    await UpdateTemplate(kURLBase +
+                                        'REST/REVIEWS/App_UpdateTemplate?SMSFeedbackWording=$feedbackTemp&SMSFeedback_Followup_Wording=$feedbackFollowTemp&FeedBack_FollowUP=$followUpEnabled&Feedback_FollowUp_Days=${ctrlFeedbackFollowDays.text}&CUID=$curClientUserID');
+                                    setState(() {
+                                      _waiting = false;
+                                    });
+                                    await Flushbar(
+                                      titleText: Text(
+                                        'Template Updated',
                                         style: TextStyle(
                                           fontFamily: 'Manrope',
-                                          fontSize: 1.7 * SizeConfig.heightMultiplier,
-                                          color: const Color(0xffa1a1a1),
+                                          fontSize: 2.0 * SizeConfig.heightMultiplier,
+                                          color: const Color(0xffffffff),
+                                          fontWeight: FontWeight.w600,
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
-                                      IconButton(
-                                          icon: Icon(
-                                            Icons.help_outline,
-                                            color: kshadeColor1,
-                                            size: 2.25 * SizeConfig.heightMultiplier,
-                                          ),
-                                          onPressed: () {
-                                            showFeedbackTemplateInfo();
-                                          })
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: TextFormField(maxLines: 7,
-                                      controller: ctrlFeedbackFollowUp,
-                                      validator: (String value){
-                                        if(value.isEmpty){
-                                          return 'Feedback Follow Up Template can\'t be null';
-                                        }
-                                      },
-                                      textAlign: TextAlign.center,
-                                      onChanged: (value) {
-                                        feedbackFollowTemp = value;
-                                      },
-                                      style: TextStyle(
+                                      messageText: Text(
+                                        'You successfully updated the settings.',
+                                        style: TextStyle(
                                           fontFamily: 'Manrope',
-                                          fontSize: 1.84 * SizeConfig.heightMultiplier),
-                                      decoration: kTextFieldDecorationNoback.copyWith(
-                                        hintText: '',
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 1.5 * SizeConfig.heightMultiplier,
-                                            horizontal: 20.0),
-                                      )),
-//                                  width: 68.2 * SizeConfig.widthMultiplier,
-//                            height: 5.65 * SizeConfig.heightMultiplier,
-                                ),
-                              ],
-                            ),),
-                          SizedBox(height: 4 * SizeConfig.heightMultiplier,),
-                          Row(mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 53.2 * SizeConfig.widthMultiplier,
-                                height: 5.65 * SizeConfig.heightMultiplier,
-                                child: RaisedButton(
-                                  onPressed: () async {
-                                    if(_formKey.currentState.validate()){
-                                      print('done');
-                                      setState(() {
-                                        _waiting = true;
-                                      });
-                                      print(kURLBase +'REST/REVIEWS/App_UpdateTemplate?SMSFeedbackWording=$feedbackTemp&SMSFeedback_Followup_Wording=$feedbackFollowTemp&FeedBack_FollowUP=$followUpEnabled&Feedback_FollowUp_Days=${ctrlFeedbackFollowDays.text}&CUID=$curClientUserID');
-                                      await UpdateTemplate(kURLBase +
-                                          'REST/REVIEWS/App_UpdateTemplate?SMSFeedbackWording=$feedbackTemp&SMSFeedback_Followup_Wording=$feedbackFollowTemp&FeedBack_FollowUP=$followUpEnabled&Feedback_FollowUp_Days=${ctrlFeedbackFollowDays.text}&CUID=$curClientUserID');
-                                      setState(() {
-                                        _waiting = false;
-                                      });
-                                      await Flushbar(
-                                        titleText: Text(
-                                          'Template Updated',
-                                          style: TextStyle(
-                                            fontFamily: 'Manrope',
-                                            fontSize: 2.0 * SizeConfig.heightMultiplier,
-                                            color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          textAlign: TextAlign.left,
+                                          fontSize: 1.3 * SizeConfig.heightMultiplier,
+                                          color: const Color(0xffffffff),
+                                          fontWeight: FontWeight.w300,
                                         ),
-                                        messageText: Text(
-                                          'You successfully updated the settings.',
-                                          style: TextStyle(
-                                            fontFamily: 'Manrope',
-                                            fontSize: 1.3 * SizeConfig.heightMultiplier,
-                                            color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                          textAlign: TextAlign.left,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                                      icon: Icon(
+                                        Icons.check,
+                                        size: 3.94 * SizeConfig.heightMultiplier,
+                                        color: Colors.white,
+                                      ),
+                                      duration: Duration(seconds: 15),
+                                      flushbarPosition: FlushbarPosition.TOP,
+                                      borderColor: Colors.transparent,
+                                      shouldIconPulse: false,
+                                      maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                                      boxShadows: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.3),
+                                          spreadRadius: 1 * SizeConfig.heightMultiplier,
+                                          blurRadius: 2 * SizeConfig.heightMultiplier,
+                                          offset: Offset(0, 10), // changes position of shadow
                                         ),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-                                        icon: Icon(
-                                          Icons.check,
-                                          size: 3.94 * SizeConfig.heightMultiplier,
-                                          color: Colors.white,
-                                        ),
-                                        duration: Duration(seconds: 15),
-                                        flushbarPosition: FlushbarPosition.TOP,
-                                        borderColor: Colors.transparent,
-                                        shouldIconPulse: false,
-                                        maxWidth: 91.8 * SizeConfig.widthMultiplier,
-                                        boxShadows: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.3),
-                                            spreadRadius: 1 * SizeConfig.heightMultiplier,
-                                            blurRadius: 2 * SizeConfig.heightMultiplier,
-                                            offset: Offset(0, 10), // changes position of shadow
-                                          ),
-                                        ],
-                                        backgroundColor: kshadeColor1,
+                                      ],
+                                      backgroundColor: kshadeColor1,
 
-                                      ).show(context);
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                                    ).show(context);
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
 
-                                    }
+                                  }
 
 
 //                                    setState(() {
 //                                      _waiting = false;
 //                                    });
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(80.0)),
-                                  padding: EdgeInsets.all(0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: kshadeColor1,
-                                          borderRadius:
-                                          BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        'Save Changes',
-                                        style: TextStyle(
-                                          fontFamily: 'Manrope',
-                                          fontSize: 2.0 *SizeConfig.heightMultiplier,
-                                          color: const Color(0xffffffff),
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(80.0)),
+                                padding: EdgeInsets.all(0.0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 0.0, right: 0.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: kshadeColor1,
+                                        borderRadius:
+                                        BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Save Changes',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 2.0 *SizeConfig.heightMultiplier,
+                                        color: const Color(0xffffffff),
+                                        fontWeight: FontWeight.w600,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 30.2 * SizeConfig.widthMultiplier,
-                                height: 5.65 * SizeConfig.heightMultiplier,
-                                child: RaisedButton(
-                                  onPressed: () {
-                                   Navigator.pop(context);
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(80.0)),
-                                  padding: EdgeInsets.all(0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xff929292),
-                                          borderRadius:
-                                          BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        'Cancel',
-                                        style: TextStyle(
-                                          fontFamily: 'Manrope',
-                                          fontSize: 2.0 *SizeConfig.heightMultiplier,
-                                          color: const Color(0xffffffff),
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              width: 30.2 * SizeConfig.widthMultiplier,
+                              height: 5.65 * SizeConfig.heightMultiplier,
+                              child: RaisedButton(
+                                onPressed: () {
+                                 Navigator.pop(context);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(80.0)),
+                                padding: EdgeInsets.all(0.0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 0.0, right: 0.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xff929292),
+                                        borderRadius:
+                                        BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 2.0 *SizeConfig.heightMultiplier,
+                                        color: const Color(0xffffffff),
+                                        fontWeight: FontWeight.w600,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 5 * SizeConfig.heightMultiplier)
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5 * SizeConfig.heightMultiplier)
+                      ],
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

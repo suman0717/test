@@ -478,7 +478,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
               Visibility(
-                visible: true,
+                visible: locationListTemp.length>1,
                 replacement: Container(
                   margin: EdgeInsets.only(top: 60.0),
                   width: 82.5 * SizeConfig.imageSizeMultipier,
@@ -564,7 +564,7 @@ class _HomeState extends State<Home> {
                                   }),
                               Flexible(
                                 child: Text(
-                                  'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of Optimise Nutrition and I understand and accept Rad Reviews terms and conditions.',
+                                  'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 1.1 * SizeConfig.heightMultiplier,
@@ -720,7 +720,7 @@ class _HomeState extends State<Home> {
                                     }),
                                 Flexible(
                                   child: Text(
-                                    'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of Optimise Nutrition and I understand and accept Rad Reviews terms and conditions.',
+                                    'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
                                     style: TextStyle(
                                       fontFamily: 'Manrope',
                                       fontSize: 1.1 * SizeConfig.heightMultiplier,
