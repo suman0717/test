@@ -300,7 +300,7 @@ class _SettingsState extends State<Settings> {
             ],
           ),
           child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0)),
+              borderRadius: BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
               child:InkWell(
                 child:IconButton(
                   iconSize: 4 * SizeConfig.heightMultiplier,
@@ -491,7 +491,7 @@ class _SettingsState extends State<Settings> {
                                     Container(
                                       width: 110.0,
                                       foregroundDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30.0),
+                                        borderRadius: BorderRadius.circular(7.65 * SizeConfig.widthMultiplier),
                                         border: Border.all(
                                           color: Color(0xffe8e8e8),
                                           width: 2.0,
