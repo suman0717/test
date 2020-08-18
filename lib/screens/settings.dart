@@ -444,13 +444,13 @@ class _SettingsState extends State<Settings> {
                               ),
                               FlutterSwitch(
                                 activeColor: kshadeColor1,
-                                width: 70.0,
-                                height: 35.0,
-                                valueFontSize: 18.0,
-                                toggleSize: 20.0,
+                                width: 17.82 * SizeConfig.widthMultiplier,
+                                height: 4.6 * SizeConfig.heightMultiplier,
+                                valueFontSize: 2.36 * SizeConfig.heightMultiplier,
+                                toggleSize: 2.63 *SizeConfig.heightMultiplier,
                                 value: followUpEnabled,
-                                borderRadius: 30.0,
-                                padding: 8.0,
+                                borderRadius: 3.94 *SizeConfig.heightMultiplier,
+                                padding: 1.05 *SizeConfig.heightMultiplier,
                                 showOnOff: true,
                                 onToggle: (val) {
                                   setState(() {
@@ -458,17 +458,6 @@ class _SettingsState extends State<Settings> {
                                   });
                                 },
                               ),
-//                              CustomSwitch(
-//                                activeColor: kshadeColor1,
-//                                value: followUpEnabled,
-//                                onChanged: (value) {
-//                                  print("VALUE : $value");
-//                                  setState(() {
-//                                    followUpEnabled = value;
-//                                  });
-//                                },
-//                              ),
-
                             ],
                           ),
                         ),
