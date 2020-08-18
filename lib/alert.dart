@@ -3,19 +3,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:radreviews/constants.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(''),backgroundColor: Colors.transparent,elevation: 0.0,
+      title: Text(''),
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
       contentPadding: EdgeInsets.all(0.0),
-      content:
-      Stack(
+      content: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          GestureDetector(onTap: (){
-            Navigator.pop(context);
-          },
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Container(
               width: 200.0,
               height: 230.0,
@@ -28,7 +29,8 @@ class CustomAlertDialog extends StatelessWidget {
                   stops: [0.0, 1.0],
                 ),
               ),
-              child:Column(mainAxisAlignment: MainAxisAlignment.end,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     'Back to Main Screen',
@@ -40,7 +42,7 @@ class CustomAlertDialog extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height:12.0),
+                  SizedBox(height: 12.0),
                 ],
               ),
             ),
@@ -52,7 +54,8 @@ class CustomAlertDialog extends StatelessWidget {
             ),
             height: 191.0,
             width: 326.0,
-            child: Column(mainAxisAlignment: MainAxisAlignment.end,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   child: Text(
@@ -91,7 +94,8 @@ class CustomAlertDialog extends StatelessWidget {
                 Stack(
                   children: <Widget>[
                     Transform.translate(
-                      offset: Offset(0.0, 0.0),//this is half Circle background in Alert Box
+                      offset: Offset(0.0, 0.0),
+                      //this is half Circle background in Alert Box
                       child: SvgPicture.string(
                         '<svg viewBox="104.4 256.0 165.7 83.1" ><defs><linearGradient id="gradient" x1="0.185576" y1="0.5" x2="0.794173" y2="0.5"><stop offset="0.0" stop-color="#ff36b033"  /><stop offset="1.0" stop-color="#ff50d94c"  /></linearGradient></defs><path transform="translate(3313.0, 173.36)" d="M -3202.469970703125 114.1974029541016 C -3206.69384765625 103.859977722168 -3208.674560546875 93.159423828125 -3208.63916015625 82.63980102539063 L -3042.918701171875 82.63980102539063 C -3042.852294921875 115.3598709106445 -3062.302490234375 146.4168090820313 -3094.441162109375 159.5511016845703 C -3104.6884765625 163.7379150390625 -3115.291748046875 165.7207183837891 -3125.72265625 165.7207946777344 C -3158.38330078125 165.7209930419922 -3189.360107421875 146.2825927734375 -3202.469970703125 114.1974029541016 Z" fill="url(#gradient)" fill-opacity="0.06" stroke="none" stroke-width="0.5" stroke-opacity="0.06" stroke-miterlimit="4" stroke-linecap="butt" /><defs><linearGradient id="gradient" x1="0.185576" y1="0.5" x2="0.794173" y2="0.5"><stop offset="0.0" stop-color="#ff36b033"  /><stop offset="1.0" stop-color="#ff50d94c"  /></linearGradient></defs><path transform="translate(3313.0, 187.42)" d="M -3189.460693359375 94.82670593261719 C -3192.973388671875 86.22982025146484 -3194.61767578125 77.33236694335938 -3194.58349609375 68.58450317382813 L -3056.974365234375 68.58450317382813 C -3056.906494140625 95.76638031005859 -3073.059326171875 121.5760726928711 -3099.757568359375 132.4871978759766 C -3108.2666015625 135.9637908935547 -3117.07080078125 137.6102294921875 -3125.732421875 137.6102600097656 C -3152.8525390625 137.6103210449219 -3178.574951171875 121.4690856933594 -3189.460693359375 94.82670593261719 Z" fill="url(#gradient)" fill-opacity="0.06" stroke="none" stroke-width="0.5" stroke-opacity="0.06" stroke-miterlimit="4" stroke-linecap="butt" /><defs><linearGradient id="gradient" x1="0.185576" y1="0.5" x2="0.794173" y2="0.5"><stop offset="0.0" stop-color="#ff36b033"  /><stop offset="1.0" stop-color="#ff50d94c"  /></linearGradient></defs><path transform="translate(3313.0, 201.14)" d="M -3176.761474609375 75.91680145263672 C -3179.579345703125 69.0206298828125 -3180.8955078125 61.87998962402344 -3180.862548828125 54.86310195922852 L -3070.69482421875 54.86310195922852 C -3070.621826171875 76.64174652099609 -3083.556884765625 97.32583618164063 -3104.947021484375 106.0668029785156 C -3111.759033203125 108.8501663208008 -3118.80810546875 110.1683654785156 -3125.742431640625 110.1684646606445 C -3147.454345703125 110.1687927246094 -3168.046630859375 97.24667358398438 -3176.761474609375 75.91680145263672 Z" fill="url(#gradient)" fill-opacity="0.06" stroke="none" stroke-width="0.5" stroke-opacity="0.06" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
                         allowDrawingOutsideViewBox: true,
@@ -102,7 +106,8 @@ class CustomAlertDialog extends StatelessWidget {
                 Stack(
                   children: <Widget>[
                     Transform.translate(
-                      offset: Offset(46.0, -33.0), //Circular green box in Alert Box
+                      offset: Offset(46.0, -33.0),
+                      //Circular green box in Alert Box
                       child: SvgPicture.string(
                         '<svg viewBox="150.3 219.3 73.8 73.8" ><defs><filter id="shadow"><feDropShadow dx="0" dy="5" stdDeviation="17"/></filter><linearGradient id="gradient" x1="0.185576" y1="0.5" x2="0.794173" y2="0.5"><stop offset="0.0" stop-color="#ff36b033"  /><stop offset="1.0" stop-color="#ff50d94c"  /></linearGradient></defs><path transform="translate(-42.84, 443.3)" d="M 216.1126403808594 -221.2132263183594 C 234.9553070068359 -228.9127807617188 256.5003051757813 -219.8683471679688 264.201171875 -201.0242919921875 C 271.9006958007813 -182.1816711425781 262.8562622070313 -160.6366424560547 244.01220703125 -152.9357604980469 C 225.1682281494141 -145.2362670898438 203.6232147216797 -154.2806701660156 195.9237213134766 -173.1247253417969 C 188.2242584228516 -191.9687805175781 197.2686767578125 -213.5123291015625 216.1126403808594 -221.2132263183594 Z" fill="url(#gradient)" stroke="none" stroke-width="0.5" stroke-miterlimit="4" stroke-linecap="butt" filter="url(#shadow)"/></svg>',
                         allowDrawingOutsideViewBox: true,
@@ -111,14 +116,14 @@ class CustomAlertDialog extends StatelessWidget {
                     Transform.translate(
                       offset: Offset(63.0, -20.0),
                       child:
-                      // Adobe XD layer: 'passage-of-time' (group)
-                      Stack(
+                          // Adobe XD layer: 'passage-of-time' (group)
+                          Stack(
                         children: <Widget>[
                           Transform.translate(
                             offset: Offset(0.0, 1.77),
                             child:
-                            // Adobe XD layer: 'Layer_1_65_' (group)
-                            Stack(
+                                // Adobe XD layer: 'Layer_1_65_' (group)
+                                Stack(
                               children: <Widget>[
                                 Stack(
                                   children: <Widget>[
@@ -139,11 +144,8 @@ class CustomAlertDialog extends StatelessWidget {
               ],
             ),
           )
-
         ],
       ),
     );
   }
 }
-
-

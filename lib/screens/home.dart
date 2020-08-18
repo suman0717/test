@@ -373,35 +373,38 @@ class _HomeState extends State<Home> {
         extendBodyBehindAppBar: true,
         bottomNavigationBar: BottomBar(),
         floatingActionButton: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-            color: kshadeColor1,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
-              child:InkWell(
-            child:IconButton(
-            iconSize: 4 * SizeConfig.heightMultiplier,
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+              color: kshadeColor1,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1 * SizeConfig.heightMultiplier,
+                  blurRadius: 2 * SizeConfig.heightMultiplier,
+                  offset: Offset(0, 10), // changes position of shadow
+                ),
+              ],
             ),
-            onPressed: () {
+            child: Material(
+                color: kshadeColor1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        6.65 * SizeConfig.widthMultiplier)),
+                child: InkWell(
+                  child: IconButton(
+                    iconSize: 4 * SizeConfig.heightMultiplier,
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
 //              Navigator.push(
 //                  context, MaterialPageRoute(builder: (context) => Home()));
-            },
-          ),))
-        ),
+                    },
+                  ),
+                ))),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         backgroundColor: const Color(0xffffffff),

@@ -91,5 +91,8 @@ String feedBack_FollowUP;
 String feedback_FollowUp_Days;
 String smsFeedbackWording;
 String smsFeedback_Followup_Wording;
+String serverOTP;
+String localOTP;
+String forgotClientUserID;
 
 

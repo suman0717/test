@@ -444,7 +444,7 @@ class _SettingsState extends State<Settings> {
                               ),
                               FlutterSwitch(
                                 activeColor: kshadeColor1,
-                                width: 17.82 * SizeConfig.widthMultiplier,
+                                width: 21.82 * SizeConfig.widthMultiplier,
                                 height: 4.6 * SizeConfig.heightMultiplier,
                                 valueFontSize: 2.36 * SizeConfig.heightMultiplier,
                                 toggleSize: 2.63 *SizeConfig.heightMultiplier,

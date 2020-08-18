@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/linkOpener.dart';
@@ -7,13 +9,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/screens/home.dart';
+import 'package:radreviews/screens/otp_forgotPassword.dart';
 import 'package:radreviews/screens/registration_success.dart';
 import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List<String> locationListTemp=[''];
-
+List<String> locationListTemp = [''];
 class XDSignIn extends StatefulWidget {
   @override
   _XDSignInState createState() => _XDSignInState();
@@ -25,52 +27,294 @@ class _XDSignInState extends State<XDSignIn> {
   String serverUsername;
   String serverPassword;
   bool _waiting = false;
+  bool _waiting_Forgot = false;
   String message = '';
+
   String accountStatus = '';
+  String forgotEmailAddress;
   int _len;
+
+
+  void ShowForgotPassword() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 5.0,
+          title: Text(
+            'Password Recovery',
+            style: TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 18,
+              color: const Color(0xff363636),
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ModalProgressHUD(
+                  inAsyncCall: _waiting_Forgot,
+                  child: Container(
+                    width: 68.2 * SizeConfig.widthMultiplier,
+                    height: 5.65 * SizeConfig.heightMultiplier,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                        forgotEmailAddress = value;
+                      },
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 1.9 * SizeConfig.heightMultiplier,
+                      ),
+                      decoration: kTextFieldDecorationNoback.copyWith(
+                        hintText: 'Email Address',
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 1.5 * SizeConfig.heightMultiplier,
+                            horizontal: 20.0),
+                      ),
+                    ),
+                  ),
+                ),
+//                Visibility(
+//                    visible: _recoveryMessage==''?false:true,
+//                    child: Padding(
+//                      padding: EdgeInsets.only(top: 8.0),
+//                      child: Text(
+//                        _recoveryMessage,
+//                        style: TextStyle(
+//                            color: Colors.red,
+//                            fontSize: 1.5 * SizeConfig.heightMultiplier),
+//                      ),
+//                    )),
+                SizedBox(
+                  height: 30.0,
+                ),
+                Container(
+                  width: 68.2 * SizeConfig.widthMultiplier,
+                  height: 5.65 * SizeConfig.heightMultiplier,
+                  child: RaisedButton(
+                    onPressed: () async {
+                      int _otp;
+                      print('clicked');
+                      setState(() {
+                        _waiting_Forgot = true;
+                      });
+                      print(forgotEmailAddress);
+                      if (forgotEmailAddress != null) {
+                        Random _random = Random();
+                        _otp = _random.nextInt(999999);
+                        print(_otp);
+                        if (_otp < 100000) {
+                          _otp = _otp + 100000;
+                        }
+
+                        http.Response _response = await http.get(kURLBase +
+                            'REST/REVIEWS/App_ForgotPWD?EmailAddress=$forgotEmailAddress&OTP=$_otp');
+                        print(kURLBase +
+                            'REST/REVIEWS/App_ForgotPWD?EmailAddress=$forgotEmailAddress&OTP=${_otp.toString()}');
+                        print(_response.body);
+                        var _responseBody=_response.body;
+                        String _errormessage = jsonDecode(_responseBody)['Error'];
+                        print(_errormessage);
+                        if(_errormessage !='No Error'){
+                          Flushbar(
+                            titleText: Text(
+                              'User does not exists',
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 2.0 * SizeConfig.heightMultiplier,
+                                color: const Color(0xffffffff),
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            messageText: Text(
+                              'User with email address does not exist in our system',
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 1.3 * SizeConfig.heightMultiplier,
+                                color: const Color(0xffffffff),
+                                fontWeight: FontWeight.w300,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                            icon: Icon(
+                              Icons.clear,
+                              size: 3.94 * SizeConfig.heightMultiplier,
+                              color: Colors.white,
+                            ),
+                            duration: Duration(seconds: 3),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            borderColor: Colors.transparent,
+                            shouldIconPulse: false,
+                            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                            boxShadows: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                                blurRadius: 2 * SizeConfig.heightMultiplier,
+                                offset: Offset(0, 10), // changesvalue position of shadow
+                              ),
+                            ],
+                            backgroundColor: kshadeColor1,
+                          ).show(context);
+
+                        }
+                        else{
+                          serverOTP=jsonDecode(_responseBody)['OTP'];
+                          forgotClientUserID=jsonDecode(_responseBody)['CUID'];
+
+                          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                          sharedPreferences.setString('tempUserID', forgotClientUserID);
+                          sharedPreferences.setString('serverOTP', serverOTP);
+                          print(serverOTP);
+                          print(forgotClientUserID);
+                          if(forgotClientUserID!=null && serverOTP!=null){
+                            await Flushbar(
+                              titleText: Text(
+                                'Email Sent',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 2.0 * SizeConfig.heightMultiplier,
+                                  color: const Color(0xffffffff),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              messageText: Text(
+                                'An email with one time password has been sent on your registered email address.',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 1.3 * SizeConfig.heightMultiplier,
+                                  color: const Color(0xffffffff),
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                              icon: Icon(
+                                Icons.check,
+                                size: 3.94 * SizeConfig.heightMultiplier,
+                                color: Colors.white,
+                              ),
+                              duration: Duration(seconds: 3),
+                              flushbarPosition: FlushbarPosition.TOP,
+                              borderColor: Colors.transparent,
+                              shouldIconPulse: false,
+                              maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                              boxShadows: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  spreadRadius: 1 * SizeConfig.heightMultiplier,
+                                  blurRadius: 2 * SizeConfig.heightMultiplier,
+                                  offset: Offset(0, 10), // changesvalue position of shadow
+                                ),
+                              ],
+                              backgroundColor: kshadeColor1,
+                            ).show(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EnterOTP()));}
+                        }
+                        setState(() {
+                          _waiting_Forgot = false;
+                        });
+                      }
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            2.63 * SizeConfig.heightMultiplier)),
+                    padding: EdgeInsets.all(0.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: kshadeColor1,
+                          borderRadius: BorderRadius.circular(
+                              2.9 * SizeConfig.heightMultiplier)),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Send Email',
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 2.0 * SizeConfig.heightMultiplier,
+                          color: const Color(0xffffffff),
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   GetUserLogin(String urlString) async {
     print(urlString);
-    http.Response response = await http .get(urlString);
+    http.Response response = await http.get(urlString);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String data = response.body;
     serverUsername = jsonDecode(data)['UserName'];
     serverPassword = jsonDecode(data)['Decrypted_Password'];
     accountStatus = jsonDecode(data)['Account_Status'];
     sharedPreferences.setString('curuser', jsonDecode(data)['UserName']);
-    curUserName=sharedPreferences.get('curuser');
-    sharedPreferences.setString('curUserPWD', jsonDecode(data)['Decrypted_Password']);
-    curPassword=sharedPreferences.get('curUserPWD');
-    sharedPreferences.setString('business_Name', jsonDecode(data)['Business_Name']);
-    curbusinessName=sharedPreferences.get('business_Name');
-    sharedPreferences.setString('business_Num', jsonDecode(data)['Business_Num']);
-    businessnumber=sharedPreferences.get('business_Num');
-    sharedPreferences.setString('maskedbusiness_Num', jsonDecode(data)['Business_Num_Masked']);
-    maskedbusinessnumber=sharedPreferences.get('maskedbusiness_Num');
-    sharedPreferences.setString('account_Status', jsonDecode(data)['Account_Status']);
-    curaccountStatus=sharedPreferences.get('account_Status');
+    curUserName = sharedPreferences.get('curuser');
+    sharedPreferences.setString(
+        'curUserPWD', jsonDecode(data)['Decrypted_Password']);
+    curPassword = sharedPreferences.get('curUserPWD');
+    sharedPreferences.setString(
+        'business_Name', jsonDecode(data)['Business_Name']);
+    curbusinessName = sharedPreferences.get('business_Name');
+    sharedPreferences.setString(
+        'business_Num', jsonDecode(data)['Business_Num']);
+    businessnumber = sharedPreferences.get('business_Num');
+    sharedPreferences.setString(
+        'maskedbusiness_Num', jsonDecode(data)['Business_Num_Masked']);
+    maskedbusinessnumber = sharedPreferences.get('maskedbusiness_Num');
+    sharedPreferences.setString(
+        'account_Status', jsonDecode(data)['Account_Status']);
+    curaccountStatus = sharedPreferences.get('account_Status');
     sharedPreferences.setString('clientID', jsonDecode(data)['CID']);
-    curClientID=sharedPreferences.get('clientID');
+    curClientID = sharedPreferences.get('clientID');
     sharedPreferences.setString('mobile', jsonDecode(data)['Mobile']);
-    unmasked_mobile=sharedPreferences.get('mobile');
-    sharedPreferences.setString('maskedMobile', jsonDecode(data)['Mobile_Masked']);
-    masked_mobile=sharedPreferences.get('maskedMobile');
+    unmasked_mobile = sharedPreferences.get('mobile');
+    sharedPreferences.setString(
+        'maskedMobile', jsonDecode(data)['Mobile_Masked']);
+    masked_mobile = sharedPreferences.get('maskedMobile');
     sharedPreferences.setString('cUID', jsonDecode(data)['CUID']);
-    curClientUserID=sharedPreferences.get('cUID');
+    curClientUserID = sharedPreferences.get('cUID');
     sharedPreferences.setString('first_Name', jsonDecode(data)['First_Name']);
-    curUserFName=sharedPreferences.get('first_Name');
+    curUserFName = sharedPreferences.get('first_Name');
     sharedPreferences.setString('surname', jsonDecode(data)['Surname']);
-    curUserSName=sharedPreferences.get('surname');
+    curUserSName = sharedPreferences.get('surname');
     sharedPreferences.setString('country', jsonDecode(data)['Country']);
-    country=sharedPreferences.get('country');
-    sharedPreferences.setString('feedBack_FollowUP', jsonDecode(data)['FeedBack_FollowUP']);
-    feedBack_FollowUP=sharedPreferences.get('feedBack_FollowUP');
-    sharedPreferences.setInt('feedback_FollowUp_Days', jsonDecode(data)['Feedback_FollowUp_Days']);
-    feedback_FollowUp_Days=sharedPreferences.get('feedback_FollowUp_Days').toString();
-    sharedPreferences.setString('smsFeedbackWording', jsonDecode(data)['SMSFeedbackWording']);
-    smsFeedbackWording=sharedPreferences.get('smsFeedbackWording');
-    sharedPreferences.setString('smsFeedback_Followup_Wording', jsonDecode(data)['SMSFeedback_Followup_Wording']);
-    smsFeedback_Followup_Wording=sharedPreferences.get('smsFeedback_Followup_Wording');
+    country = sharedPreferences.get('country');
+    sharedPreferences.setString(
+        'feedBack_FollowUP', jsonDecode(data)['FeedBack_FollowUP']);
+    feedBack_FollowUP = sharedPreferences.get('feedBack_FollowUP');
+    sharedPreferences.setInt(
+        'feedback_FollowUp_Days', jsonDecode(data)['Feedback_FollowUp_Days']);
+    feedback_FollowUp_Days =
+        sharedPreferences.get('feedback_FollowUp_Days').toString();
+    sharedPreferences.setString(
+        'smsFeedbackWording', jsonDecode(data)['SMSFeedbackWording']);
+    smsFeedbackWording = sharedPreferences.get('smsFeedbackWording');
+    sharedPreferences.setString('smsFeedback_Followup_Wording',
+        jsonDecode(data)['SMSFeedback_Followup_Wording']);
+    smsFeedback_Followup_Wording =
+        sharedPreferences.get('smsFeedback_Followup_Wording');
     String _cid = sharedPreferences.get('clientID');
     print(sharedPreferences.get('curuser'));
     print(sharedPreferences.get('clientID'));
@@ -85,34 +329,39 @@ class _XDSignInState extends State<XDSignIn> {
     print(_cid);
     print(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
 
-    if(curaccountStatus=='Active'){
-      http.Response _locationResponse = await http.get(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
-      try{var _locationData = _locationResponse.body;
+    if (curaccountStatus == 'Active') {
+      http.Response _locationResponse =
+          await http.get(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
+      try {
+        var _locationData = _locationResponse.body;
 
-      print(_locationData);
+        print(_locationData);
 
-      List _localData = jsonDecode(_locationData)["response"];
+        List _localData = jsonDecode(_locationData)["response"];
 
-      if(_localData !=null){_len = _localData.length;}
-
-      if (_localData != null) {
-        print('test4');
-        locationListTemp = [];
-//        TODO Implement length
-        for (int i = 0; i < _len; i++) {
-          var _lodata = _localData[i];
-          locationListTemp.add(_lodata["Location_Name"]);
+        if (_localData != null) {
+          _len = _localData.length;
         }
-      } else {print('test5');
-        locationListTemp = [];
-        print(locationListTemp);
-        var _localData = jsonDecode(_locationData);
-        print(_localData);
-        locationListTemp.add(_localData["Location_Name"]);
-        selectedlocation = _localData[
-        "Location_Name"]; //this will initiate if client have only 1 location
-      }}
-      catch(e){
+
+        if (_localData != null) {
+          print('test4');
+          locationListTemp = [];
+//        TODO Implement length
+          for (int i = 0; i < _len; i++) {
+            var _lodata = _localData[i];
+            locationListTemp.add(_lodata["Location_Name"]);
+          }
+        } else {
+          print('test5');
+          locationListTemp = [];
+          print(locationListTemp);
+          var _localData = jsonDecode(_locationData);
+          print(_localData);
+          locationListTemp.add(_localData["Location_Name"]);
+          selectedlocation = _localData[
+              "Location_Name"]; //this will initiate if client have only 1 location
+        }
+      } catch (e) {
         locationListTemp = ['No Location'];
         print(e);
       }
@@ -167,13 +416,15 @@ class _XDSignInState extends State<XDSignIn> {
                     onChanged: (value) {
                       username = value;
                     },
-                    style:
-                        TextStyle(fontFamily: 'Manrope', fontSize: 1.9 * SizeConfig.heightMultiplier,),
-                    decoration:
-                    kTextFieldDecorationNoback.copyWith(
-                        hintText: 'Username',
-                        contentPadding: EdgeInsets.symmetric(vertical: 1.5 * SizeConfig.heightMultiplier, horizontal: 20.0),
-
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+                    ),
+                    decoration: kTextFieldDecorationNoback.copyWith(
+                      hintText: 'Username',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 1.5 * SizeConfig.heightMultiplier,
+                          horizontal: 20.0),
                     ),
                   ),
                 ),
@@ -194,8 +445,10 @@ class _XDSignInState extends State<XDSignIn> {
                       fontSize: 1.9 * SizeConfig.heightMultiplier,
                     ),
                     decoration: kTextFieldDecorationNoback.copyWith(
-                        hintText: 'Password',
-                      contentPadding: EdgeInsets.symmetric(vertical: 1.5 * SizeConfig.heightMultiplier, horizontal: 20.0),
+                      hintText: 'Password',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 1.5 * SizeConfig.heightMultiplier,
+                          horizontal: 20.0),
                     ),
                   ),
                 ),
@@ -205,7 +458,9 @@ class _XDSignInState extends State<XDSignIn> {
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         message,
-                        style: TextStyle(color: Colors.red,fontSize: 1.5 * SizeConfig.heightMultiplier),
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 1.5 * SizeConfig.heightMultiplier),
                       ),
                     )),
                 SizedBox(
@@ -229,7 +484,6 @@ class _XDSignInState extends State<XDSignIn> {
                         if (username == serverUsername &&
                             password == serverPassword) {
                           if (accountStatus == 'Active') {
-                            
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -253,13 +507,14 @@ class _XDSignInState extends State<XDSignIn> {
                       });
                     },
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.63 * SizeConfig.heightMultiplier)),
+                        borderRadius: BorderRadius.circular(
+                            2.63 * SizeConfig.heightMultiplier)),
                     padding: EdgeInsets.all(0.0),
                     child: Container(
                       decoration: BoxDecoration(
                           color: kshadeColor1,
-                          borderRadius: BorderRadius.circular(2.9 * SizeConfig.heightMultiplier)),
-
+                          borderRadius: BorderRadius.circular(
+                              2.9 * SizeConfig.heightMultiplier)),
                       alignment: Alignment.center,
                       child: Text(
                         'Sign In',
@@ -280,6 +535,8 @@ class _XDSignInState extends State<XDSignIn> {
                 GestureDetector(
                   onTap: () {
                     print('Forgot Password Tapped');
+//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EnterNewPWD()));
+                    ShowForgotPassword();
                   },
                   child: Text(
                     'Forgot your password?',
@@ -318,12 +575,12 @@ class _XDSignInState extends State<XDSignIn> {
                           ),
                         ),
                         TextSpan(
-                          text: ' Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'Manrope',
-                            fontSize: 2.23 * SizeConfig.heightMultiplier,
-                            color: Colors.blue,)
-                        ),
+                            text: ' Sign Up',
+                            style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontSize: 2.23 * SizeConfig.heightMultiplier,
+                              color: Colors.blue,
+                            )),
                       ],
                     ),
                     textAlign: TextAlign.center,
@@ -334,8 +591,7 @@ class _XDSignInState extends State<XDSignIn> {
                 ),
                 RawMaterialButton(
                   child: Container(
-                    child:
-                    SvgPicture.string(
+                    child: SvgPicture.string(
                       _svg_731xhc,
                       allowDrawingOutsideViewBox: true,
                     ),
