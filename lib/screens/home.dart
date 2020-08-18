@@ -11,7 +11,7 @@ import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsand%20conditins.dart';
+import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
@@ -39,8 +39,6 @@ class _HomeState extends State<Home> {
   var mobileMaskAustralia = MaskTextInputFormatter(
       mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
   bool _isWaiting = false;
-
-
 
   @override
   void initState() {
@@ -127,23 +125,21 @@ class _HomeState extends State<Home> {
         });
   }
 
-  bool validateMobile(String number){
+  bool validateMobile(String number) {
     print(number);
-    if(number==null){
+    if (number == null) {
       validationOnRequestFeedback('Please provide Mobile Number');
       return false;
-    }
-    else if(number.length!=10){
+    } else if (number.length != 10) {
       validationOnRequestFeedback('Please provide the Correct Number');
       return false;
-    }
-    else if(!(number.startsWith('0'))){
+    } else if (!(number.startsWith('0'))) {
       validationOnRequestFeedback('Number should starts with 0');
       return false;
-    }
-    else return true;
-
+    } else
+      return true;
   }
+
   void validationOnRequestFeedback(String errormsg) {
     showDialog(
         context: context,
@@ -175,7 +171,6 @@ class _HomeState extends State<Home> {
                   SizedBox(
                     height: 1 * SizeConfig.heightMultiplier,
                   ),
-
                 ],
               ),
             ),
@@ -200,165 +195,181 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-        leading: Container(),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        actions: [
-          PopupMenuButton(
-            offset: Offset(0, 200),
-            icon: Icon(Icons.more_horiz),
-            onSelected: (value) {
-              if(value==1){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
-              }
-              else if(value==2){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
-              }
-              else if(value==3){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
-              }
-              else if(value==4){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SMSSent(),
+          leading: Container(),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          actions: [
+            PopupMenuButton(
+              offset: Offset(0, 200),
+              icon: Icon(Icons.more_horiz),
+              onSelected: (value) {
+                if (value == 1) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Settings()));
+                } else if (value == 2) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyAccount()));
+                } else if (value == 3) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FeedbackStats()));
+                } else if (value == 4) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SMSSent(),
+                    ),
+                  );
+                } else if (value == 5) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NegFeedback(),
+                    ),
+                  );
+                } else if (value == 6) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TandC(kURLTerms),
+                    ),
+                  );
+                } else if (value == 7) {
+                  Logout();
+                }
+                ;
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text(
+                    'Settings',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                );
-              }
-              else if(value==5){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NegFeedback(),
-                  ),
-                );
-              }
-              else if(value==6){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TandC(kURLTerms),
-                  ),
-                );
-              }
-              else if(value==7){
-                Logout();
-              };
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
+                  value: 1,
                 ),
-                value: 1,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'My Account',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
                   ),
-                  textAlign: TextAlign.left,
                 ),
-                value: 2,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback Stats',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  child: Text(
+                    'My Account',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
+                  value: 2,
                 ),
-                value: 3,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback SMS Sent',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
                   ),
-                  textAlign: TextAlign.left,
                 ),
-                value: 4,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback Negative',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback Stats',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
+                  value: 3,
                 ),
-                value: 5,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Terms & Conditions',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
                   ),
-                  textAlign: TextAlign.left,
                 ),
-                value: 6,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback SMS Sent',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
+                  value: 4,
                 ),
-                value: 7,
-              ),
-            ],
-          ),
-        ],
-      ),
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
+                  ),
+                ),
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback Negative',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 5,
+                ),
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
+                  ),
+                ),
+                PopupMenuItem(
+                  child: Text(
+                    'Terms & Conditions',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 6,
+                ),
+                PopupMenuItem(
+                  height: 1,
+                  child: PopupMenuDivider(
+                    height: 1,
+                  ),
+                ),
+                PopupMenuItem(
+                  child: Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 7,
+                ),
+              ],
+            ),
+          ],
+        ),
         extendBodyBehindAppBar: true,
         bottomNavigationBar: BottomBar(),
         floatingActionButton: Container(
@@ -376,7 +387,10 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          child: IconButton(
+          child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0)),
+              child:InkWell(
+            child:IconButton(
             iconSize: 4 * SizeConfig.heightMultiplier,
             icon: Icon(
               Icons.add,
@@ -386,7 +400,7 @@ class _HomeState extends State<Home> {
 //              Navigator.push(
 //                  context, MaterialPageRoute(builder: (context) => Home()));
             },
-          ),
+          ),))
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -451,9 +465,9 @@ class _HomeState extends State<Home> {
                                   child: Container(
                                     constraints: BoxConstraints(
                                         maxWidth:
-                                        68.2 * SizeConfig.widthMultiplier,
+                                            68.2 * SizeConfig.widthMultiplier,
                                         minHeight:
-                                        5.7 * SizeConfig.heightMultiplier),
+                                            5.7 * SizeConfig.heightMultiplier),
                                     alignment: Alignment.center,
                                     child: Text(
                                       'Request',
@@ -478,7 +492,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
               Visibility(
-                visible: locationListTemp.length>1,
+                visible: locationListTemp.length > 1,
                 replacement: Container(
                   margin: EdgeInsets.only(top: 60.0),
                   width: 82.5 * SizeConfig.imageSizeMultipier,
@@ -529,8 +543,8 @@ class _HomeState extends State<Home> {
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
                               _unMaskedMobile = (_country == 'Australia'
-                                  ? mobileMaskAustralia
-                                  : mobileMaskUSA)
+                                      ? mobileMaskAustralia
+                                      : mobileMaskUSA)
                                   .getUnmaskedText();
                               print(_unMaskedMobile);
                             },
@@ -584,7 +598,8 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.only(top: 60.0),
                   width: 82.5 * SizeConfig.imageSizeMultipier,
                   height: 41.2 * SizeConfig.heightMultiplier,
-                  child: Form(key: _formkey,
+                  child: Form(
+                    key: _formkey,
                     child: Card(
                       color: Colors.white,
                       elevation: 20.0,
@@ -630,8 +645,8 @@ class _HomeState extends State<Home> {
                               keyboardType: TextInputType.phone,
                               onChanged: (value) {
                                 _unMaskedMobile = (_country == 'Australia'
-                                    ? mobileMaskAustralia
-                                    : mobileMaskUSA)
+                                        ? mobileMaskAustralia
+                                        : mobileMaskUSA)
                                     .getUnmaskedText();
                                 print(_unMaskedMobile);
                               },
@@ -658,15 +673,15 @@ class _HomeState extends State<Home> {
                             child: Center(
                               child: DropdownButton<String>(
                                 items:
-                                locationListTemp.map((String dropdownitem) {
+                                    locationListTemp.map((String dropdownitem) {
                                   return DropdownMenuItem<String>(
                                     value: dropdownitem,
                                     child: Text(
                                       dropdownitem,
                                       style: TextStyle(
                                           fontFamily: 'Manrope',
-                                          fontSize:
-                                          1.84 * SizeConfig.heightMultiplier),
+                                          fontSize: 1.84 *
+                                              SizeConfig.heightMultiplier),
                                     ),
                                   );
                                 }).toList(),
@@ -683,7 +698,7 @@ class _HomeState extends State<Home> {
                                   style: TextStyle(
                                       fontFamily: 'Manrope',
                                       fontSize:
-                                      2.0 * SizeConfig.heightMultiplier),
+                                          2.0 * SizeConfig.heightMultiplier),
                                 ),
                                 underline: Container(
                                   height: 1.0,
@@ -723,7 +738,8 @@ class _HomeState extends State<Home> {
                                     'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
                                     style: TextStyle(
                                       fontFamily: 'Manrope',
-                                      fontSize: 1.1 * SizeConfig.heightMultiplier,
+                                      fontSize:
+                                          1.1 * SizeConfig.heightMultiplier,
                                       color: const Color(0xff363636),
                                     ),
                                     textAlign: TextAlign.left,
@@ -746,129 +762,126 @@ class _HomeState extends State<Home> {
   }
 
   void RequestFeedback(String mob, String loc) async {
-
-    if(loc!=null && loc!='No Location' && termsAndConsdditions==true){
+    if (loc != null && loc != 'No Location' && termsAndConsdditions == true) {
       bool _validate = validateMobile(mob);
-      if(_validate==true){
+      if (_validate == true) {
         print(loc);
         setState(() {
           _isWaiting = true;
         });
 
-      String _tempMobile = '61' + mob.substring(1, mob.length);
-      print(kURLBase +
-          'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-      http.Response response = await http.get(kURLBase +
-          'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-      var _smsString = response.body;
-      String _smsID = jsonDecode(_smsString)['SMSID'];
-      print(_smsString);
-      print(_smsID);
-      if(_smsID!=null){
-        setState(() {
-          _unMaskedMobile = '';
-          ctrlMobile.text = '';
-          selectedlocation = null;
-          _isWaiting = false;
-        });
-        Flushbar(
-        titleText: Text(
-          'Request Sent',
-          style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 2.0 * SizeConfig.heightMultiplier,
-            color: const Color(0xffffffff),
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.left,
-        ),
-        messageText: Text(
-          'You successfully sent your feedback request.',
-          style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 1.3 * SizeConfig.heightMultiplier,
-            color: const Color(0xffffffff),
-            fontWeight: FontWeight.w300,
-          ),
-          textAlign: TextAlign.left,
-        ),
-        padding: EdgeInsets.symmetric(
-            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-        icon: Icon(
-          Icons.check,
-          size: 3.94 * SizeConfig.heightMultiplier,
-          color: Colors.white,
-        ),
-        duration: Duration(seconds: 3),
-        flushbarPosition: FlushbarPosition.TOP,
-        borderColor: Colors.transparent,
-        shouldIconPulse: false,
-        maxWidth: 91.8 * SizeConfig.widthMultiplier,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            spreadRadius: 1 * SizeConfig.heightMultiplier,
-            blurRadius: 2 * SizeConfig.heightMultiplier,
-            offset: Offset(0, 10), // changes position of shadow
-          ),
-        ],
-        backgroundColor: kshadeColor1,
-      ).show(context);
-      }
-      else {
-        setState(() {
-          _isWaiting = false;
-        });
-        Flushbar(
-          titleText: Text(
-            'Failed !',
-            style: TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 2.0 * SizeConfig.heightMultiplier,
-              color: const Color(0xffffffff),
-              fontWeight: FontWeight.w600,
+        String _tempMobile = '61' + mob.substring(1, mob.length);
+        print(kURLBase +
+            'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+        http.Response response = await http.get(kURLBase +
+            'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+        var _smsString = response.body;
+        String _smsID = jsonDecode(_smsString)['SMSID'];
+        print(_smsString);
+        print(_smsID);
+        if (_smsID != null) {
+          setState(() {
+            _unMaskedMobile = '';
+            ctrlMobile.text = '';
+            selectedlocation = null;
+            _isWaiting = false;
+          });
+          Flushbar(
+            titleText: Text(
+              'Request Sent',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 2.0 * SizeConfig.heightMultiplier,
+                color: const Color(0xffffffff),
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.left,
             ),
-            textAlign: TextAlign.left,
-          ),
-          messageText: Text(
-            'Something went wrong.',
-            style: TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 1.3 * SizeConfig.heightMultiplier,
-              color: const Color(0xffffffff),
-              fontWeight: FontWeight.w300,
+            messageText: Text(
+              'You successfully sent your feedback request.',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.3 * SizeConfig.heightMultiplier,
+                color: const Color(0xffffffff),
+                fontWeight: FontWeight.w300,
+              ),
+              textAlign: TextAlign.left,
             ),
-            textAlign: TextAlign.left,
-          ),
-          padding: EdgeInsets.symmetric(
-              vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-          icon: Icon(
-            Icons.clear,
-            size: 3.94 * SizeConfig.heightMultiplier,
-            color: Colors.white,
-          ),
-          duration: Duration(seconds: 3),
-          flushbarPosition: FlushbarPosition.TOP,
-          borderColor: Colors.transparent,
-          shouldIconPulse: false,
-          maxWidth: 91.8 * SizeConfig.widthMultiplier,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              spreadRadius: 1 * SizeConfig.heightMultiplier,
-              blurRadius: 2 * SizeConfig.heightMultiplier,
-              offset: Offset(0, 10), // changes position of shadow
+            padding: EdgeInsets.symmetric(
+                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+            icon: Icon(
+              Icons.check,
+              size: 3.94 * SizeConfig.heightMultiplier,
+              color: Colors.white,
             ),
-          ],
-          backgroundColor: kshadeColor1,
-        ).show(context);
+            duration: Duration(seconds: 3),
+            flushbarPosition: FlushbarPosition.TOP,
+            borderColor: Colors.transparent,
+            shouldIconPulse: false,
+            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+            boxShadows: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                blurRadius: 2 * SizeConfig.heightMultiplier,
+                offset: Offset(0, 10), // changes position of shadow
+              ),
+            ],
+            backgroundColor: kshadeColor1,
+          ).show(context);
+        } else {
+          setState(() {
+            _isWaiting = false;
+          });
+          Flushbar(
+            titleText: Text(
+              'Failed !',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 2.0 * SizeConfig.heightMultiplier,
+                color: const Color(0xffffffff),
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            messageText: Text(
+              'Something went wrong.',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.3 * SizeConfig.heightMultiplier,
+                color: const Color(0xffffffff),
+                fontWeight: FontWeight.w300,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            padding: EdgeInsets.symmetric(
+                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+            icon: Icon(
+              Icons.clear,
+              size: 3.94 * SizeConfig.heightMultiplier,
+              color: Colors.white,
+            ),
+            duration: Duration(seconds: 3),
+            flushbarPosition: FlushbarPosition.TOP,
+            borderColor: Colors.transparent,
+            shouldIconPulse: false,
+            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+            boxShadows: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                blurRadius: 2 * SizeConfig.heightMultiplier,
+                offset: Offset(0, 10), // changes position of shadow
+              ),
+            ],
+            backgroundColor: kshadeColor1,
+          ).show(context);
+        }
       }
-      }
-    }
-    else if (termsAndConsdditions==false){
-      validationOnRequestFeedback('Please confirm you are authorised to send this SMS Message');
-    }
-    else if (loc==null || loc=='No Location'){
+    } else if (termsAndConsdditions == false) {
+      validationOnRequestFeedback(
+          'Please confirm you are authorised to send this SMS Message');
+    } else if (loc == null || loc == 'No Location') {
       validationOnRequestFeedback('Location Undefined');
     }
   }

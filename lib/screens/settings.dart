@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsand%20conditins.dart';
+import 'package:radreviews/screens/termsandconditins.dart';
 import 'dart:convert';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +33,8 @@ SharedPreferences sharedPreferences;
 class _SettingsState extends State<Settings> {
 
   bool _waiting = false;
+
+
 
   @override
   void initState() {
@@ -283,31 +285,34 @@ class _SettingsState extends State<Settings> {
         ],
       ),
       floatingActionButton: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-          color: kshadeColor1,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 1 * SizeConfig.heightMultiplier,
-              blurRadius: 2 * SizeConfig.heightMultiplier,
-              offset: Offset(0, 10), // changes position of shadow
-            ),
-          ],
-        ),
-        child: IconButton(
-          iconSize: 4 * SizeConfig.heightMultiplier,
-          icon: Icon(
-            Icons.add,
-            color: Colors.white,
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+            color: kshadeColor1,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                blurRadius: 2 * SizeConfig.heightMultiplier,
+                offset: Offset(0, 10), // changes position of shadow
+              ),
+            ],
           ),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
-          },
-        ),
+          child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0)),
+              child:InkWell(
+                child:IconButton(
+                  iconSize: 4 * SizeConfig.heightMultiplier,
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => Home()));
+                  },
+                ),))
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomBar(),
@@ -356,6 +361,14 @@ class _SettingsState extends State<Settings> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+
+
+                          ],
+                        ),
                         Text(
                           'Settings',
                           style: TextStyle(
@@ -429,16 +442,33 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 textAlign: TextAlign.left,
                               ),
-                              CustomSwitch(
+                              FlutterSwitch(
                                 activeColor: kshadeColor1,
+                                width: 70.0,
+                                height: 35.0,
+                                valueFontSize: 18.0,
+                                toggleSize: 20.0,
                                 value: followUpEnabled,
-                                onChanged: (value) {
-                                  print("VALUE : $value");
+                                borderRadius: 30.0,
+                                padding: 8.0,
+                                showOnOff: true,
+                                onToggle: (val) {
                                   setState(() {
-                                    followUpEnabled = value;
+                                    followUpEnabled = val;
                                   });
                                 },
                               ),
+//                              CustomSwitch(
+//                                activeColor: kshadeColor1,
+//                                value: followUpEnabled,
+//                                onChanged: (value) {
+//                                  print("VALUE : $value");
+//                                  setState(() {
+//                                    followUpEnabled = value;
+//                                  });
+//                                },
+//                              ),
+
                             ],
                           ),
                         ),

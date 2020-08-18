@@ -1,35 +1,60 @@
-library custom_switch;
+library flutter_switch;
 
 import 'package:flutter/material.dart';
-import 'package:radreviews/size_config.dart';
 
-class CustomSwitch extends StatefulWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final Color activeColor;
+class FlutterSwitch extends StatefulWidget {
+  final bool value, showOnOff;
+  final ValueChanged<bool> onToggle;
+  final Color activeColor,
+      inactiveColor,
+      activeTextColor,
+      inactiveTextColor,
+      toggleColor;
+  final double width, height, toggleSize, valueFontSize, borderRadius, padding;
+  final String activeText, inactiveText;
 
-  const CustomSwitch({Key key, this.value, this.onChanged, this.activeColor})
+  const FlutterSwitch(
+      {Key key,
+        this.value,
+        this.onToggle,
+        this.activeColor = Colors.blue,
+        this.inactiveColor = Colors.grey,
+        this.activeTextColor = Colors.white70,
+        this.inactiveTextColor = Colors.white70,
+        this.toggleColor = Colors.white,
+        this.width = 70.0,
+        this.height = 35.0,
+        this.toggleSize = 25.0,
+        this.valueFontSize = 16.0,
+        this.borderRadius = 30.0,
+        this.padding = 4.0,
+        this.showOnOff = false,
+        this.activeText,
+        this.inactiveText})
       : super(key: key);
 
   @override
-  _CustomSwitchState createState() => _CustomSwitchState();
+  _FlutterSwitchState createState() => _FlutterSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch>
+class _FlutterSwitchState extends State<FlutterSwitch>
     with SingleTickerProviderStateMixin {
-  Animation _circleAnimation;
+  Animation _toggleAnimation;
   AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
-    _circleAnimation = AlignmentTween(
-        begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-        end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
-        .animate(CurvedAnimation(
-        parent: _animationController, curve: Curves.linear));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 60),
+    );
+    _toggleAnimation = AlignmentTween(
+      begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
+      end: widget.value ? Alignment.centerLeft : Alignment.centerRight,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
+    );
   }
 
   @override
@@ -45,65 +70,98 @@ class _CustomSwitchState extends State<CustomSwitch>
               _animationController.forward();
             }
             widget.value == false
-                ? widget.onChanged(true)
-                : widget.onChanged(false);
+                ? widget.onToggle(true)
+                : widget.onToggle(false);
           },
           child: Container(
-            width: 17.85 * SizeConfig.widthMultiplier,
-            height: 3.94 * SizeConfig.heightMultiplier,
+            width: widget.width,
+            height: widget.height,
+            padding: EdgeInsets.all(widget.padding),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: _circleAnimation.value == Alignment.centerLeft
-                    ? Colors.grey
-                    : widget.activeColor),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 0.0, bottom: 0.0, right: 0.0, left: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _circleAnimation.value == Alignment.centerRight
-                      ? Padding(
-                    padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                    child: Text(
-                      'On',
-                      style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 16.0),
-                    ),
-                  )
-                      : Container(),
-                  Align(
-                    alignment: _circleAnimation.value,
-                    child: Container(
-                      width: 7.14 *SizeConfig.widthMultiplier,
-                      height: 3.68 *SizeConfig.heightMultiplier,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xff1b0e97), width: 3.0),
-                      ),
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+//              color: _toggleAnimation.value == Alignment.centerLeft
+//                  ? widget.inactiveColor
+//                  : widget.activeColor,
+              gradient: _toggleAnimation.value == Alignment.centerLeft
+              ?LinearGradient(
+                end: Alignment(1.15, -0.25),
+                begin: Alignment(-1.08, -0.32),
+                colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
+                stops: [0.0, 1.0],
+              )
+              :LinearGradient(
+                begin: Alignment(1.15, -0.25),
+                end: Alignment(-1.08, -0.32),
+                colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
+                stops: [0.0, 1.0],
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _toggleAnimation.value == Alignment.centerRight
+                    ? Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    child: _activeText,
+                  ),
+                )
+                    : Container(),
+                Align(
+                  alignment: _toggleAnimation.value,
+                  child: Container(
+                    width: widget.toggleSize,
+                    height: widget.toggleSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.toggleColor,
                     ),
                   ),
-                  _circleAnimation.value == Alignment.centerLeft
-                      ? Padding(
-                    padding: const EdgeInsets.only(left: 4.0, right: 5.0),
-                    child: Text(
-                      'Off',
-                      style: TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 16.0),
-                    ),
-                  )
-                      : Container(),
-                ],
-              ),
+                ),
+                _toggleAnimation.value == Alignment.centerLeft
+                    ? Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    alignment: Alignment.centerRight,
+                    child: _inactiveText,
+                  ),
+                )
+                    : Container(),
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  Widget get _activeText {
+    if (widget.showOnOff) {
+      return Text(
+        (widget?.activeText != null) ? widget.activeText : "On",
+        style: TextStyle(
+          color: widget.activeTextColor,
+          fontWeight: FontWeight.w900,
+          fontSize: widget.valueFontSize,
+        ),
+      );
+    }
+
+    return Text("");
+  }
+
+  Widget get _inactiveText {
+    if (widget.showOnOff) {
+      return Text(
+        (widget?.inactiveText != null) ? widget.inactiveText : "Off",
+        style: TextStyle(
+          color: widget.inactiveTextColor,
+          fontWeight: FontWeight.w900,
+          fontSize: widget.valueFontSize,
+        ),
+      );
+    }
+
+    return Text("");
   }
 }

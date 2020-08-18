@@ -319,6 +319,10 @@ class _XDSignInState extends State<XDSignIn> {
                         ),
                         TextSpan(
                           text: ' Sign Up',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 2.23 * SizeConfig.heightMultiplier,
+                            color: Colors.blue,)
                         ),
                       ],
                     ),

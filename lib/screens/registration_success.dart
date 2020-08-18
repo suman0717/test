@@ -1,5 +1,3 @@
-import 'package:radreviews/alert.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -128,7 +126,7 @@ class _SuccessState extends State<Success> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Account Panding Activation',
+                        'Account Pending Activation',
                         style: TextStyle(
                           fontFamily: 'Manrope',
                           fontSize: 18,

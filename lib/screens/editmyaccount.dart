@@ -11,7 +11,7 @@ import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsand%20conditins.dart';
+import 'package:radreviews/screens/termsandconditins.dart';
 import 'dart:convert';
 import 'package:radreviews/size_config.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -269,31 +269,34 @@ var _editFormKey = GlobalKey<FormState>();
           ],
         ),
         floatingActionButton: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-            color: kshadeColor1,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
-              ),
-            ],
-          ),
-          child: IconButton(
-            iconSize: 4 * SizeConfig.heightMultiplier,
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+              color: kshadeColor1,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1 * SizeConfig.heightMultiplier,
+                  blurRadius: 2 * SizeConfig.heightMultiplier,
+                  offset: Offset(0, 10), // changes position of shadow
+                ),
+              ],
             ),
-            onPressed: () {
+            child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+                child:InkWell(
+                  child:IconButton(
+                    iconSize: 4 * SizeConfig.heightMultiplier,
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Home()));
-            },
-          ),
+                    },
+                  ),))
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomBar(),

@@ -11,7 +11,7 @@ import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsand%20conditins.dart';
+import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
@@ -341,31 +341,34 @@ class _NegFeedbackState extends State<NegFeedback> {
         ],
       ),
       floatingActionButton: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-          color: kshadeColor1,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 1 * SizeConfig.heightMultiplier,
-              blurRadius: 2 * SizeConfig.heightMultiplier,
-              offset: Offset(0, 10), // changes position of shadow
-            ),
-          ],
-        ),
-        child: IconButton(
-          iconSize: 4 * SizeConfig.heightMultiplier,
-          icon: Icon(
-            Icons.add,
-            color: Colors.white,
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+            color: kshadeColor1,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                blurRadius: 2 * SizeConfig.heightMultiplier,
+                offset: Offset(0, 10), // changes position of shadow
+              ),
+            ],
           ),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
-          },
-        ),
+          child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0)),
+              child:InkWell(
+                child:IconButton(
+                  iconSize: 4 * SizeConfig.heightMultiplier,
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => Home()));
+                  },
+                ),))
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomBar(),
@@ -682,7 +685,7 @@ class _NegFeedbackListTileState extends State<NegFeedbackListTile> {
                       print('object');
                       _waiting=true;
                     });
-                    http.Response _respomse = await http.get('https://radreviews.online/app/REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
+                    await http.get('https://radreviews.online/app/REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
                     setState(() {
                       _waiting=false;
                     });
