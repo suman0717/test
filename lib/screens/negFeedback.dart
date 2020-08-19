@@ -21,7 +21,7 @@ class NegFeedback extends StatefulWidget {
   @override
   _NegFeedbackState createState() => _NegFeedbackState();
 }
-bool _waiting = false;
+bool waiting = false;
 bool isticked=false;
 String filterAction='All';
 String filterName='All';
@@ -35,14 +35,14 @@ class _NegFeedbackState extends State<NegFeedback> {
 
   void initState() {
     setState(() {
-      _waiting=true;
+      waiting=true;
     });
     getNegFeedback().whenComplete(() {
-      setState(() {_waiting=false;});
+      setState(() {waiting=false;});
       print("success");
 
     }).catchError((error, stackTrace) {
-      setState(() {_waiting=false;});
+      setState(() {waiting=false;});
       print("outer: $error");
     });
 
@@ -52,7 +52,7 @@ class _NegFeedbackState extends State<NegFeedback> {
   Future<List<Widget>> getNegFeedback() async {
     List jsonRes;
     setState(() {
-      _waiting=true;
+      waiting=true;
     });
     var data = await http.get(
         kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=All&Name=All');
@@ -109,7 +109,7 @@ class _NegFeedbackState extends State<NegFeedback> {
     filteredCustomListTileNegFeedback=[];
     List jsonRes;
     setState(() {
-      _waiting=true;
+      waiting=true;
     });
     print('Filtered');
     print(kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=$filterAction&Name=$filterName');
@@ -159,7 +159,7 @@ class _NegFeedbackState extends State<NegFeedback> {
     }
 
     setState(() {
-      _waiting=false;
+      waiting=false;
     });
     return customListTileNegFeedback;
 
@@ -179,370 +179,370 @@ class _NegFeedbackState extends State<NegFeedback> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          PopupMenuButton(
-            offset: Offset(0, 200),
-            icon: Icon(Icons.more_horiz),
-            onSelected: (value) {
-              if(value==1){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
-              }
-              else if(value==2){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
-              }
-              else if(value==3){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
-              }
-              else if(value==4){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SMSSent(),
-                  ),
-                );
-              }
-              else if(value==5){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NegFeedback(),
-                  ),
-                );
-              }
-              else if(value==6){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TandC(kURLTerms),
-                  ),
-                );
-              }
-              else if(value==7){
-                Logout();
-              };
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 1,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'My Account',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 2,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback Stats',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 3,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback SMS Sent',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 4,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Feedback Negative',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 5,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Terms & Conditions',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 6,
-              ),
-              PopupMenuItem(height: 1,
-                child: PopupMenuDivider(height: 1,
-                ),),
-              PopupMenuItem(
-                child: Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 11,
-                    color: const Color(0xff363636),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                value: 7,
-              ),
-            ],
-          ),
-        ],
-      ),
-      floatingActionButton: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
-            color: kshadeColor1,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
-              child:InkWell(
-                child:IconButton(
-                  iconSize: 4 * SizeConfig.heightMultiplier,
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => Home()));
-                  },
-                ),))
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomBar(),
-      body: ModalProgressHUD(
-        inAsyncCall: _waiting,
-        color: Color(0xff3ba838),
-        opacity: 0.1,
-        child: Column(
-          children: [
-            Container(
-              height: 12.25 * SizeConfig.heightMultiplier,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(1.15, -0.25),
-                  end: Alignment(-1.08, -0.32),
-                  colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
-                  stops: [0.0, 1.0],
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'FEEDBACK SMS SENT',
+    return ModalProgressHUD(          inAsyncCall: waiting,
+      color: Color(0xff3ba838),
+      opacity: 0.1,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            PopupMenuButton(
+              offset: Offset(0, 200),
+              icon: Icon(Icons.more_horiz),
+              onSelected: (value) {
+                if(value==1){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
+                }
+                else if(value==2){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
+                }
+                else if(value==3){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
+                }
+                else if(value==4){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SMSSent(),
+                    ),
+                  );
+                }
+                else if(value==5){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NegFeedback(),
+                    ),
+                  );
+                }
+                else if(value==6){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TandC(kURLTerms),
+                    ),
+                  );
+                }
+                else if(value==7){
+                  Logout();
+                };
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text(
+                    'Settings',
                     style: TextStyle(
                       fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-                      color: const Color(0xffffffff),
+                      fontSize: 11,
+                      color: const Color(0xff363636),
                       fontWeight: FontWeight.w500,
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                   ),
-                  SizedBox(
-                    height: 3.3 * SizeConfig.heightMultiplier,
-                  ),
-                ],
-              ),
-            ),
-            Container(padding: EdgeInsets.symmetric(horizontal: 10.0),
-              height: 11.0 * SizeConfig.heightMultiplier,
-              child: Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Name',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 1.9 * SizeConfig.heightMultiplier,
-
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                4 * SizeConfig.heightMultiplier),
-                            border: Border.all(
-                                color: Color(0xffe8e8e8), width: 1.0),
-                          ),
-                          child: Center(
-                            child: DropdownButton<String>(
-                              items: filterNameList.map((e) {
-                                return DropdownMenuItem<String>(child: Text(e),value: e,);
-                              }).toList(),
-                              onChanged: (e){
-                                setState(() {
-                                  filterName=e;
-                                  getNegFeedbackFiltered();
-                                });
-                              },
-                              value: filterName,
-                              underline: Container(
-                                height: 1.0,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0)),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 2.5 * SizeConfig.heightMultiplier,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 2.5 * SizeConfig.widthMultiplier,),
-                  Expanded(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Status',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 1.9 * SizeConfig.heightMultiplier,
-
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                4 * SizeConfig.heightMultiplier),
-                            border: Border.all(
-                                color: Color(0xffe8e8e8), width: 1.0),
-                          ),
-                          child: Center(
-                            child: DropdownButton<String>(
-                              items: filterActionList.map((e) {
-                                return DropdownMenuItem<String>(child: Text(e),value: e,);
-                              }).toList(),
-                              onChanged: (e){
-                                setState(() {
-                                  filterAction=e;
-                                  getNegFeedbackFiltered();
-                                });
-                              },
-                              value: filterAction,
-                              underline: Container(
-                                height: 1.0,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0)),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 2.5 * SizeConfig.heightMultiplier,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding:
-                EdgeInsets.only(top: 2.63 * SizeConfig.heightMultiplier),
-                child: SingleChildScrollView(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
-
-                    children: filteredCustomListTileNegFeedback,
-                  ),
+                  value: 1,
                 ),
-              ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'My Account',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 2,
+                ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback Stats',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 3,
+                ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback SMS Sent',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 4,
+                ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'Feedback Negative',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 5,
+                ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'Terms & Conditions',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 6,
+                ),
+                PopupMenuItem(height: 1,
+                  child: PopupMenuDivider(height: 1,
+                  ),),
+                PopupMenuItem(
+                  child: Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11,
+                      color: const Color(0xff363636),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  value: 7,
+                ),
+              ],
             ),
           ],
         ),
+        floatingActionButton: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+              color: kshadeColor1,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1 * SizeConfig.heightMultiplier,
+                  blurRadius: 2 * SizeConfig.heightMultiplier,
+                  offset: Offset(0, 10), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Material(color: kshadeColor1,shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
+                child:InkWell(
+                  child:IconButton(
+                    iconSize: 4 * SizeConfig.heightMultiplier,
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => Home()));
+                    },
+                  ),))
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomBar(),
+        body: Column(
+            children: [
+              Container(
+                height: 12.25 * SizeConfig.heightMultiplier,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment(1.15, -0.25),
+                    end: Alignment(-1.08, -0.32),
+                    colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
+                    stops: [0.0, 1.0],
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'NEGATIVE FEEDBACK',
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 1.9 * SizeConfig.heightMultiplier,
+                        color: const Color(0xffffffff),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 3.3 * SizeConfig.heightMultiplier,
+                    ),
+                  ],
+                ),
+              ),
+              Container(padding: EdgeInsets.symmetric(horizontal: 10.0),
+                height: 11.0 * SizeConfig.heightMultiplier,
+                child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Name',
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 1.9 * SizeConfig.heightMultiplier,
+
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+
+                            height: 5.7 * SizeConfig.heightMultiplier,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  4 * SizeConfig.heightMultiplier),
+                              border: Border.all(
+                                  color: Color(0xffe8e8e8), width: 1.0),
+                            ),
+                            child: Center(
+                              child: DropdownButton<String>(
+                                items: filterNameList.map((e) {
+                                  return DropdownMenuItem<String>(child: Text(e),value: e,);
+                                }).toList(),
+                                onChanged: (e){
+                                  setState(() {
+                                    filterName=e;
+                                    getNegFeedbackFiltered();
+                                  });
+                                },
+                                value: filterName,
+                                underline: Container(
+                                  height: 1.0,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0)),
+                                  ),
+                                ),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 2.5 * SizeConfig.heightMultiplier,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 2.5 * SizeConfig.widthMultiplier,),
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Status',
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 1.9 * SizeConfig.heightMultiplier,
+
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+
+                            height: 5.7 * SizeConfig.heightMultiplier,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  4 * SizeConfig.heightMultiplier),
+                              border: Border.all(
+                                  color: Color(0xffe8e8e8), width: 1.0),
+                            ),
+                            child: Center(
+                              child: DropdownButton<String>(
+                                items: filterActionList.map((e) {
+                                  return DropdownMenuItem<String>(child: Text(e),value: e,);
+                                }).toList(),
+                                onChanged: (e){
+                                  setState(() {
+                                    filterAction=e;
+                                    getNegFeedbackFiltered();
+                                  });
+                                },
+                                value: filterAction,
+                                underline: Container(
+                                  height: 1.0,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0)),
+                                  ),
+                                ),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 2.5 * SizeConfig.heightMultiplier,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding:
+                  EdgeInsets.only(top: 2.63 * SizeConfig.heightMultiplier),
+                  child: SingleChildScrollView(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+
+                      children: filteredCustomListTileNegFeedback,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
       ),
     );
   }
@@ -619,10 +619,10 @@ class _NegFeedbackListTileState extends State<NegFeedbackListTile> {
                     ),
                   ),
                   TextSpan(
-                    text: 'ID: ${widget.id}\n10/11/2019  17:45\n',
+                    text: 'ID: ${widget.id}\n${widget.SMSSentDateTime}\n',
                   ),
                   TextSpan(
-                    text: '${widget.email}\n841-266-0797',
+                    text: '${widget.email}\n${widget.mobile}',
                     style: TextStyle(
                       color: const Color(0xff971a9f),
                     ),
@@ -683,11 +683,11 @@ class _NegFeedbackListTileState extends State<NegFeedbackListTile> {
                   onPressed: () async {
                     setState(() {
                       print('object');
-                      _waiting=true;
+                      waiting=true;
                     });
-                    await http.get('https://radreviews.online/app/REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
+                    await http.get(kURLBase+ 'REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
                     setState(() {
-                      _waiting=false;
+                      waiting=false;
                     });
                     Flushbar(
                       titleText: Text(
@@ -791,16 +791,16 @@ class _NegFeedbackCheckboxState extends State<NegFeedbackCheckbox> {
 
   void MakeActionedNotActioned() async{
     setState(() {
-      _waiting=true;
+      waiting=true;
     });
     print(widget.isActioned);
     print(widget.id);
-    print('https://radreviews.online/app/REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
-    http.Response _response = await http.get('https://radreviews.online/app/REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
+    print(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
+    http.Response _response = await http.get(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
     var _data = _response.body;
     print(_data);
     setState(() {
-      _waiting=false;
+      waiting=false;
     });
   }
 }

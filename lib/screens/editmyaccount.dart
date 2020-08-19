@@ -349,7 +349,7 @@ var _editFormKey = GlobalKey<FormState>();
                             'Basic Information',
                             style: TextStyle(
                               fontFamily: 'Manrope',
-                              fontSize: 18,
+                              fontSize: 2.36 * SizeConfig.heightMultiplier,
                               color: const Color(0xff363636),
                               fontWeight: FontWeight.w500,
                               height: 0.2 * SizeConfig.heightMultiplier,
@@ -387,13 +387,13 @@ var _editFormKey = GlobalKey<FormState>();
                                   hintText: '',
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 1.5 * SizeConfig.heightMultiplier,
-                                      horizontal: 20.0),
+                                      horizontal: 5.10 * SizeConfig.widthMultiplier),
                                 )),
                             width: 68.2 * SizeConfig.widthMultiplier,
 //                            height: 5.65 * SizeConfig.heightMultiplier,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                            padding: EdgeInsets.only(bottom: 1.05 * SizeConfig.heightMultiplier, top: 2.63 * SizeConfig.heightMultiplier),
                             child: Text(
                               'Surname',
                               style: TextStyle(
@@ -422,13 +422,13 @@ var _editFormKey = GlobalKey<FormState>();
                                   hintText: '',
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 1.5 * SizeConfig.heightMultiplier,
-                                      horizontal: 20.0),
+                                      horizontal: 5.10 * SizeConfig.widthMultiplier),
                                 )),
                             width: 68.2 * SizeConfig.widthMultiplier,
 //                            height: 5.65 * SizeConfig.heightMultiplier,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                            padding: EdgeInsets.only(bottom: 1.05 * SizeConfig.heightMultiplier, top: 2.63 * SizeConfig.heightMultiplier),
                             child: Text(
                               'Mobile Number',
                               style: TextStyle(
@@ -481,7 +481,7 @@ var _editFormKey = GlobalKey<FormState>();
                                   hintText: '',
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 1.5 * SizeConfig.heightMultiplier,
-                                      horizontal: 20.0),
+                                      horizontal: 5.10 * SizeConfig.widthMultiplier),
                                 )),
                             width: 68.2 * SizeConfig.widthMultiplier,
 //                            height: 5.65 * SizeConfig.heightMultiplier,
@@ -496,7 +496,7 @@ var _editFormKey = GlobalKey<FormState>();
                               'Account Information',
                               style: TextStyle(
                                 fontFamily: 'Manrope',
-                                fontSize: 18,
+                                fontSize: 2.36 * SizeConfig.heightMultiplier,
                                 color: const Color(0xff363636),
                                 fontWeight: FontWeight.w500,
                                 height: 1.5,
@@ -505,7 +505,7 @@ var _editFormKey = GlobalKey<FormState>();
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                            padding: EdgeInsets.only(bottom: 1.05 * SizeConfig.heightMultiplier, top: 2.63 * SizeConfig.heightMultiplier),
                             child: Text(
                               'Email Address',
                               style: TextStyle(
@@ -538,13 +538,13 @@ var _editFormKey = GlobalKey<FormState>();
                                   hintText: '',
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 1.5 * SizeConfig.heightMultiplier,
-                                      horizontal: 20.0),
+                                      horizontal: 5.10 * SizeConfig.widthMultiplier),
                                 )),
                             width: 68.2 * SizeConfig.widthMultiplier,
 //                            height: 5.65 * SizeConfig.heightMultiplier,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                            padding: EdgeInsets.only(bottom: 1.05 * SizeConfig.heightMultiplier, top: 2.63 * SizeConfig.heightMultiplier),
                             child: Text(
                               'Password',
                               style: TextStyle(
@@ -612,7 +612,7 @@ var _editFormKey = GlobalKey<FormState>();
 //                            height: 5.65 * SizeConfig.heightMultiplier,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: 8.0, top: 20),
+                            padding: EdgeInsets.only(bottom: 1.05 * SizeConfig.heightMultiplier, top: 2.63 * SizeConfig.heightMultiplier),
                             child: Text(
                               'Confirm Password',
                               style: TextStyle(

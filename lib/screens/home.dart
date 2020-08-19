@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           );
-        });
+        },);
   }
 
   bool validateMobile(String number) {
@@ -459,7 +459,7 @@ class _HomeState extends State<Home> {
                                   _unMaskedMobile, selectedlocation);
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
+                                borderRadius: BorderRadius.circular(1.31 * SizeConfig.heightMultiplier)),
                             child: Ink(
                                 decoration: BoxDecoration(
                                     color: kshadeColor1,
@@ -476,7 +476,7 @@ class _HomeState extends State<Home> {
                                     'Request',
                                     style: TextStyle(
                                       fontFamily: 'Manrope',
-                                      fontSize: 15,
+                                      fontSize: 1.97 * SizeConfig.heightMultiplier,
                                       color: const Color(0xffffffff),
                                       fontWeight: FontWeight.w600,
                                     ),

@@ -314,7 +314,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       'Total SMS Sent',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff707070),
                       ),
                       textAlign: TextAlign.left,
@@ -323,7 +323,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       totalSmsSent,
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff971a9f),
                         fontWeight: FontWeight.w600,
                       ),
@@ -339,7 +339,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       'Total SMS Opens',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff707070),
                       ),
                       textAlign: TextAlign.left,
@@ -348,7 +348,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       totalSmsOpened,
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff971a9f),
                         fontWeight: FontWeight.w600,
                       ),
@@ -364,7 +364,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       'Total Negative Submitted',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff707070),
                       ),
                       textAlign: TextAlign.left,
@@ -373,7 +373,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       totalNegSubmitted,
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff971a9f),
                         fontWeight: FontWeight.w600,
                       ),
@@ -389,7 +389,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       'Total Positive Opened',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff707070),
                       ),
                       textAlign: TextAlign.left,
@@ -398,7 +398,7 @@ class _FeedbackStatsState extends State<FeedbackStats> {
                       totalPosOpended,
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 15,
+                        fontSize: 1.97 * SizeConfig.heightMultiplier,
                         color: const Color(0xff971a9f),
                         fontWeight: FontWeight.w600,
                       ),
