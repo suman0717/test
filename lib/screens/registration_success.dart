@@ -28,8 +28,7 @@ class _SuccessState extends State<Success> {
   @override
   Widget build(BuildContext context) {
     return
-      SafeArea(
-      child: Scaffold(
+      Scaffold(
         appBar: AppBar(
           leading: Container(),
           elevation: 0.0,
@@ -194,7 +193,6 @@ class _SuccessState extends State<Success> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

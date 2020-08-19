@@ -80,17 +80,6 @@ class _XDSignInState extends State<XDSignIn> {
                     ),
                   ),
                 ),
-//                Visibility(
-//                    visible: _recoveryMessage==''?false:true,
-//                    child: Padding(
-//                      padding: EdgeInsets.only(top: 8.0),
-//                      child: Text(
-//                        _recoveryMessage,
-//                        style: TextStyle(
-//                            color: Colors.red,
-//                            fontSize: 1.5 * SizeConfig.heightMultiplier),
-//                      ),
-//                    )),
                 SizedBox(
                   height: 30.0,
                 ),
@@ -382,7 +371,6 @@ class _XDSignInState extends State<XDSignIn> {
         child: SingleChildScrollView(
           child: Center(
             child: Column(
-//              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 10.0 * SizeConfig.heightMultiplier,
@@ -481,7 +469,7 @@ class _XDSignInState extends State<XDSignIn> {
                           _waiting = false;
                         });
 
-                        if (username == serverUsername &&
+                        if (username.toLowerCase() == serverUsername.toLowerCase() &&
                             password == serverPassword) {
                           if (accountStatus == 'Active') {
                             Navigator.push(

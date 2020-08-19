@@ -18,8 +18,7 @@ class _ResetSuccessState extends State<ResetSuccess> {
   @override
   Widget build(BuildContext context) {
     return
-      SafeArea(
-      child: Scaffold(
+      Scaffold(
         backgroundColor: const Color(0xffffffff),
         body: Stack(
           alignment: Alignment.center,
@@ -139,7 +138,6 @@ class _ResetSuccessState extends State<ResetSuccess> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

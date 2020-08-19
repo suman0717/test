@@ -18,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
 
 String selectedlocation;
 var _formkey = GlobalKey<FormState>();
@@ -192,314 +193,416 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Container(),
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          actions: [
-            PopupMenuButton(
-              offset: Offset(0, 200),
-              icon: Icon(Icons.more_horiz),
-              onSelected: (value) {
-                if (value == 1) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Settings()));
-                } else if (value == 2) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyAccount()));
-                } else if (value == 3) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FeedbackStats()));
-                } else if (value == 4) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SMSSent(),
-                    ),
-                  );
-                } else if (value == 5) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NegFeedback(),
-                    ),
-                  );
-                } else if (value == 6) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TandC(kURLTerms),
-                    ),
-                  );
-                } else if (value == 7) {
-                  Logout();
-                }
-                ;
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+    return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          PopupMenuButton(
+            offset: Offset(0, 200),
+            icon: Icon(Icons.more_horiz),
+            onSelected: (value) {
+              if (value == 1) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Settings()));
+              } else if (value == 2) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyAccount()));
+              } else if (value == 3) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FeedbackStats()));
+              } else if (value == 4) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SMSSent(),
                   ),
-                  value: 1,
+                );
+              } else if (value == 5) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NegFeedback(),
+                  ),
+                );
+              } else if (value == 6) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TandC(kURLTerms),
+                  ),
+                );
+              } else if (value == 7) {
+                Logout();
+              }
+              ;
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text(
+                  'Settings',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 1,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'My Account',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'My Account',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 2,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 2,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback Stats',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback Stats',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 3,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 3,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback SMS Sent',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback SMS Sent',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 4,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 4,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'Feedback Negative',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Feedback Negative',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 5,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 5,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'Terms & Conditions',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Terms & Conditions',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 6,
+                  textAlign: TextAlign.left,
                 ),
-                PopupMenuItem(
+                value: 6,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
                   height: 1,
-                  child: PopupMenuDivider(
-                    height: 1,
-                  ),
                 ),
-                PopupMenuItem(
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
-                      color: const Color(0xff363636),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
                   ),
-                  value: 7,
+                  textAlign: TextAlign.left,
                 ),
-              ],
-            ),
-          ],
-        ),
-        extendBodyBehindAppBar: true,
-        bottomNavigationBar: BottomBar(),
-        floatingActionButton: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+                value: 7,
+              ),
+            ],
+          ),
+        ],
+      ),
+      extendBodyBehindAppBar: true,
+      bottomNavigationBar: BottomBar(),
+      floatingActionButton: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Colors.white, width: 1 * SizeConfig.heightMultiplier),
+            color: kshadeColor1,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                blurRadius: 2 * SizeConfig.heightMultiplier,
+                offset: Offset(0, 10), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Material(
               color: kshadeColor1,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 1 * SizeConfig.heightMultiplier,
-                  blurRadius: 2 * SizeConfig.heightMultiplier,
-                  offset: Offset(0, 10), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Material(
-                color: kshadeColor1,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        6.65 * SizeConfig.widthMultiplier)),
-                child: InkWell(
-                  child: IconButton(
-                    iconSize: 4 * SizeConfig.heightMultiplier,
-                    icon: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      6.65 * SizeConfig.widthMultiplier)),
+              child: InkWell(
+                child: IconButton(
+                  iconSize: 4 * SizeConfig.heightMultiplier,
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
 //              Navigator.push(
 //                  context, MaterialPageRoute(builder: (context) => Home()));
-                    },
+                  },
+                ),
+              ))),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      backgroundColor: const Color(0xffffffff),
+      body: ModalProgressHUD(
+        inAsyncCall: _isWaiting,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(-0.12, 1.05),
+                        end: Alignment(-0.14, -0.78),
+                        colors: [kshadeColor2, kshadeColor1],
+                        stops: [0.0, 1.0],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          height: 4 * SizeConfig.heightMultiplier,
+                        ),
+                        Image.asset(
+                          'images/radwhite.png',
+                          width: 26.5 * SizeConfig.imageSizeMultipier,
+                          height: 20.4 * SizeConfig.heightMultiplier,
+                        ),
+                      ],
+                    ),
                   ),
-                ))),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        backgroundColor: const Color(0xffffffff),
-        body: ModalProgressHUD(
-          inAsyncCall: _isWaiting,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment(-0.12, 1.05),
-                          end: Alignment(-0.14, -0.78),
-                          colors: [kshadeColor2, kshadeColor1],
-                          stops: [0.0, 1.0],
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xffF5F8FB),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          height: 5.7 * SizeConfig.heightMultiplier,
+                          child: MaterialButton(
+                            elevation: 10.0,
+                            onPressed: () {
+                              RequestFeedback(
+                                  _unMaskedMobile, selectedlocation);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Ink(
+                                decoration: BoxDecoration(
+                                    color: kshadeColor1,
+                                    borderRadius: BorderRadius.circular(
+                                        4 * SizeConfig.heightMultiplier)),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth:
+                                          68.2 * SizeConfig.widthMultiplier,
+                                      minHeight:
+                                          5.7 * SizeConfig.heightMultiplier),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Request',
+                                    style: TextStyle(
+                                      fontFamily: 'Manrope',
+                                      fontSize: 15,
+                                      color: const Color(0xffffffff),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 6 * SizeConfig.heightMultiplier,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Visibility(
+              visible: locationListTemp.length > 1,
+              replacement: Container(
+                margin: EdgeInsets.only(top: 60.0),
+                width: 82.5 * SizeConfig.imageSizeMultipier,
+                height: 41.2 * SizeConfig.heightMultiplier,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 20.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Request Feedback',
+                            style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontSize: 2.4 * SizeConfig.heightMultiplier,
+                              color: const Color(0xff363636),
+                              fontWeight: FontWeight.w500,
+                              height: 1.5,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          IconButton(
+                              icon: Icon(
+                                Icons.help_outline,
+                                color: kshadeColor1,
+                                size: 3.3 * SizeConfig.heightMultiplier,
+                              ),
+                              onPressed: () {
+                                showRequestFeedbackInfo();
+                              })
+                        ],
+                      ),
+                      Container(
+                        width: 68.2 * SizeConfig.widthMultiplier,
+                        height: 5.7 * SizeConfig.heightMultiplier,
+                        child: TextField(
+//                            TODO Implement Dynamic ISD Code Selection, Use Quizler app concept
+                          controller: ctrlMobile,
+                          inputFormatters: [
+                            _country == 'Australia'
+                                ? mobileMaskAustralia
+                                : mobileMaskUSA
+                          ],
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.phone,
+                          onChanged: (value) {
+                            _unMaskedMobile = (_country == 'Australia'
+                                    ? mobileMaskAustralia
+                                    : mobileMaskUSA)
+                                .getUnmaskedText();
+                            print(_unMaskedMobile);
+                          },
+                          style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontSize: 2.0 * SizeConfig.heightMultiplier),
+                          decoration: kTextFieldDecorationNoback.copyWith(
+                            hintText: 'Mobile Number. . . ',
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 1.5 * SizeConfig.heightMultiplier,
+                                horizontal: 20.0),
+                          ),
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SizedBox(
-                            height: 4 * SizeConfig.heightMultiplier,
-                          ),
-                          Image.asset(
-                            'images/radwhite.png',
-                            width: 26.5 * SizeConfig.imageSizeMultipier,
-                            height: 20.4 * SizeConfig.heightMultiplier,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xffF5F8FB),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            child: MaterialButton(
-                              elevation: 10.0,
-                              onPressed: () {
-                                RequestFeedback(
-                                    _unMaskedMobile, selectedlocation);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Ink(
-                                  decoration: BoxDecoration(
-                                      color: kshadeColor1,
-                                      borderRadius: BorderRadius.circular(
-                                          4 * SizeConfig.heightMultiplier)),
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                        maxWidth:
-                                            68.2 * SizeConfig.widthMultiplier,
-                                        minHeight:
-                                            5.7 * SizeConfig.heightMultiplier),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Request',
-                                      style: TextStyle(
-                                        fontFamily: 'Manrope',
-                                        fontSize: 15,
-                                        color: const Color(0xffffffff),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )),
+                      Container(
+                        width: 68.2 * SizeConfig.widthMultiplier,
+                        height: 5.7 * SizeConfig.heightMultiplier,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                                activeColor: kshadeColor1,
+                                value: termsAndConsdditions,
+                                onChanged: (bool newvalue) {
+                                  setState(() {
+                                    termsAndConsdditions = newvalue;
+                                  });
+                                  print(newvalue);
+//                        TODO
+                                }),
+                            Flexible(
+                              child: Text(
+                                'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 1.1 * SizeConfig.heightMultiplier,
+                                  color: const Color(0xff363636),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6 * SizeConfig.heightMultiplier,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              Visibility(
-                visible: locationListTemp.length > 1,
-                replacement: Container(
-                  margin: EdgeInsets.only(top: 60.0),
-                  width: 82.5 * SizeConfig.imageSizeMultipier,
-                  height: 41.2 * SizeConfig.heightMultiplier,
+              child: Container(
+                margin: EdgeInsets.only(top: 60.0),
+                width: 82.5 * SizeConfig.imageSizeMultipier,
+                height: 41.2 * SizeConfig.heightMultiplier,
+                child: Form(
+                  key: _formkey,
                   child: Card(
                     color: Colors.white,
                     elevation: 20.0,
@@ -535,7 +638,6 @@ class _HomeState extends State<Home> {
                           width: 68.2 * SizeConfig.widthMultiplier,
                           height: 5.7 * SizeConfig.heightMultiplier,
                           child: TextField(
-//                            TODO Implement Dynamic ISD Code Selection, Use Quizler app concept
                             controller: ctrlMobile,
                             inputFormatters: [
                               _country == 'Australia'
@@ -565,6 +667,63 @@ class _HomeState extends State<Home> {
                         Container(
                           width: 68.2 * SizeConfig.widthMultiplier,
                           height: 5.7 * SizeConfig.heightMultiplier,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                4 * SizeConfig.heightMultiplier),
+                            border: Border.all(
+                                color: Color(0xffe8e8e8), width: 1.0),
+                          ),
+                          child: Center(
+                            child: DropdownButton<String>(onTap: (){
+                              FocusManager.instance.primaryFocus.unfocus();
+                            },
+                              items:
+                                  locationListTemp.map((String dropdownitem) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitem,
+                                  child: Text(
+                                    dropdownitem,
+                                    style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize: 1.84 *
+                                            SizeConfig.heightMultiplier),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (String newselectedcountry) {
+                                setState(() {
+                                  selectedlocation = newselectedcountry;
+                                  print(selectedlocation);
+                                });
+                              },
+                              value: selectedlocation,
+                              hint: Text(
+                                'Location',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Manrope',
+                                    fontSize:
+                                        2.0 * SizeConfig.heightMultiplier),
+                              ),
+                              underline: Container(
+                                height: 1.0,
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1.0)),
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 2.5 * SizeConfig.heightMultiplier,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 68.2 * SizeConfig.widthMultiplier,
+                          height: 5.7 * SizeConfig.heightMultiplier,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -584,7 +743,8 @@ class _HomeState extends State<Home> {
                                   'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
-                                    fontSize: 1.1 * SizeConfig.heightMultiplier,
+                                    fontSize:
+                                        1.1 * SizeConfig.heightMultiplier,
                                     color: const Color(0xff363636),
                                   ),
                                   textAlign: TextAlign.left,
@@ -597,168 +757,9 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 60.0),
-                  width: 82.5 * SizeConfig.imageSizeMultipier,
-                  height: 41.2 * SizeConfig.heightMultiplier,
-                  child: Form(
-                    key: _formkey,
-                    child: Card(
-                      color: Colors.white,
-                      elevation: 20.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Request Feedback',
-                                style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 2.4 * SizeConfig.heightMultiplier,
-                                  color: const Color(0xff363636),
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.5,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.help_outline,
-                                    color: kshadeColor1,
-                                    size: 3.3 * SizeConfig.heightMultiplier,
-                                  ),
-                                  onPressed: () {
-                                    showRequestFeedbackInfo();
-                                  })
-                            ],
-                          ),
-                          Container(
-                            width: 68.2 * SizeConfig.widthMultiplier,
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            child: TextField(
-                              controller: ctrlMobile,
-                              inputFormatters: [
-                                _country == 'Australia'
-                                    ? mobileMaskAustralia
-                                    : mobileMaskUSA
-                              ],
-                              textAlign: TextAlign.center,
-                              keyboardType: TextInputType.phone,
-                              onChanged: (value) {
-                                _unMaskedMobile = (_country == 'Australia'
-                                        ? mobileMaskAustralia
-                                        : mobileMaskUSA)
-                                    .getUnmaskedText();
-                                print(_unMaskedMobile);
-                              },
-                              style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 2.0 * SizeConfig.heightMultiplier),
-                              decoration: kTextFieldDecorationNoback.copyWith(
-                                hintText: 'Mobile Number. . . ',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 1.5 * SizeConfig.heightMultiplier,
-                                    horizontal: 20.0),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 68.2 * SizeConfig.widthMultiplier,
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  4 * SizeConfig.heightMultiplier),
-                              border: Border.all(
-                                  color: Color(0xffe8e8e8), width: 1.0),
-                            ),
-                            child: Center(
-                              child: DropdownButton<String>(
-                                items:
-                                    locationListTemp.map((String dropdownitem) {
-                                  return DropdownMenuItem<String>(
-                                    value: dropdownitem,
-                                    child: Text(
-                                      dropdownitem,
-                                      style: TextStyle(
-                                          fontFamily: 'Manrope',
-                                          fontSize: 1.84 *
-                                              SizeConfig.heightMultiplier),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String newselectedcountry) {
-                                  setState(() {
-                                    selectedlocation = newselectedcountry;
-                                    print(selectedlocation);
-                                  });
-                                },
-                                value: selectedlocation,
-                                hint: Text(
-                                  'Location',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontSize:
-                                          2.0 * SizeConfig.heightMultiplier),
-                                ),
-                                underline: Container(
-                                  height: 1.0,
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0)),
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 2.5 * SizeConfig.heightMultiplier,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 68.2 * SizeConfig.widthMultiplier,
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Checkbox(
-                                    activeColor: kshadeColor1,
-                                    value: termsAndConsdditions,
-                                    onChanged: (bool newvalue) {
-                                      setState(() {
-                                        termsAndConsdditions = newvalue;
-                                      });
-                                      print(newvalue);
-//                        TODO
-                                    }),
-                                Flexible(
-                                  child: Text(
-                                    'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
-                                    style: TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontSize:
-                                          1.1 * SizeConfig.heightMultiplier,
-                                      color: const Color(0xff363636),
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
