@@ -9,8 +9,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/screens/home.dart';
+import 'package:radreviews/screens/homenew.dart';
+import 'package:radreviews/screens/otp_ResetPassword.dart';
 import 'package:radreviews/screens/otp_forgotPassword.dart';
 import 'package:radreviews/screens/registration_success.dart';
+import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +36,7 @@ class _XDSignInState extends State<XDSignIn> {
   String accountStatus = '';
   String forgotEmailAddress;
   int _len;
-
+  bool isButtonEnabled=true;
 
   void ShowForgotPassword() {
     showDialog(
@@ -56,27 +59,24 @@ class _XDSignInState extends State<XDSignIn> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ModalProgressHUD(
-                  inAsyncCall: _waiting_Forgot,
-                  child: Container(
-                    width: 68.2 * SizeConfig.widthMultiplier,
-                    height: 5.65 * SizeConfig.heightMultiplier,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) {
-                        forgotEmailAddress = value;
-                      },
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontSize: 1.9 * SizeConfig.heightMultiplier,
-                      ),
-                      decoration: kTextFieldDecorationNoback.copyWith(
-                        hintText: 'Email Address',
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 1.5 * SizeConfig.heightMultiplier,
-                            horizontal: 20.0),
-                      ),
+                Container(
+                  width: 68.2 * SizeConfig.widthMultiplier,
+                  height: 5.65 * SizeConfig.heightMultiplier,
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      forgotEmailAddress = value;
+                    },
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+                    ),
+                    decoration: kTextFieldDecorationNoback.copyWith(
+                      hintText: 'Email Address',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 1.5 * SizeConfig.heightMultiplier,
+                          horizontal: 20.0),
                     ),
                   ),
                 ),
@@ -86,15 +86,55 @@ class _XDSignInState extends State<XDSignIn> {
                 Container(
                   width: 68.2 * SizeConfig.widthMultiplier,
                   height: 5.65 * SizeConfig.heightMultiplier,
-                  child: RaisedButton(
+                  child: RaisedButton(color: kshadeColor1,
                     onPressed: () async {
+                      FocusManager.instance.primaryFocus.unfocus();
                       int _otp;
                       print('clicked');
-                      setState(() {
-                        _waiting_Forgot = true;
-                      });
-                      print(forgotEmailAddress);
                       if (forgotEmailAddress != null) {
+                        Flushbar(
+                          titleText: Text(
+                            'Checking User. . . ',
+                            style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontSize: 2.0 * SizeConfig.heightMultiplier,
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          messageText: Text(
+                            'Email will be sent once we validate email address',
+                            style: TextStyle(
+                              fontFamily: 'Manrope',
+                              fontSize: 1.3 * SizeConfig.heightMultiplier,
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w300,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                          icon: Icon(
+                            Icons.priority_high,
+                            size: 3.94 * SizeConfig.heightMultiplier,
+                            color: Colors.white,
+                          ),
+                          duration: Duration(seconds: 3),
+                          flushbarPosition: FlushbarPosition.TOP,
+                          borderColor: Colors.transparent,
+                          shouldIconPulse: false,
+                          maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                          boxShadows: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 1 * SizeConfig.heightMultiplier,
+                              blurRadius: 2 * SizeConfig.heightMultiplier,
+                              offset: Offset(0, 10), // changesvalue position of shadow
+                            ),
+                          ],
+                          backgroundColor: kshadeColor1,
+                        ).show(context);
                         Random _random = Random();
                         _otp = _random.nextInt(999999);
                         print(_otp);
@@ -214,31 +254,21 @@ class _XDSignInState extends State<XDSignIn> {
                                 MaterialPageRoute(
                                     builder: (context) => EnterOTP()));}
                         }
-                        setState(() {
-                          _waiting_Forgot = false;
-                        });
                       }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             2.63 * SizeConfig.heightMultiplier)),
                     padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: kshadeColor1,
-                          borderRadius: BorderRadius.circular(
-                              2.9 * SizeConfig.heightMultiplier)),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Send Email',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 2.0 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                    child: Text(
+                      'Send Email',
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 2.0 * SizeConfig.heightMultiplier,
+                        color: const Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -249,6 +279,8 @@ class _XDSignInState extends State<XDSignIn> {
       },
     );
   }
+
+
 
   GetUserLogin(String urlString) async {
     print(urlString);
@@ -457,7 +489,8 @@ class _XDSignInState extends State<XDSignIn> {
                 Container(
                   width: 68.2 * SizeConfig.widthMultiplier,
                   height: 5.65 * SizeConfig.heightMultiplier,
-                  child: RaisedButton(
+                  child:
+                  RaisedButton(color: kshadeColor1,
                     onPressed: () async {
                       setState(() {
                         _waiting = true;
@@ -498,22 +531,15 @@ class _XDSignInState extends State<XDSignIn> {
                         borderRadius: BorderRadius.circular(
                             2.63 * SizeConfig.heightMultiplier)),
                     padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: kshadeColor1,
-                          borderRadius: BorderRadius.circular(
-                              2.9 * SizeConfig.heightMultiplier)),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 2.0 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 2.0 * SizeConfig.heightMultiplier,
+                        color: const Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -523,7 +549,7 @@ class _XDSignInState extends State<XDSignIn> {
                 GestureDetector(
                   onTap: () {
                     print('Forgot Password Tapped');
-//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EnterNewPWD()));
+//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EnterOTP()));
                     ShowForgotPassword();
                   },
                   child: Text(

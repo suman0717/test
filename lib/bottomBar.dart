@@ -2,6 +2,7 @@ import 'package:radreviews/alert.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:flutter/material.dart';
+import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
@@ -98,7 +99,7 @@ class _BottomBarState extends State<BottomBar> {
           () {
         selectedIndex = index;
         if (index == 0) {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
         } else if (index == 1) {
           QuickLaunchLink().hitLink(
               'mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');

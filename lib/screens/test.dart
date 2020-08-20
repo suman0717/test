@@ -1,69 +1,95 @@
-import 'package:flutter/material.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool status1 = false;
-  bool status2 = false;
-  bool status3 = false;
-  bool status4 = false;
-  bool status5 = false;
-  bool status6 = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("FlutterSwitch Demo"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("Default"),
-            SizedBox(height: 10.0),
-
-            SizedBox(height: 20.0),
-            Text("Custom Colors"),
-            SizedBox(height: 10.0),
-
-            SizedBox(height: 20.0),
-            Text("With 'On' and 'Off' text and custom text colors"),
-            SizedBox(height: 10.0),
-
-            SizedBox(height: 20.0),
-            Text("Custom size"),
-            SizedBox(height: 10.0),
-
-            SizedBox(height: 20.0),
-            Text("Custom border radius and padding"),
-            SizedBox(height: 10.0),
-
-            SizedBox(height: 20.0),
-            Text("Custom text"),
-            SizedBox(height: 10.0),
-
-          ],
-        ),
-      ),
-    );
-  }
-}
+//import 'package:flutter/material.dart';
+//
+//import 'Homepage.dart';
+//import 'Setting.dart';
+//import 'Print.dart';
+//
+//void main() => runApp(MyApp());
+//
+//class MyApp extends StatelessWidget {
+//// This widget is the root of your application.
+//  @override
+//  Widget build(BuildContext context) {
+//    return MaterialApp(
+//      title: 'Flutter Demo',
+//      theme: ThemeData(
+//        primarySwatch: Colors.blue,
+//      ),
+//      home: MyHomePage(title: 'Flutter Demo Home Page'),
+//    );
+//  }
+//}
+//
+//class MyHomePage extends StatefulWidget {
+//  MyHomePage({Key key, this.title}) : super(key: key);
+//  final String title;
+//
+//  @override
+//  MyHomePageState createState() => MyHomePageState();
+//}
+//
+//class _MyHomePageState extends State<MyHomePage> {
+//  int _counter = 0;
+//  int _currentIndex=0;
+//  final List<Widget> _children=
+//  [
+//    Homepage(),
+//    Setting(),
+//    Print(),
+//  ];
+//
+//  void ontabbed(int index){
+//    setState(() {
+//      _currentIndex= index;
+//    });
+//  }
+//
+//  void _incrementCounter() {
+//    setState(() {
+//
+//      _currentIndex=0;
+//    });
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text(widget.title),
+//      ),
+//      body: _children[_currentIndex],
+//      bottomNavigationBar: BottomNavigationBar(
+//        onTap: ontabbed,
+//        currentIndex: _currentIndex,
+//        type: BottomNavigationBarType.fixed,
+//        items: [
+//          BottomNavigationBarItem(
+//              icon: Icon(Icons.home),
+//              title: Text('Home'),
+//              backgroundColor: Colors.green),
+//          BottomNavigationBarItem(
+//              icon: Icon(Icons.camera),
+//              title: Text('Camera'),
+//              backgroundColor: Colors.blue
+//          ),
+//          BottomNavigationBarItem(
+//              icon: Icon(Icons.print),
+//              title: Text('Print'),
+//              backgroundColor: Colors.red
+//          ),
+//          BottomNavigationBarItem(
+//              icon: Icon(Icons.settings),
+//              title: Text('Setting'),
+//              backgroundColor: Colors.pink
+//          )
+//        ],
+//      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: _incrementCounter,
+//        tooltip: 'Increment',
+//        child: Icon(Icons.add),
+//      ), // This trailing comma makes auto-formatting nicer for build methods.
+//    );
+//  }
+//}

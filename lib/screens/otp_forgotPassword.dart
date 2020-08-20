@@ -100,7 +100,7 @@ class _EnterOTPState extends State<EnterOTP> {
                   height: 5.3 * SizeConfig.heightMultiplier,
                 ),
                 Text(
-                  'Enter varification code \n sent on your email',
+                  'Enter the verification code \n sent to your email',
                   style: TextStyle(
                     fontFamily: 'Manrope',
                     fontSize: 2.3 * SizeConfig.heightMultiplier,
@@ -150,7 +150,7 @@ class _EnterOTPState extends State<EnterOTP> {
                 Container(
                   width: 68.2 * SizeConfig.widthMultiplier,
                   height: 5.65 * SizeConfig.heightMultiplier,
-                  child: RaisedButton(
+                  child: RaisedButton(color: kshadeColor1,
                     onPressed: () async {
                       if(_message!=''){
                         _message='';
@@ -165,12 +165,15 @@ class _EnterOTPState extends State<EnterOTP> {
                           print(_tempOTP);
                           print(_tempUserID);
                           if(_tempOTP==_enteredOTP){
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => EnterNewPWD(),
                               ),
                             );
+                          }
+                          else{
+                            validationOTPMessage('Please enter correct verification code');
                           }
                         }
                       }
@@ -184,22 +187,15 @@ class _EnterOTPState extends State<EnterOTP> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2.63 * SizeConfig.heightMultiplier)),
                     padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: kshadeColor1,
-                          borderRadius: BorderRadius.circular(2.9 * SizeConfig.heightMultiplier)),
-
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 2.0 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 2.0 * SizeConfig.heightMultiplier,
+                        color: const Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

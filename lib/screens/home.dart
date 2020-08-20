@@ -1,3 +1,4 @@
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:radreviews/alert.dart';
 import 'package:radreviews/bottomBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:radreviews/constants.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:radreviews/linkOpener.dart';
 import 'package:radreviews/screens/SignIn.dart';
+import 'package:radreviews/screens/editmyaccount.dart';
 import 'package:radreviews/screens/feedbackState.dart';
+import 'package:radreviews/screens/homenew.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/settings.dart';
@@ -20,8 +24,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 
-String selectedlocation;
-var _formkey = GlobalKey<FormState>();
+//String selectedlocation;
+//var _formkey = GlobalKey<FormState>();
 
 class Home extends StatefulWidget {
   @override
@@ -29,155 +33,169 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String _unMaskedMobile;
-  bool termsAndConsdditions = true;
-  String _country = 'Australia';
-  var ctrlMobile = TextEditingController();
-  var ctrllocation = TextEditingController();
+//  String _unMaskedMobile;
+//  bool termsAndConsdditions = true;
+//  String _country = 'Australia';
+//  var ctrlMobile = TextEditingController();
+//  var ctrllocation = TextEditingController();
+//
+//  var mobileMaskUSA = MaskTextInputFormatter(
+//      mask: "(###) ###-####", filter: {"#": RegExp(r'[0-9]')});
+//  var mobileMaskAustralia = MaskTextInputFormatter(
+//      mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
+//  bool _isWaiting = false;
+  int selectedIndex = 2;
+  int selectedAppIndex = 2;
 
-  var mobileMaskUSA = MaskTextInputFormatter(
-      mask: "(###) ###-####", filter: {"#": RegExp(r'[0-9]')});
-  var mobileMaskAustralia = MaskTextInputFormatter(
-      mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
-  bool _isWaiting = false;
+  final List<Widget> _children=
+  [
+    Settings(),
+    Settings(),
+    HomeNew(),
+    SMSSent(),
+    MyAccount(),
+    FeedbackStats(),
+    NegFeedback(),
+    TandC(kURLTerms),
+  ];
 
   @override
-  void initState() {
-    getSharedPref().whenComplete(() {
-      setState(() {});
-      print("success");
-    }).catchError((error, stackTrace) {
-      print("outer: $error");
-    });
+//  void initState() {
+//    getSharedPref().whenComplete(() {
+//      setState(() {});
+//      print("success");
+//    }).catchError((error, stackTrace) {
+//      print("outer: $error");
+//    });
+//
+//    super.initState();
+//  }
 
-    super.initState();
-  }
+//  Future<bool> getSharedPref() async {
+//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//    print(locationListTemp);
+//    print('old list');
+//    if (sharedPreferences.getStringList('loc') == null) {
+//      locationListTemp = [''];
+//    } else {
+//      locationListTemp = (sharedPreferences.getStringList('loc'));
+//    }
+//    print('shared list');
+//    print(sharedPreferences.get('loc'));
+//    print('new list');
+//    print(locationListTemp);
+//    return true;
+//  }
 
-  Future<bool> getSharedPref() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(locationListTemp);
-    print('old list');
-    if (sharedPreferences.getStringList('loc') == null) {
-      locationListTemp = [''];
-    } else {
-      locationListTemp = (sharedPreferences.getStringList('loc'));
-    }
-    print('shared list');
-    print(sharedPreferences.get('loc'));
-    print('new list');
-    print(locationListTemp);
-    return true;
-  }
+//  void showAlert() {
+//    showDialog(
+//      context: context,
+//      barrierDismissible: false,
+//      builder: (BuildContext context) {
+//        return CustomAlertDialog();
+//      },
+//    );
+//  }
 
-  void showAlert() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return CustomAlertDialog();
-      },
-    );
-  }
+//  void showRequestFeedbackInfo() {
+//    showDialog(
+//        context: context,
+//        builder: (BuildContext context) {
+//          return AlertDialog(
+//            elevation: 5.0,
+//            title: Text(
+//              'Feedback Instructions',
+//              textAlign: TextAlign.center,
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 3.0 * SizeConfig.heightMultiplier,
+//                fontWeight: FontWeight.w600,
+//              ),
+//            ),
+//            content: Container(
+//              child: Column(
+//                mainAxisSize: MainAxisSize.min,
+//                children: [
+//                  Text(
+//                    'AUS Number Format 0412-343-567',
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                      fontFamily: 'Manrope',
+//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+//                      fontWeight: FontWeight.w600,
+//                    ),
+//                  ),
+//                  SizedBox(
+//                    height: 1 * SizeConfig.heightMultiplier,
+//                  ),
+//                  Text(
+//                    'USA Number Format (555)555-1234',
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                      fontFamily: 'Manrope',
+//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+//                      fontWeight: FontWeight.w600,
+//                    ),
+//                  ),
+//                ],
+//              ),
+//            ),
+//          );
+//        },);
+//  }
 
-  void showRequestFeedbackInfo() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            elevation: 5.0,
-            title: Text(
-              'Feedback Instructions',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 3.0 * SizeConfig.heightMultiplier,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            content: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'AUS Number Format 0412-343-567',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1 * SizeConfig.heightMultiplier,
-                  ),
-                  Text(
-                    'USA Number Format (555)555-1234',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },);
-  }
+//  bool validateMobile(String number) {
+//    print(number);
+//    if (number == null) {
+//      validationOnRequestFeedback('Please provide Mobile Number');
+//      return false;
+//    } else if (number.length != 10) {
+//      validationOnRequestFeedback('Please provide the Correct Number');
+//      return false;
+//    } else if (!(number.startsWith('0'))) {
+//      validationOnRequestFeedback('Number should starts with 0');
+//      return false;
+//    } else
+//      return true;
+//  }
 
-  bool validateMobile(String number) {
-    print(number);
-    if (number == null) {
-      validationOnRequestFeedback('Please provide Mobile Number');
-      return false;
-    } else if (number.length != 10) {
-      validationOnRequestFeedback('Please provide the Correct Number');
-      return false;
-    } else if (!(number.startsWith('0'))) {
-      validationOnRequestFeedback('Number should starts with 0');
-      return false;
-    } else
-      return true;
-  }
-
-  void validationOnRequestFeedback(String errormsg) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            elevation: 5.0,
-            title: Text(
-              'Error:',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 3.0 * SizeConfig.heightMultiplier,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            content: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    errormsg,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1 * SizeConfig.heightMultiplier,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+//  void validationOnRequestFeedback(String errormsg) {
+//    showDialog(
+//        context: context,
+//        builder: (BuildContext context) {
+//          return AlertDialog(
+//            elevation: 5.0,
+//            title: Text(
+//              'Error:',
+//              textAlign: TextAlign.center,
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 3.0 * SizeConfig.heightMultiplier,
+//                fontWeight: FontWeight.w600,
+//              ),
+//            ),
+//            content: Container(
+//              child: Column(
+//                mainAxisSize: MainAxisSize.min,
+//                children: [
+//                  Text(
+//                    errormsg,
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                      fontFamily: 'Manrope',
+//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+//                      fontWeight: FontWeight.w600,
+//                    ),
+//                  ),
+//                  SizedBox(
+//                    height: 1 * SizeConfig.heightMultiplier,
+//                  ),
+//                ],
+//              ),
+//            ),
+//          );
+//        });
+//  }
 
   void Logout() async {
     print(locationListTemp.length);
@@ -189,6 +207,27 @@ class _HomeState extends State<Home> {
     print(sharedPreferences.get('curuser'));
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => XDSignIn()));
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      if(index<5){
+        if(index!=1){
+        selectedIndex = index;
+        selectedAppIndex=index;
+        isEditable=false;}
+        else{
+          QuickLaunchLink().hitLink(
+              'mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');
+        }
+      }
+      else{
+        selectedAppIndex=index;
+        isEditable=false;
+      }
+        print(selectedIndex);
+      },
+    );
   }
 
   @override
@@ -204,35 +243,21 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.more_horiz),
             onSelected: (value) {
               if (value == 1) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Settings()));
+                _onItemTapped(0);
               } else if (value == 2) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyAccount()));
+
+                  _onItemTapped(4);
+
               } else if (value == 3) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FeedbackStats()));
+                _onItemTapped(5);
               } else if (value == 4) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SMSSent(),
-                  ),
-                );
+                _onItemTapped(3);
               } else if (value == 5) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NegFeedback(),
-                  ),
-                );
+                _onItemTapped(6);
               } else if (value == 6) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TandC(kURLTerms),
-                  ),
-                );
+                setState(() {
+                  _onItemTapped(7);
+                });
               } else if (value == 7) {
                 Logout();
               }
@@ -371,7 +396,79 @@ class _HomeState extends State<Home> {
         ],
       ),
       extendBodyBehindAppBar: true,
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Feather.settings,
+              size: 2.0 * SizeConfig.heightMultiplier,
+            ),
+            title: Text(
+              'Settings',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.4 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Feather.phone_call,
+              size: 2.36 * SizeConfig.heightMultiplier,
+            ),
+            title: Text(
+              'Support',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.4 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.phone_in_talk,
+              size: 0.0,
+            ),
+            title: Text(
+              '',
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              AntDesign.message1,
+              size: 2.6 * SizeConfig.heightMultiplier,
+            ),
+            title: Text(
+              'SMS Sent',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.4 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline,
+              size: 3.0 * SizeConfig.heightMultiplier,
+            ),
+            title: Text(
+              'Account',
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 1.4 * SizeConfig.heightMultiplier,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: kshadeColor1,
+        onTap: _onItemTapped,
+      ),
       floatingActionButton: Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -400,493 +497,144 @@ class _HomeState extends State<Home> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-//              Navigator.push(
-//                  context, MaterialPageRoute(builder: (context) => Home()));
+                    setState(() {
+
+                      isEditable=false;
+                      selectedIndex=2;
+                      selectedAppIndex=2;
+                    });
                   },
                 ),
               ))),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       backgroundColor: const Color(0xffffffff),
-      body: ModalProgressHUD(
-        inAsyncCall: _isWaiting,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(-0.12, 1.05),
-                        end: Alignment(-0.14, -0.78),
-                        colors: [kshadeColor2, kshadeColor1],
-                        stops: [0.0, 1.0],
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          height: 4 * SizeConfig.heightMultiplier,
-                        ),
-                        Image.asset(
-                          'images/radwhite.png',
-                          width: 26.5 * SizeConfig.imageSizeMultipier,
-                          height: 20.4 * SizeConfig.heightMultiplier,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xffF5F8FB),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          child: MaterialButton(
-                            elevation: 10.0,
-                            onPressed: () {
-                              RequestFeedback(
-                                  _unMaskedMobile, selectedlocation);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1.31 * SizeConfig.heightMultiplier)),
-                            child: Ink(
-                                decoration: BoxDecoration(
-                                    color: kshadeColor1,
-                                    borderRadius: BorderRadius.circular(
-                                        4 * SizeConfig.heightMultiplier)),
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth:
-                                          68.2 * SizeConfig.widthMultiplier,
-                                      minHeight:
-                                          5.7 * SizeConfig.heightMultiplier),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Request',
-                                    style: TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontSize: 1.97 * SizeConfig.heightMultiplier,
-                                      color: const Color(0xffffffff),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 6 * SizeConfig.heightMultiplier,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Visibility(
-              visible: locationListTemp.length > 1,
-              replacement: Container(
-                margin: EdgeInsets.only(top: 60.0),
-                width: 82.5 * SizeConfig.imageSizeMultipier,
-                height: 41.2 * SizeConfig.heightMultiplier,
-                child: Card(
-                  color: Colors.white,
-                  elevation: 20.0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Request Feedback',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 2.4 * SizeConfig.heightMultiplier,
-                              color: const Color(0xff363636),
-                              fontWeight: FontWeight.w500,
-                              height: 1.5,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                          IconButton(
-                              icon: Icon(
-                                Icons.help_outline,
-                                color: kshadeColor1,
-                                size: 3.3 * SizeConfig.heightMultiplier,
-                              ),
-                              onPressed: () {
-                                showRequestFeedbackInfo();
-                              })
-                        ],
-                      ),
-                      Container(
-                        width: 68.2 * SizeConfig.widthMultiplier,
-                        height: 5.7 * SizeConfig.heightMultiplier,
-                        child: TextField(
-//                            TODO Implement Dynamic ISD Code Selection, Use Quizler app concept
-                          controller: ctrlMobile,
-                          inputFormatters: [
-                            _country == 'Australia'
-                                ? mobileMaskAustralia
-                                : mobileMaskUSA
-                          ],
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) {
-                            _unMaskedMobile = (_country == 'Australia'
-                                    ? mobileMaskAustralia
-                                    : mobileMaskUSA)
-                                .getUnmaskedText();
-                            print(_unMaskedMobile);
-                          },
-                          style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 2.0 * SizeConfig.heightMultiplier),
-                          decoration: kTextFieldDecorationNoback.copyWith(
-                            hintText: 'Mobile Number. . . ',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 1.5 * SizeConfig.heightMultiplier,
-                                horizontal: 20.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 68.2 * SizeConfig.widthMultiplier,
-                        height: 5.7 * SizeConfig.heightMultiplier,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                                activeColor: kshadeColor1,
-                                value: termsAndConsdditions,
-                                onChanged: (bool newvalue) {
-                                  setState(() {
-                                    termsAndConsdditions = newvalue;
-                                  });
-                                  print(newvalue);
-//                        TODO
-                                }),
-                            Flexible(
-                              child: Text(
-                                'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
-                                style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 1.1 * SizeConfig.heightMultiplier,
-                                  color: const Color(0xff363636),
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              child: Container(
-                margin: EdgeInsets.only(top: 60.0),
-                width: 82.5 * SizeConfig.imageSizeMultipier,
-                height: 41.2 * SizeConfig.heightMultiplier,
-                child: Form(
-                  key: _formkey,
-                  child: Card(
-                    color: Colors.white,
-                    elevation: 20.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Request Feedback',
-                              style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 2.4 * SizeConfig.heightMultiplier,
-                                color: const Color(0xff363636),
-                                fontWeight: FontWeight.w500,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.help_outline,
-                                  color: kshadeColor1,
-                                  size: 3.3 * SizeConfig.heightMultiplier,
-                                ),
-                                onPressed: () {
-                                  showRequestFeedbackInfo();
-                                })
-                          ],
-                        ),
-                        Container(
-                          width: 68.2 * SizeConfig.widthMultiplier,
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          child: TextField(
-                            controller: ctrlMobile,
-                            inputFormatters: [
-                              _country == 'Australia'
-                                  ? mobileMaskAustralia
-                                  : mobileMaskUSA
-                            ],
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.phone,
-                            onChanged: (value) {
-                              _unMaskedMobile = (_country == 'Australia'
-                                      ? mobileMaskAustralia
-                                      : mobileMaskUSA)
-                                  .getUnmaskedText();
-                              print(_unMaskedMobile);
-                            },
-                            style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 2.0 * SizeConfig.heightMultiplier),
-                            decoration: kTextFieldDecorationNoback.copyWith(
-                              hintText: 'Mobile Number. . . ',
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 1.5 * SizeConfig.heightMultiplier,
-                                  horizontal: 20.0),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 68.2 * SizeConfig.widthMultiplier,
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                4 * SizeConfig.heightMultiplier),
-                            border: Border.all(
-                                color: Color(0xffe8e8e8), width: 1.0),
-                          ),
-                          child: Center(
-                            child: DropdownButton<String>(onTap: (){
-                              FocusManager.instance.primaryFocus.unfocus();
-                            },
-                              items:
-                                  locationListTemp.map((String dropdownitem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitem,
-                                  child: Text(
-                                    dropdownitem,
-                                    style: TextStyle(
-                                        fontFamily: 'Manrope',
-                                        fontSize: 1.84 *
-                                            SizeConfig.heightMultiplier),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String newselectedcountry) {
-                                setState(() {
-                                  selectedlocation = newselectedcountry;
-                                  print(selectedlocation);
-                                });
-                              },
-                              value: selectedlocation,
-                              hint: Text(
-                                'Location',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize:
-                                        2.0 * SizeConfig.heightMultiplier),
-                              ),
-                              underline: Container(
-                                height: 1.0,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0)),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 2.5 * SizeConfig.heightMultiplier,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 68.2 * SizeConfig.widthMultiplier,
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Checkbox(
-                                  activeColor: kshadeColor1,
-                                  value: termsAndConsdditions,
-                                  onChanged: (bool newvalue) {
-                                    setState(() {
-                                      termsAndConsdditions = newvalue;
-                                    });
-                                    print(newvalue);
-//                        TODO
-                                  }),
-                              Flexible(
-                                child: Text(
-                                  'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize:
-                                        1.1 * SizeConfig.heightMultiplier,
-                                    color: const Color(0xff363636),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: _children[selectedAppIndex],
     );
   }
 
-  void RequestFeedback(String mob, String loc) async {
-    if (loc != null && loc != 'No Location' && termsAndConsdditions == true) {
-      bool _validate = validateMobile(mob);
-      if (_validate == true) {
-        print(loc);
-        setState(() {
-          _isWaiting = true;
-        });
-
-        String _tempMobile = '61' + mob.substring(1, mob.length);
-        print(kURLBase +
-            'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-        http.Response response = await http.get(kURLBase +
-            'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-        var _smsString = response.body;
-        String _smsID = jsonDecode(_smsString)['SMSID'];
-        print(_smsString);
-        print(_smsID);
-        if (_smsID != null) {
-          setState(() {
-            _unMaskedMobile = '';
-            ctrlMobile.text = '';
-            selectedlocation = null;
-            _isWaiting = false;
-          });
-          Flushbar(
-            titleText: Text(
-              'Request Sent',
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 2.0 * SizeConfig.heightMultiplier,
-                color: const Color(0xffffffff),
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            messageText: Text(
-              'You successfully sent your feedback request.',
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 1.3 * SizeConfig.heightMultiplier,
-                color: const Color(0xffffffff),
-                fontWeight: FontWeight.w300,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            padding: EdgeInsets.symmetric(
-                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-            icon: Icon(
-              Icons.check,
-              size: 3.94 * SizeConfig.heightMultiplier,
-              color: Colors.white,
-            ),
-            duration: Duration(seconds: 3),
-            flushbarPosition: FlushbarPosition.TOP,
-            borderColor: Colors.transparent,
-            shouldIconPulse: false,
-            maxWidth: 91.8 * SizeConfig.widthMultiplier,
-            boxShadows: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
-              ),
-            ],
-            backgroundColor: kshadeColor1,
-          ).show(context);
-        } else {
-          setState(() {
-            _isWaiting = false;
-          });
-          Flushbar(
-            titleText: Text(
-              'Failed !',
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 2.0 * SizeConfig.heightMultiplier,
-                color: const Color(0xffffffff),
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            messageText: Text(
-              'Something went wrong.',
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 1.3 * SizeConfig.heightMultiplier,
-                color: const Color(0xffffffff),
-                fontWeight: FontWeight.w300,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            padding: EdgeInsets.symmetric(
-                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-            icon: Icon(
-              Icons.clear,
-              size: 3.94 * SizeConfig.heightMultiplier,
-              color: Colors.white,
-            ),
-            duration: Duration(seconds: 3),
-            flushbarPosition: FlushbarPosition.TOP,
-            borderColor: Colors.transparent,
-            shouldIconPulse: false,
-            maxWidth: 91.8 * SizeConfig.widthMultiplier,
-            boxShadows: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                spreadRadius: 1 * SizeConfig.heightMultiplier,
-                blurRadius: 2 * SizeConfig.heightMultiplier,
-                offset: Offset(0, 10), // changes position of shadow
-              ),
-            ],
-            backgroundColor: kshadeColor1,
-          ).show(context);
-        }
-      }
-    } else if (termsAndConsdditions == false) {
-      validationOnRequestFeedback(
-          'Please confirm you are authorised to send this SMS Message');
-    } else if (loc == null || loc == 'No Location') {
-      validationOnRequestFeedback('Location Undefined');
-    }
-  }
+//  void RequestFeedback(String mob, String loc) async {
+//    if (loc != null && loc != 'No Location' && termsAndConsdditions == true) {
+//      bool _validate = validateMobile(mob);
+//      if (_validate == true) {
+//        print(loc);
+//        setState(() {
+//          _isWaiting = true;
+//        });
+//
+//        String _tempMobile = '61' + mob.substring(1, mob.length);
+//        print(kURLBase +
+//            'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+//        http.Response response = await http.get(kURLBase +
+//            'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
+//        var _smsString = response.body;
+//        String _smsID = jsonDecode(_smsString)['SMSID'];
+//        print(_smsString);
+//        print(_smsID);
+//        if (_smsID != null) {
+//          setState(() {
+//            _unMaskedMobile = '';
+//            ctrlMobile.text = '';
+//            selectedlocation = null;
+//            _isWaiting = false;
+//          });
+//          Flushbar(
+//            titleText: Text(
+//              'Request Sent',
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 2.0 * SizeConfig.heightMultiplier,
+//                color: const Color(0xffffffff),
+//                fontWeight: FontWeight.w600,
+//              ),
+//              textAlign: TextAlign.left,
+//            ),
+//            messageText: Text(
+//              'You successfully sent your feedback request.',
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 1.3 * SizeConfig.heightMultiplier,
+//                color: const Color(0xffffffff),
+//                fontWeight: FontWeight.w300,
+//              ),
+//              textAlign: TextAlign.left,
+//            ),
+//            padding: EdgeInsets.symmetric(
+//                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+//            icon: Icon(
+//              Icons.check,
+//              size: 3.94 * SizeConfig.heightMultiplier,
+//              color: Colors.white,
+//            ),
+//            duration: Duration(seconds: 3),
+//            flushbarPosition: FlushbarPosition.TOP,
+//            borderColor: Colors.transparent,
+//            shouldIconPulse: false,
+//            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+//            boxShadows: [
+//              BoxShadow(
+//                color: Colors.black.withOpacity(0.3),
+//                spreadRadius: 1 * SizeConfig.heightMultiplier,
+//                blurRadius: 2 * SizeConfig.heightMultiplier,
+//                offset: Offset(0, 10), // changes position of shadow
+//              ),
+//            ],
+//            backgroundColor: kshadeColor1,
+//          ).show(context);
+//        } else {
+//          setState(() {
+//            _isWaiting = false;
+//          });
+//          Flushbar(
+//            titleText: Text(
+//              'Failed !',
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 2.0 * SizeConfig.heightMultiplier,
+//                color: const Color(0xffffffff),
+//                fontWeight: FontWeight.w600,
+//              ),
+//              textAlign: TextAlign.left,
+//            ),
+//            messageText: Text(
+//              'Something went wrong.',
+//              style: TextStyle(
+//                fontFamily: 'Manrope',
+//                fontSize: 1.3 * SizeConfig.heightMultiplier,
+//                color: const Color(0xffffffff),
+//                fontWeight: FontWeight.w300,
+//              ),
+//              textAlign: TextAlign.left,
+//            ),
+//            padding: EdgeInsets.symmetric(
+//                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+//            icon: Icon(
+//              Icons.clear,
+//              size: 3.94 * SizeConfig.heightMultiplier,
+//              color: Colors.white,
+//            ),
+//            duration: Duration(seconds: 3),
+//            flushbarPosition: FlushbarPosition.TOP,
+//            borderColor: Colors.transparent,
+//            shouldIconPulse: false,
+//            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+//            boxShadows: [
+//              BoxShadow(
+//                color: Colors.black.withOpacity(0.3),
+//                spreadRadius: 1 * SizeConfig.heightMultiplier,
+//                blurRadius: 2 * SizeConfig.heightMultiplier,
+//                offset: Offset(0, 10), // changes position of shadow
+//              ),
+//            ],
+//            backgroundColor: kshadeColor1,
+//          ).show(context);
+//        }
+//      }
+//    } else if (termsAndConsdditions == false) {
+//      validationOnRequestFeedback(
+//          'Please confirm you are authorised to send this SMS Message');
+//    } else if (loc == null || loc == 'No Location') {
+//      validationOnRequestFeedback('Location Undefined');
+//    }
+//  }
 }

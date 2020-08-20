@@ -266,7 +266,7 @@ class _EnterNewPWDState extends State<EnterNewPWD> {
                   Container(
                     width: 68.2 * SizeConfig.widthMultiplier,
                     height: 5.65 * SizeConfig.heightMultiplier,
-                    child: RaisedButton(
+                    child: RaisedButton(color: kshadeColor1,
                       onPressed: () async {
 
                           if(_restformKey.currentState.validate()){
@@ -275,10 +275,9 @@ class _EnterNewPWDState extends State<EnterNewPWD> {
                             });
                             SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                             String _tempUserID=sharedPreferences.get('tempUserID');
-                            String _tempOTP=sharedPreferences.get('serverOTP');
-                            print(_tempOTP);
                             print(_tempUserID);
                             print(_password);
+                            FocusManager.instance.primaryFocus.unfocus();
                             http.Response _response =await http.get(kURLBase +
                               'REST/REVIEWS/App_SetNewPWD?Temp_pdw=$_password&CUID=$_tempUserID');
                             print(_response.body);
@@ -329,7 +328,7 @@ class _EnterNewPWDState extends State<EnterNewPWD> {
                                 ],
                                 backgroundColor: kshadeColor1,
                               ).show(context);
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ResetSuccess()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ResetSuccess()));
                             }
                             setState(() {
                               _waiting=false;
@@ -344,22 +343,15 @@ class _EnterNewPWDState extends State<EnterNewPWD> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(2.63 * SizeConfig.heightMultiplier)),
                       padding: EdgeInsets.all(0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: kshadeColor1,
-                            borderRadius: BorderRadius.circular(2.9 * SizeConfig.heightMultiplier)),
-
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Update',
-                          style: TextStyle(
-                            fontFamily: 'Manrope',
-                            fontSize: 2.0 * SizeConfig.heightMultiplier,
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
+                      child: Text(
+                        'Update',
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 2.0 * SizeConfig.heightMultiplier,
+                          color: const Color(0xffffffff),
+                          fontWeight: FontWeight.w600,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

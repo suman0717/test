@@ -104,22 +104,6 @@ class _SignupState extends State<Signup> {
   bool _isHiddenPwd = true;
   bool _isHiddenCnfPwd = true;
 
-  @override
-  void dispose() {
-    ctrlBusinessaName.dispose();
-    ctrlBusinessContactName.dispose();
-    ctrlBusinessContactEmail.dispose();
-    ctrlBusinessContactNumber.dispose();
-    ctrlUserFirstName.dispose();
-    ctrlUserSurame.dispose();
-    ctrlUserMobile.dispose();
-    ctrlUserUserName.dispose();
-    ctrlUserPassword.dispose();
-    ctrlUserCnfPassword.dispose();
-
-    super.dispose();
-  }
-
   void _toggleVisibilityPwd() {
     setState(() {
       _isHiddenPwd = !_isHiddenPwd;
@@ -730,7 +714,7 @@ class _SignupState extends State<Signup> {
                         Container(
                           width: 68.2 * SizeConfig.widthMultiplier,
                           height: 5.65 * SizeConfig.heightMultiplier,
-                          child: RaisedButton(
+                          child: RaisedButton(color: kshadeColor1,
                             onPressed: () async {
                               setState(() {
                                 waiting = true;
@@ -801,26 +785,20 @@ class _SignupState extends State<Signup> {
                               });
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(80.0)),
+                                borderRadius: BorderRadius.circular(
+                                    2.63 * SizeConfig.heightMultiplier)),
                             padding: EdgeInsets.all(0.0),
                             child: Padding(
                               padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: kshadeColor1,
-                                    borderRadius:
-                                        BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 2.0 *SizeConfig.heightMultiplier,
-                                    color: const Color(0xffffffff),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 2.0 *SizeConfig.heightMultiplier,
+                                  color: const Color(0xffffffff),
+                                  fontWeight: FontWeight.w600,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ),

@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:radreviews/screens/SignIn.dart';
+import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResetSuccess extends StatefulWidget {
@@ -103,30 +104,26 @@ class _ResetSuccessState extends State<ResetSuccess> {
                         textAlign: TextAlign.center,
                       ),
                       Container(
-                        height: 43.0,
-                        child: RaisedButton(
+                        width: 68.2 * SizeConfig.widthMultiplier,
+                        height: 5.65 * SizeConfig.heightMultiplier,
+                        child: RaisedButton(color: kshadeColor1,
                           onPressed: () async {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>XDSignIn()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>XDSignIn()));
                           },
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(80.0)),
+                              borderRadius: BorderRadius.circular(2.63 * SizeConfig.heightMultiplier)),
                           padding: EdgeInsets.all(0.0),
                           child: Padding(
                             padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                            child: Container(decoration: BoxDecoration(color: kshadeColor1,borderRadius: BorderRadius.circular(22.0)),
-                              constraints:
-                              BoxConstraints(maxWidth: 266.0, minHeight: 50.0),
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Sign in',
-                                style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 15,
-                                  color: const Color(0xffffffff),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
+                            child: Text(
+                              'Sign in',
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 15,
+                                color: const Color(0xffffffff),
+                                fontWeight: FontWeight.w600,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),

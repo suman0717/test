@@ -76,30 +76,56 @@ return true;
 
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(inAsyncCall: _waiting,
-      child: Scaffold(
-          appBar: AppBar(centerTitle: true,
-            title: Column(
-              children: [SizedBox(height: 10.0),
-                Text('Terms & Conditions',textAlign: TextAlign.center,),
-              ],
-            ),
-          ),
-          body: Container(
-            child:
-            path != null?
-                Container(
-                  height: 85 * SizeConfig.heightMultiplier,
-                  child: PdfViewer(
-                    filePath: path,
+    return Scaffold(
+
+        body: Column(
+          children: [
+            Container(
+              height: 12.25 * SizeConfig.heightMultiplier,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(1.15, -0.25),
+                  end: Alignment(-1.08, -0.32),
+                  colors: [const Color(0xff1b0e97), const Color(0xff881c8e)],
+                  stops: [0.0, 1.0],
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'TERMS & CONDITIONS',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+                      color: const Color(0xffffffff),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ):
-                Text("Loading pdf..."),
+                  SizedBox(
+                    height: 3.3 * SizeConfig.heightMultiplier,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child:
+              path != null?
+                  Container(
+                    height: 75 * SizeConfig.heightMultiplier,
+                    child: PdfViewer(
+                      filePath: path,
+                    ),
+                  ):
+                  Text("Loading pdf..."),
 
 
-          ),
+            ),
+          ],
         ),
-    );
+      );
 
   }
 }

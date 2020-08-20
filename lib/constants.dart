@@ -94,5 +94,5 @@ String smsFeedback_Followup_Wording;
 String serverOTP;
 String localOTP;
 String forgotClientUserID;
-
+bool isEditable=false;
 
