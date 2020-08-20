@@ -10,10 +10,8 @@ import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/homenew.dart';
-import 'package:radreviews/screens/otp_ResetPassword.dart';
 import 'package:radreviews/screens/otp_forgotPassword.dart';
 import 'package:radreviews/screens/registration_success.dart';
-import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -501,7 +499,7 @@ class _XDSignInState extends State<XDSignIn> {
                         setState(() {
                           _waiting = false;
                         });
-
+                        if(username != null && serverUsername != null){
                         if (username.toLowerCase() == serverUsername.toLowerCase() &&
                             password == serverPassword) {
                           if (accountStatus == 'Active') {
@@ -519,7 +517,8 @@ class _XDSignInState extends State<XDSignIn> {
                               ),
                             );
                           }
-                        } else {
+                        }}
+                        else {
                           message = '*Username or Password is Incorrect';
                         }
                       }
