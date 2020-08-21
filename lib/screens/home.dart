@@ -11,6 +11,7 @@ import 'package:radreviews/screens/SignIn.dart';
 import 'package:radreviews/screens/editmyaccount.dart';
 import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/homenew.dart';
+import 'package:radreviews/screens/manageuser.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/settings.dart';
@@ -23,7 +24,7 @@ import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
-
+// Last modified
 //String selectedlocation;
 //var _formkey = GlobalKey<FormState>();
 
@@ -47,8 +48,7 @@ class _HomeState extends State<Home> {
   int selectedIndex = 2;
   int selectedAppIndex = 2;
 
-  final List<Widget> _children=
-  [
+  final List<Widget> _children = [
     Settings(),
     Settings(),
     HomeNew(),
@@ -57,6 +57,7 @@ class _HomeState extends State<Home> {
     FeedbackStats(),
     NegFeedback(),
     TandC(kURLTerms),
+    ManageUser(),
   ];
 
   @override
@@ -213,9 +214,9 @@ class _HomeState extends State<Home> {
     setState(() {
       if(index<5){
         if(index!=1){
-        selectedIndex = index;
-        selectedAppIndex=index;
-        isEditable=false;}
+          selectedIndex = index;
+          selectedAppIndex=index;
+          isEditable=false;}
         else{
           QuickLaunchLink().hitLink(
               'mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');
@@ -225,8 +226,8 @@ class _HomeState extends State<Home> {
         selectedAppIndex=index;
         isEditable=false;
       }
-        print(selectedIndex);
-      },
+      print(selectedIndex);
+    },
     );
   }
 
@@ -246,7 +247,7 @@ class _HomeState extends State<Home> {
                 _onItemTapped(0);
               } else if (value == 2) {
 
-                  _onItemTapped(4);
+                _onItemTapped(4);
 
               } else if (value == 3) {
                 _onItemTapped(5);
@@ -261,7 +262,12 @@ class _HomeState extends State<Home> {
               } else if (value == 7) {
                 Logout();
               }
-              ;
+              else if (value == 8) {
+                setState(() {
+                  _onItemTapped(8);
+                });
+              }
+
             },
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -295,6 +301,25 @@ class _HomeState extends State<Home> {
                   textAlign: TextAlign.left,
                 ),
                 value: 2,
+              ),
+              PopupMenuItem(
+                height: 1,
+                child: PopupMenuDivider(
+                  height: 1,
+                ),
+              ),
+              PopupMenuItem(
+                child: Text(
+                  'Manage Users',
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 11,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                value: 8,
               ),
               PopupMenuItem(
                 height: 1,
@@ -487,8 +512,8 @@ class _HomeState extends State<Home> {
           child: Material(
               color: kshadeColor1,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      6.65 * SizeConfig.widthMultiplier)),
+                  borderRadius:
+                      BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
               child: InkWell(
                 child: IconButton(
                   iconSize: 4 * SizeConfig.heightMultiplier,
@@ -498,10 +523,9 @@ class _HomeState extends State<Home> {
                   ),
                   onPressed: () {
                     setState(() {
-
-                      isEditable=false;
-                      selectedIndex=2;
-                      selectedAppIndex=2;
+                      isEditable = false;
+                      selectedIndex = 2;
+                      selectedAppIndex = 2;
                     });
                   },
                 ),

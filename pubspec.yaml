@@ -37,7 +37,7 @@ dependencies:
   email_validator: ^1.0.5
   pdf_viewer_plugin: ^1.0.0+2
   path_provider: ^1.6.11
-  colorful_safe_area: ^0.2.0
+  autocomplete_textfield: ^1.7.3
 
 
   # The following adds the Cupertino Icons font to your application.

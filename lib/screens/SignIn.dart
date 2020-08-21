@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:radreviews/constants.dart';
@@ -13,6 +14,7 @@ import 'package:radreviews/screens/homenew.dart';
 import 'package:radreviews/screens/otp_forgotPassword.dart';
 import 'package:radreviews/screens/registration_success.dart';
 import 'package:radreviews/screens/signup.dart';
+import 'package:radreviews/screens/test.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,14 +23,13 @@ class XDSignIn extends StatefulWidget {
   @override
   _XDSignInState createState() => _XDSignInState();
 }
-
+String username;
 class _XDSignInState extends State<XDSignIn> {
-  String username;
+
   String password;
   String serverUsername;
   String serverPassword;
   bool _waiting = false;
-  bool _waiting_Forgot = false;
   String message = '';
 
   String accountStatus = '';
@@ -278,8 +279,6 @@ class _XDSignInState extends State<XDSignIn> {
     );
   }
 
-
-
   GetUserLogin(String urlString) async {
     print(urlString);
     http.Response response = await http.get(urlString);
@@ -350,7 +349,7 @@ class _XDSignInState extends State<XDSignIn> {
 
     if (curaccountStatus == 'Active') {
       http.Response _locationResponse =
-          await http.get(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
+      await http.get(kURLBase + 'REST/REVIEWS/Get_Location?Client=$_cid');
       try {
         var _locationData = _locationResponse.body;
 
@@ -378,7 +377,7 @@ class _XDSignInState extends State<XDSignIn> {
           print(_localData);
           locationListTemp.add(_localData["Location_Name"]);
           selectedlocation = _localData[
-              "Location_Name"]; //this will initiate if client have only 1 location
+          "Location_Name"]; //this will initiate if client have only 1 location
         }
       } catch (e) {
         locationListTemp = ['No Location'];
@@ -391,7 +390,47 @@ class _XDSignInState extends State<XDSignIn> {
     sharedPreferences.setStringList('loc', locationListTemp);
     print(sharedPreferences.get('loc'));
   }
+//
+//  List<String> suggestions = [
+//    "Apple",
+//    "Armidillo",
+//    "Actual",
+//    "Actuary",
+//    "America",
+//    "Argentina",
+//    "Australia",
+//    "Antarctica",
+//    "Blueberry",
+//    "Cheese",
+//    "Danish",
+//    "Eclair",
+//    "Fudge",
+//    "Granola",
+//    "Hazelnut",
+//    "Ice Cream",
+//    "Jely",
+//    "Kiwi Fruit",
+//    "Lamb",
+//    "Macadamia",
+//    "Nachos",
+//    "Oatmeal",
+//    "Palm Oil",
+//    "Quail",
+//    "Rabbit",
+//    "Salad",
+//    "T-Bone Steak",
+//    "Urid Dal",
+//    "Vanilla",
+//    "Waffles",
+//    "Yam",
+//    "Zest"
+//  ];
 
+  List<String> added = [];
+  String currentText = "";
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  SimpleAutoCompleteTextField textField;
+  bool showWhichErrorText = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -422,6 +461,22 @@ class _XDSignInState extends State<XDSignIn> {
                   ),
                   textAlign: TextAlign.center,
                 ),
+//            SimpleAutoCompleteTextField(
+//
+//              key: key,
+//              decoration: kTextFieldDecorationNoback.copyWith(hintText: 'user'),
+//              controller: TextEditingController(text: username,),
+//              suggestions: suggestions,
+//              textChanged: (text) => currentText = text,
+//              clearOnSubmit: true,
+//              textSubmitted: (text) => setState(() {
+//                if (text != "") {
+//                  added.add(text);
+//                  print(text);
+//                  username=text;
+//                }
+//              }),
+//            ),
                 SizedBox(
                   height: 6.3 * SizeConfig.heightMultiplier,
                 ),
@@ -439,11 +494,11 @@ class _XDSignInState extends State<XDSignIn> {
                       fontSize: 1.9 * SizeConfig.heightMultiplier,
                     ),
                     decoration: kTextFieldDecorationNoback.copyWith(
-                      hintText: 'Username',
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 1.5 * SizeConfig.heightMultiplier,
-                          horizontal: 20.0),
-                    ),
+                    hintText: 'Username',
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 1.5 * SizeConfig.heightMultiplier,
+                        horizontal: 20.0),
+                  ),
                   ),
                 ),
                 SizedBox(
@@ -500,24 +555,24 @@ class _XDSignInState extends State<XDSignIn> {
                           _waiting = false;
                         });
                         if(username != null && serverUsername != null){
-                        if (username.toLowerCase() == serverUsername.toLowerCase() &&
-                            password == serverPassword) {
-                          if (accountStatus == 'Active') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Home(),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Success(),
-                              ),
-                            );
-                          }
-                        }}
+                          if (username.toLowerCase() == serverUsername.toLowerCase() &&
+                              password == serverPassword) {
+                            if (accountStatus == 'Active') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Home(),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Success(),
+                                ),
+                              );
+                            }
+                          }}
                         else {
                           message = '*Username or Password is Incorrect';
                         }
@@ -548,7 +603,7 @@ class _XDSignInState extends State<XDSignIn> {
                 GestureDetector(
                   onTap: () {
                     print('Forgot Password Tapped');
-//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EnterOTP()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
                     ShowForgotPassword();
                   },
                   child: Text(
