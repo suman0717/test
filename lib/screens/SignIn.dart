@@ -603,7 +603,7 @@ class _XDSignInState extends State<XDSignIn> {
                 GestureDetector(
                   onTap: () {
                     print('Forgot Password Tapped');
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
                     ShowForgotPassword();
                   },
                   child: Text(
