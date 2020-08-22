@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/screens/SignIn.dart';
+import 'package:radreviews/screens/editUserDetails.dart';
 import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/myaccount.dart';
@@ -23,13 +25,11 @@ class ManageUser extends StatefulWidget {
 }
 bool waiting = false;
 bool isticked=false;
-String filterAction='All';
-String filterName='All';
 List<String> filterActionList=['All','Actioned','Not Actioned'];
 List<String> filterNameList=['All'];
 class _ManageUserState extends State<ManageUser> {
-  List<Widget> customListTileNegFeedback=[];
-  List<Widget> filteredCustomListTileNegFeedback=[];
+  List<Widget> customListManageUser=[];
+  List<Widget> filteredcustomListManageUser=[];
 
   int len;
 
@@ -54,8 +54,11 @@ class _ManageUserState extends State<ManageUser> {
     setState(() {
       waiting=true;
     });
+    print(
+        kURLBase+'REST/REVIEWS/App_ManageUser?Client=$curClientID');
     var data = await http.get(
-        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=All&Name=All');
+        kURLBase+'REST/REVIEWS/App_ManageUser?Client=$curClientID');
+
     var jsonData = json.decode(data.body);
     if(jsonData['response'] != null){
       filterNameList=['All'];
@@ -73,95 +76,36 @@ class _ManageUserState extends State<ManageUser> {
            filterNameList.add(jsonRes[i]["Name"]);
          }
 
-         var _txt = NegFeedbackListTile(
-           name: jsonRes[i]["Name"],
-           actioned: jsonRes[i]["Ticked1"],
+         var _txt = UserDetails(
+           first_Name: jsonRes[i]["First_Name"],
+           surName: jsonRes[i]["Surname"],
+           primary_User: jsonRes[i]["Primary_User"],
            email: jsonRes[i]["EmailAddress"],
+           pwd: jsonRes[i]["Decrypted_Password"],
            id: jsonRes[i]["EXT_ID"],
-           mobile: jsonRes[i]["Mobile"],
-           SMSSentDateTime: jsonRes[i]["SMSSentDateTime"],
-           message: jsonRes[i]["Message"],
+           mobile: jsonRes[i]["Mobile_Masked"],
          );
-         customListTileNegFeedback.add(_txt);
-         filteredCustomListTileNegFeedback.add(_txt);
+         customListManageUser.add(_txt);
+         filteredcustomListManageUser.add(_txt);
        }
     }
     else{
       filterNameList=['All'];
       filterNameList.add(jsonData['Name']);
-       var _txt = NegFeedbackListTile(
-         name: jsonData['Name'],
-         actioned: jsonData['Ticked1'],
+       var _txt = UserDetails(
+         first_Name: jsonData['First_Name'],
+         surName: jsonData["Surname"],
+         primary_User: jsonData["Primary_User"],
          email: jsonData['EmailAddress'],
+         pwd: jsonData["Decrypted_Password"],
          id: jsonData['EXT_ID'],
-         mobile: jsonData['Mobile'],
-         SMSSentDateTime: jsonData['SMSSentDateTime'],
-         message: jsonData["Message"],
+         mobile: jsonData['Mobile_Masked'],
        );
-       customListTileNegFeedback.add(_txt);
-      filteredCustomListTileNegFeedback.add(_txt);
+       customListManageUser.add(_txt);
+      filteredcustomListManageUser.add(_txt);
     }
     print(filterNameList);
-    return customListTileNegFeedback;
-
-  }
-  Future<List<Widget>> getNegFeedbackFiltered() async {
-    filteredCustomListTileNegFeedback=[];
-    List jsonRes;
-    setState(() {
-      waiting=true;
-    });
-    print('Filtered');
-    print(kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=$filterAction&Name=$filterName');
-    var data = await http.get(
-        kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=$filterAction&Name=$filterName');
-    try{var jsonData = json.decode(data.body);
-    if(jsonData['response'] != null){
-      print('not null');
-      jsonRes = jsonData['response'];
-      print(jsonRes);
-      print(jsonRes.length);
-      len = jsonRes.length;
-
-
-      for (int i = 0; i < jsonRes.length; i++) {
-        print(i);
-        print(jsonRes[i]["EXT_ID"]);
-        var _txt = NegFeedbackListTile(
-          name: jsonRes[i]["Name"],
-          actioned: jsonRes[i]["Ticked1"],
-          email: jsonRes[i]["EmailAddress"],
-          id: jsonRes[i]["EXT_ID"],
-          mobile: jsonRes[i]["Mobile"],
-          SMSSentDateTime: jsonRes[i]["SMSSentDateTime"],
-          message: jsonRes[i]["Message"],
-        );
-        customListTileNegFeedback.add(_txt);
-        filteredCustomListTileNegFeedback.add(_txt);
-      }
-    }
-    else{
-      var _txt = NegFeedbackListTile(
-        name: jsonData['Name'],
-        actioned: jsonData['Ticked1'],
-        email: jsonData['EmailAddress'],
-        id: jsonData['EXT_ID'],
-        mobile: jsonData['Mobile'],
-        SMSSentDateTime: jsonData['SMSSentDateTime'],
-        message: jsonData["Message"],
-      );
-      customListTileNegFeedback.add(_txt);
-      filteredCustomListTileNegFeedback.add(_txt);
-    }
-    print(filterNameList);}
-    catch(e){
-      print(e);
-    }
-
-    setState(() {
-      waiting=false;
-    });
-    return customListTileNegFeedback;
+    return customListManageUser;
 
   }
 
@@ -216,127 +160,6 @@ class _ManageUserState extends State<ManageUser> {
                   ],
                 ),
               ),
-              Container(padding: EdgeInsets.symmetric(horizontal: 10.0),
-                height: 11.0 * SizeConfig.heightMultiplier,
-                child: Row(mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Name',
-                              style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 1.9 * SizeConfig.heightMultiplier,
-
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  4 * SizeConfig.heightMultiplier),
-                              border: Border.all(
-                                  color: Color(0xffe8e8e8), width: 1.0),
-                            ),
-                            child: Center(
-                              child: DropdownButton<String>(
-                                items: filterNameList.map((e) {
-                                  return DropdownMenuItem<String>(child: Text(e),value: e,);
-                                }).toList(),
-                                onChanged: (e){
-                                  setState(() {
-                                    filterName=e;
-                                    getNegFeedbackFiltered();
-                                  });
-                                },
-                                value: filterName,
-                                underline: Container(
-                                  height: 1.0,
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0)),
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 2.5 * SizeConfig.heightMultiplier,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 2.5 * SizeConfig.widthMultiplier,),
-                    Expanded(
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Status',
-                              style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 1.9 * SizeConfig.heightMultiplier,
-
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-
-                            height: 5.7 * SizeConfig.heightMultiplier,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  4 * SizeConfig.heightMultiplier),
-                              border: Border.all(
-                                  color: Color(0xffe8e8e8), width: 1.0),
-                            ),
-                            child: Center(
-                              child: DropdownButton<String>(
-                                items: filterActionList.map((e) {
-                                  return DropdownMenuItem<String>(child: Text(e),value: e,);
-                                }).toList(),
-                                onChanged: (e){
-                                  setState(() {
-                                    filterAction=e;
-                                    getNegFeedbackFiltered();
-                                  });
-                                },
-                                value: filterAction,
-                                underline: Container(
-                                  height: 1.0,
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0)),
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 2.5 * SizeConfig.heightMultiplier,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
               Expanded(
                 child: Padding(
                   padding:
@@ -344,7 +167,7 @@ class _ManageUserState extends State<ManageUser> {
                   child: SingleChildScrollView(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
 
-                      children: filteredCustomListTileNegFeedback,
+                      children: filteredcustomListManageUser,
                     ),
                   ),
                 ),
@@ -357,235 +180,64 @@ class _ManageUserState extends State<ManageUser> {
   }
 }
 
-class NegFeedbackListTile extends StatefulWidget {
-  String name;
+class UserDetails extends StatelessWidget {
+  String first_Name;
+  String surName;
   int id;
-  String SMSSentDateTime;
   String email;
   String mobile;
-  String actioned;
-  String message;
+  String primary_User;
+  String pwd;
 
-  NegFeedbackListTile({this.name,this.id,this.SMSSentDateTime,this.mobile,this.email,this.actioned,this.message});
-  @override
-  _NegFeedbackListTileState createState() => _NegFeedbackListTileState();
-}
-
-class _NegFeedbackListTileState extends State<NegFeedbackListTile> {
-
-  void showRequestFeedbackMessage() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            elevation: 5.0,
-            title: Text(
-              'Feedback Message',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 3.0 * SizeConfig.heightMultiplier,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            content: Text(
-              widget.message,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 1.9 * SizeConfig.heightMultiplier,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        },);
-  }
-
+  UserDetails({this.first_Name,this.surName,this.id,this.mobile,this.email,this.primary_User,this.pwd});
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: NegFeedbackCheckbox(isActioned: widget.actioned=='Actioned'?true:false,id: widget.id,),
+      leading: UserDetailsCheckbox(isActioned: false,id: id,),
       title:Padding(
         padding: EdgeInsets.symmetric(vertical:1.31* SizeConfig.heightMultiplier),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+Text('$first_Name $surName' ,style: TextStyle(
+  fontFamily: 'Manrope',
+  fontSize: 15,
+  color: const Color(0xff363636),
+),)
 
-            Text.rich(
-
-              TextSpan(
-                style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 11,
-                  color: const Color(0xffa1a1a1),
-                ),
-                children: [
-                  TextSpan(
-                    text: '${widget.name}\n',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 15,
-                      color: const Color(0xff363636),
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'ID: ${widget.id}\n${widget.SMSSentDateTime}\n',
-                  ),
-                  TextSpan(
-                    text: '${widget.email}\n${widget.mobile}',
-                    style: TextStyle(
-                      color: const Color(0xff971a9f),
-                    ),
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.left,
-            ),
           ],
         ),
       ),
       trailing: SizedBox(width: 25.0 * SizeConfig.widthMultiplier,
-        child: FittedBox(
-          child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 27.9 * SizeConfig.widthMultiplier,
-                height: 3.55 * SizeConfig.heightMultiplier,
-                child: RaisedButton(
-                  onPressed: () {
-                    print(widget.message);
-                    showRequestFeedbackMessage();
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.53* SizeConfig.heightMultiplier)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: kshadeColor1,
-                          borderRadius:
-                          BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Feedback',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 11,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 1.31* SizeConfig.heightMultiplier,),
-              Container(
-                width: 27.9 * SizeConfig.widthMultiplier,
-                height: 3.55 * SizeConfig.heightMultiplier,
-                child: OutlineButton( borderSide: BorderSide(
-                  color: kshadeColor1, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 1.5, //width of the border
-                ),
-                  onPressed: () async {
-                    setState(() {
-                      print('object');
-                      waiting=true;
-                    });
-                    await http.get(kURLBase+ 'REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
-                    setState(() {
-                      waiting=false;
-                    });
-                    Flushbar(
-                      titleText: Text(
-                        'Email Sent',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 2.0 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      messageText: Text(
-                        'Email has been sent to your registered email address.',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 1.3 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w300,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-                      icon: Icon(
-                        Icons.check,
-                        size: 3.94 * SizeConfig.heightMultiplier,
-                        color: Colors.white,
-                      ),
-                      duration: Duration(seconds: 2),
-                      flushbarPosition: FlushbarPosition.TOP,
-                      borderColor: Colors.transparent,
-                      shouldIconPulse: false,
-                      maxWidth: 91.8 * SizeConfig.widthMultiplier,
-                      boxShadows: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1 * SizeConfig.heightMultiplier,
-                          blurRadius: 2 * SizeConfig.heightMultiplier,
-                          offset: Offset(0, 10), // changes position of shadow
-                        ),
-                      ],
-                      backgroundColor: kshadeColor1,
-
-                    ).show(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.53* SizeConfig.heightMultiplier)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: const Color(0xffffffff),
-
-                          borderRadius:
-                          BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Email Me',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 11,
-                          color: kshadeColor1,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        child: RawMaterialButton(
+          onPressed: () {
+            print(first_Name);
+            EditUserDetails(first_Name: first_Name, surName: surName, id: id, email: email,mobile: mobile,primary_User: primary_User,pwd: pwd,);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserDetails()));
+            },
+          elevation: 5.0,
+          fillColor: Colors.white,
+          child: Icon(
+            FontAwesomeIcons.solidEdit,
+            size: 12.0,
+            color: kshadeColor1,
           ),
+          padding: EdgeInsets.all(10.0),
+          shape: CircleBorder(),
         ),
       ),
     );
   }
 }
 
-class NegFeedbackCheckbox extends StatefulWidget {
+class UserDetailsCheckbox extends StatefulWidget {
   int id;
   bool isActioned;
-  NegFeedbackCheckbox({this.isActioned,this.id});
+  UserDetailsCheckbox({this.isActioned,this.id});
   @override
-  _NegFeedbackCheckboxState createState() => _NegFeedbackCheckboxState();
+  _UserDetailsCheckboxState createState() => _UserDetailsCheckboxState();
 }
 
-class _NegFeedbackCheckboxState extends State<NegFeedbackCheckbox> {
+class _UserDetailsCheckboxState extends State<UserDetailsCheckbox> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(activeColor: kshadeColor1,value: widget.isActioned, onChanged: (bool s)  {
@@ -605,9 +257,9 @@ class _NegFeedbackCheckboxState extends State<NegFeedbackCheckbox> {
     print(widget.isActioned);
     print(widget.id);
     print(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
-    http.Response _response = await http.get(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
-    var _data = _response.body;
-    print(_data);
+//    http.Response _response = await http.get(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
+//    var _data = _response.body;
+//    print(_data);
     setState(() {
       waiting=false;
     });
