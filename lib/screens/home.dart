@@ -18,7 +18,6 @@ import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
 import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
