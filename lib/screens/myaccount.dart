@@ -705,7 +705,7 @@ class _MyAccountState extends State<MyAccount> {
                                       _waiting = true;
                                     });
 
-                                    await UpdateUserDetails(kURLBase +
+                                    await UpdateMyAccount(kURLBase +
                                         'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$curClientUserID&Client=$curClientID&Mobile_Masked=$_maskednumber');
                                     setState(() {
                                       _waiting = false;
@@ -840,7 +840,7 @@ class _MyAccountState extends State<MyAccount> {
   }
 }
 
-UpdateUserDetails(String url) async{
+UpdateMyAccount(String url) async{
   print(url);
   sharedPreferences = await SharedPreferences.getInstance();
   http.Response response = await http.get(url);

@@ -19,46 +19,51 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:email_validator/email_validator.dart';
 
-String firstName=curUserFName;
-String surname=curUserSName;
-String userName=curUserName;
-String mobile=unmasked_mobile;
-String password=curPassword;
-String confirm_Password;
-String _maskednumber=masked_mobile;
-
-var ctrlFirstName = TextEditingController(text: curUserFName);
-var ctrlSurame = TextEditingController(text: curUserSName);
-var ctrlMobile = TextEditingController(text: masked_mobile);
-var ctrlUserName = TextEditingController(text: curUserName);
-var ctrlPassword = TextEditingController(text: curPassword);
-var ctrlCnfPassword = TextEditingController(text: curPassword);
-
 var mobileMaskUSA = MaskTextInputFormatter(
     mask: "(###) ###-####", filter: {"#": RegExp(r'[0-9]')});
 var mobileMaskAustralia = MaskTextInputFormatter(
     mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
 
 class EditUserDetails extends StatefulWidget {
-  String first_Name;
-  String surName;
-  int id;
-  String email;
-  String mobile;
-  String primary_User;
-  String pwd;
 
-  EditUserDetails ({this.first_Name,this.surName,this.id,this.mobile,this.email,this.primary_User,this.pwd});
+  String firstName;
+  String surname;
+  String userName;
+  String mobile;
+  String password;
+  String confirm_Password;
+  String maskednumber;
+  int id;
+
+  EditUserDetails({Key key, @required this.firstName,this.surname,this.userName,this.mobile,this.maskednumber,this.password,this.confirm_Password,this.id}): super (key : key);
 
   @override
-  _EditUserDetailsState createState() => _EditUserDetailsState();
+  _EditUserDetailsState createState() => _EditUserDetailsState(firstName: firstName,surname: surname,userName: userName,mobile: mobile,maskednumber: maskednumber,password: password,confirm_Password: confirm_Password,id: id);
 }
 SharedPreferences sharedPreferences;
 class _EditUserDetailsState extends State<EditUserDetails> {
-
   bool _isHiddenPwd = true;
   bool _isHiddenCnfPwd = true;
   bool _waiting = false;
+
+  String firstName;
+  String surname;
+  String userName;
+  String mobile;
+  String password;
+  String confirm_Password;
+  String maskednumber;
+  String _errorMessage='No Error';
+  int id;
+
+  _EditUserDetailsState({this.firstName,this.surname,this.userName,this.mobile,this.maskednumber,this.password,this.confirm_Password,this.id});
+
+  var ctrlFirstName = TextEditingController();
+  var ctrlSurame = TextEditingController();
+  var ctrlMobile = TextEditingController();
+  var ctrlUserName = TextEditingController();
+  var ctrlPassword = TextEditingController();
+  var ctrlCnfPassword = TextEditingController();
 
 
   void _toggleVisibilityPwd() {
@@ -75,6 +80,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
 
   @override
   void initState() {
+
     setState(() {
       _waiting = true;
     });
@@ -91,8 +97,16 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     super.initState();
   }
 
+
+
   Future<bool> getSharedPref() async {
     sharedPreferences = await SharedPreferences.getInstance();
+    ctrlFirstName.text = firstName;
+    ctrlSurame.text = surname;
+    ctrlMobile.text = maskednumber;
+    ctrlUserName.text = userName;
+    ctrlPassword.text = password;
+    ctrlCnfPassword.text = password;
     return true;
   }
 
@@ -142,7 +156,7 @@ var _editFormKey = GlobalKey<FormState>();
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'EDIT ACCOUNT',
+                      'EDIT USER',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 1.9 * SizeConfig.heightMultiplier,
@@ -167,7 +181,7 @@ var _editFormKey = GlobalKey<FormState>();
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            'Basic Information ${widget.first_Name}',
+                            'Basic Information',
                             style: TextStyle(
                               fontFamily: 'Manrope',
                               fontSize: 2.36 * SizeConfig.heightMultiplier,
@@ -289,7 +303,7 @@ var _editFormKey = GlobalKey<FormState>();
                                       ? mobileMaskAustralia
                                       : mobileMaskUSA)
                                       .getUnmaskedText();
-                                  _maskednumber=(country=='Australia'
+                                  maskednumber=(country=='Australia'
                                       ? mobileMaskAustralia
                                   :mobileMaskUSA
                                   ).getMaskedText();
@@ -512,15 +526,20 @@ var _editFormKey = GlobalKey<FormState>();
                                       setState(() {
                                         _waiting = true;
                                       });
-
-                                      await UpdateUserDetails(kURLBase +
-                                          'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$curClientUserID&Client=$curClientID&Mobile_Masked=$_maskednumber');
+                                      print(kURLBase +
+                                          'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$id&Client=$curClientID&Mobile_Masked=$maskednumber');
+                                      http.Response response = await http.get(kURLBase +
+                                          'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$id&Client=$curClientID&Mobile_Masked=$maskednumber');
+                                      String _data = response.body;
+                                      print(_data);
+                                      _errorMessage = jsonDecode(_data)['Error'];
                                       setState(() {
                                         _waiting = false;
                                       });
-                                      await Flushbar(
+                                      if(_errorMessage=='No Error'){
+                                        await Flushbar(
                                         titleText: Text(
-                                          'Details Updated',
+                                          'User Updated',
                                           style: TextStyle(
                                             fontFamily: 'Manrope',
                                             fontSize: 2.0 * SizeConfig.heightMultiplier,
@@ -530,7 +549,7 @@ var _editFormKey = GlobalKey<FormState>();
                                           textAlign: TextAlign.left,
                                         ),
                                         messageText: Text(
-                                          'You successfully updated your details.',
+                                          'You successfully updated User\'s details.',
                                           style: TextStyle(
                                             fontFamily: 'Manrope',
                                             fontSize: 1.3 * SizeConfig.heightMultiplier,
@@ -562,8 +581,71 @@ var _editFormKey = GlobalKey<FormState>();
                                         backgroundColor: kshadeColor1,
 
                                       ).show(context);
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
+                                        ctrlFirstName.dispose();
+                                        ctrlSurame.dispose();
+                                        ctrlMobile.dispose();
+                                        ctrlUserName.dispose();
+                                        ctrlPassword.dispose();
+                                        ctrlCnfPassword.dispose();
+                                      Navigator.pop(context);
+                                      }
+                                      else {
+                                        await Flushbar(
+                                          titleText: Text(
+                                            'Error',
+                                            style: TextStyle(
+                                              fontFamily: 'Manrope',
+                                              fontSize: 2.0 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: const Color(0xffffffff),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          messageText: Text(
+                                            _errorMessage,
+                                            style: TextStyle(
+                                              fontFamily: 'Manrope',
+                                              fontSize: 1.3 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: const Color(0xffffffff),
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12.0,
+                                              horizontal: 5.1 *
+                                                  SizeConfig.widthMultiplier),
+                                          icon: Icon(
+                                            Icons.clear,
+                                            size: 3.94 *
+                                                SizeConfig.heightMultiplier,
+                                            color: Colors.white,
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                          flushbarPosition: FlushbarPosition
+                                              .TOP,
+                                          borderColor: Colors.transparent,
+                                          shouldIconPulse: false,
+                                          maxWidth: 91.8 *
+                                              SizeConfig.widthMultiplier,
+                                          boxShadows: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(
+                                                  0.3),
+                                              spreadRadius: 1 *
+                                                  SizeConfig.heightMultiplier,
+                                              blurRadius: 2 *
+                                                  SizeConfig.heightMultiplier,
+                                              offset: Offset(0,
+                                                  10), // changes position of shadow
+                                            ),
+                                          ],
+                                          backgroundColor: kshadeColor1,
 
+                                        ).show(context);
+                                      }
                                     }
 
 
@@ -643,24 +725,4 @@ var _editFormKey = GlobalKey<FormState>();
       );
 
   }
-}
-
-UpdateUserDetails(String url) async{
-  print(url);
-  http.Response response = await http.get(url);
-  String data = response.body;
-  print(data);
-  sharedPreferences.setString('first_Name', jsonDecode(data)['First_Name']);
-  curUserFName=jsonDecode(data)['First_Name'];
-  sharedPreferences.setString('surname', jsonDecode(data)['Surname']);
-  curUserSName=jsonDecode(data)['Surname'];
-  sharedPreferences.setString('mobile', jsonDecode(data)['Mobile']);
-  unmasked_mobile=jsonDecode(data)['Mobile'];
-  sharedPreferences.setString('curuser', jsonDecode(data)['EmailAddress']);
-  curUserName=jsonDecode(data)['EmailAddress'];
-  sharedPreferences.setString('curUserPWD', jsonDecode(data)['Decrypted_Password']);
-  curPassword=jsonDecode(data)['Decrypted_Password'];
-  sharedPreferences.setString('maskedMobile', jsonDecode(data)['Mobile_Masked']);
-  masked_mobile=jsonDecode(data)['Mobile_Masked'];
-
 }

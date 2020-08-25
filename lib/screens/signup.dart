@@ -119,6 +119,9 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.transparent,elevation: 0,),
+      extendBodyBehindAppBar: true,
+
       body: ModalProgressHUD(
         inAsyncCall: waiting,
         color: Color(0xff3ba838),

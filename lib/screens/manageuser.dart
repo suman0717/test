@@ -83,7 +83,8 @@ class _ManageUserState extends State<ManageUser> {
            email: jsonRes[i]["EmailAddress"],
            pwd: jsonRes[i]["Decrypted_Password"],
            id: jsonRes[i]["EXT_ID"],
-           mobile: jsonRes[i]["Mobile_Masked"],
+           mobile_masked: jsonRes[i]["Mobile_Masked"],
+           mobile: jsonRes[i]["Mobile"],
          );
          customListManageUser.add(_txt);
          filteredcustomListManageUser.add(_txt);
@@ -99,7 +100,8 @@ class _ManageUserState extends State<ManageUser> {
          email: jsonData['EmailAddress'],
          pwd: jsonData["Decrypted_Password"],
          id: jsonData['EXT_ID'],
-         mobile: jsonData['Mobile_Masked'],
+         mobile_masked: jsonData['Mobile_Masked'],
+         mobile: jsonData['Mobile'],
        );
        customListManageUser.add(_txt);
       filteredcustomListManageUser.add(_txt);
@@ -185,11 +187,12 @@ class UserDetails extends StatelessWidget {
   String surName;
   int id;
   String email;
+  String mobile_masked;
   String mobile;
   String primary_User;
   String pwd;
 
-  UserDetails({this.first_Name,this.surName,this.id,this.mobile,this.email,this.primary_User,this.pwd});
+  UserDetails({this.first_Name,this.surName,this.id,this.mobile_masked,this.email,this.primary_User,this.pwd, this.mobile});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -210,9 +213,37 @@ Text('$first_Name $surName' ,style: TextStyle(
       trailing: SizedBox(width: 25.0 * SizeConfig.widthMultiplier,
         child: RawMaterialButton(
           onPressed: () {
-            print(first_Name);
-            EditUserDetails(first_Name: first_Name, surName: surName, id: id, email: email,mobile: mobile,primary_User: primary_User,pwd: pwd,);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserDetails()));
+//            tempfirst_Name ='';
+//            tempsurName ='';
+//            tempid = 0;
+//            tempemail = '';
+//            tempmobile ='';
+//            tempunmaskedmobile = '';
+//            tempprimary_User = '';
+//            temppwd ='';
+//            print(mobile_masked);
+//            print(mobile);
+//            print(first_Name);
+//             tempfirst_Name=first_Name;
+//             tempsurName=surName;
+//            tempid=id;
+//             tempemail=email;
+//             tempmobile=mobile_masked;
+//             tempunmaskedmobile=mobile;
+//             tempprimary_User=primary_User;
+//             temppwd=pwd;
+//             if(tempfirst_Name !=null && tempsurName !=null && tempid != null && tempemail != null && tempmobile !=null && tempunmaskedmobile != null && tempprimary_User != null && temppwd !=null){
+//               Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserDetails(userDetail: this.,)));
+//             }
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserDetails(
+              firstName: first_Name,
+              surname: surName,
+              userName: email,
+            mobile: mobile,
+            maskednumber: mobile_masked,
+            password: pwd,
+            confirm_Password: pwd,
+            id: id,)));
             },
           elevation: 5.0,
           fillColor: Colors.white,
