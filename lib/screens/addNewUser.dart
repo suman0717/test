@@ -1,9 +1,18 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/screens/SignIn.dart';
+import 'package:radreviews/screens/feedbackState.dart';
+import 'package:radreviews/screens/home.dart';
 import 'package:http/http.dart' as http;
+import 'package:radreviews/screens/manageuser.dart';
+import 'package:radreviews/screens/myaccount.dart';
+import 'package:radreviews/screens/negFeedback.dart';
+import 'package:radreviews/screens/settings.dart';
+import 'package:radreviews/screens/smsSent.dart';
+import 'package:radreviews/screens/termsandconditins.dart';
 import 'dart:convert';
 import 'package:radreviews/size_config.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -15,24 +24,13 @@ var mobileMaskUSA = MaskTextInputFormatter(
 var mobileMaskAustralia = MaskTextInputFormatter(
     mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
 
-class EditUserDetails extends StatefulWidget {
-
-  String firstName;
-  String surname;
-  String userName;
-  String mobile;
-  String password;
-  String confirm_Password;
-  String maskednumber;
-  int id;
-
-  EditUserDetails({Key key, @required this.firstName,this.surname,this.userName,this.mobile,this.maskednumber,this.password,this.confirm_Password,this.id}): super (key : key);
+class AddNewUser extends StatefulWidget {
 
   @override
-  _EditUserDetailsState createState() => _EditUserDetailsState(firstName: firstName,surname: surname,userName: userName,mobile: mobile,maskednumber: maskednumber,password: password,confirm_Password: confirm_Password,id: id);
+  _AddNewUserState createState() => _AddNewUserState();
 }
 SharedPreferences sharedPreferences;
-class _EditUserDetailsState extends State<EditUserDetails> {
+class _AddNewUserState extends State<AddNewUser> {
   bool _isHiddenPwd = true;
   bool _isHiddenCnfPwd = true;
   bool _waiting = false;
@@ -46,8 +44,6 @@ class _EditUserDetailsState extends State<EditUserDetails> {
   String maskednumber;
   String _errorMessage='No Error';
   int id;
-
-  _EditUserDetailsState({this.firstName,this.surname,this.userName,this.mobile,this.maskednumber,this.password,this.confirm_Password,this.id});
 
   var ctrlFirstName = TextEditingController();
   var ctrlSurame = TextEditingController();
@@ -92,12 +88,6 @@ class _EditUserDetailsState extends State<EditUserDetails> {
 
   Future<bool> getSharedPref() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    ctrlFirstName.text = firstName;
-    ctrlSurame.text = surname;
-    ctrlMobile.text = maskednumber;
-    ctrlUserName.text = userName;
-    ctrlPassword.text = password;
-    ctrlCnfPassword.text = password;
     return true;
   }
 
@@ -113,7 +103,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
         context, MaterialPageRoute(builder: (context) => XDSignIn()));
   }
 
-var _editFormKey = GlobalKey<FormState>();
+var _AddFormKey = GlobalKey<FormState>();
 
 
 
@@ -147,7 +137,7 @@ var _editFormKey = GlobalKey<FormState>();
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'EDIT USER',
+                      'ADD USER',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 1.9 * SizeConfig.heightMultiplier,
@@ -164,7 +154,7 @@ var _editFormKey = GlobalKey<FormState>();
               ),
               Expanded(
                 child: Form(
-                  key: _editFormKey,
+                  key: _AddFormKey,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(6.35 * SizeConfig.widthMultiplier, 2.63 * SizeConfig.heightMultiplier, 6.35 * SizeConfig.widthMultiplier, 0),
                     child: SingleChildScrollView(
@@ -512,131 +502,185 @@ var _editFormKey = GlobalKey<FormState>();
                                 child: RaisedButton(
                                   onPressed: () async {
                                     print('Before validation');
-                                    if(_editFormKey.currentState.validate()){
+                                    if(_AddFormKey.currentState.validate()){
                                       print('done');
                                       setState(() {
                                         _waiting = true;
                                       });
                                       print(kURLBase +
-                                          'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$id&Client=$curClientID&Mobile_Masked=$maskednumber');
+                                          'REST/REVIEWS/App_AddNewClientUser?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&Client=$curClientID&Mobile_Masked=$maskednumber');
                                       http.Response response = await http.get(kURLBase +
-                                          'REST/REVIEWS/UpdateUserDetail?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$id&Client=$curClientID&Mobile_Masked=$maskednumber');
+                                          'REST/REVIEWS/App_AddNewClientUser?First_Name=$firstName&Surname=$surname&Mobile=$mobile&EmailAddress=$userName&Temp_pdw=$password&CUID=$id&Client=$curClientID&Mobile_Masked=$maskednumber');
                                       String _data = response.body;
-                                      print(_data);
-                                      _errorMessage = jsonDecode(_data)['Error'];
-                                      setState(() {
-                                        _waiting = false;
-                                      });
-                                      if(_errorMessage=='No Error'){
-                                        await Flushbar(
+                                      try{
+                                        print(_data);
+                                        _errorMessage = jsonDecode(_data)['Error'];
+                                        setState(() {
+                                          _waiting = false;
+                                        });
+                                        if(_errorMessage=='No Error'){
+                                          await Flushbar(
+                                            titleText: Text(
+                                              'User Added',
+                                              style: TextStyle(
+                                                fontFamily: 'Manrope',
+                                                fontSize: 2.0 * SizeConfig.heightMultiplier,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                            messageText: Text(
+                                              'You successfully added a new user.',
+                                              style: TextStyle(
+                                                fontFamily: 'Manrope',
+                                                fontSize: 1.3 * SizeConfig.heightMultiplier,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                                            icon: Icon(
+                                              Icons.check,
+                                              size: 3.94 * SizeConfig.heightMultiplier,
+                                              color: Colors.white,
+                                            ),
+                                            duration: Duration(seconds: 2),
+                                            flushbarPosition: FlushbarPosition.TOP,
+                                            borderColor: Colors.transparent,
+                                            shouldIconPulse: false,
+                                            maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                                            boxShadows: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.3),
+                                                spreadRadius: 1 * SizeConfig.heightMultiplier,
+                                                blurRadius: 2 * SizeConfig.heightMultiplier,
+                                                offset: Offset(0, 10), // changes position of shadow
+                                              ),
+                                            ],
+                                            backgroundColor: kshadeColor1,
+
+                                          ).show(context);
+                                          Navigator.of(context).pop();
+                                        }
+                                        else {
+                                          await Flushbar(
+                                            titleText: Text(
+                                              'Error',
+                                              style: TextStyle(
+                                                fontFamily: 'Manrope',
+                                                fontSize: 2.0 *
+                                                    SizeConfig.heightMultiplier,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                            messageText: Text(
+                                              _errorMessage,
+                                              style: TextStyle(
+                                                fontFamily: 'Manrope',
+                                                fontSize: 1.3 *
+                                                    SizeConfig.heightMultiplier,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 12.0,
+                                                horizontal: 5.1 *
+                                                    SizeConfig.widthMultiplier),
+                                            icon: Icon(
+                                              Icons.clear,
+                                              size: 3.94 *
+                                                  SizeConfig.heightMultiplier,
+                                              color: Colors.white,
+                                            ),
+                                            duration: Duration(seconds: 2),
+                                            flushbarPosition: FlushbarPosition
+                                                .TOP,
+                                            borderColor: Colors.transparent,
+                                            shouldIconPulse: false,
+                                            maxWidth: 91.8 *
+                                                SizeConfig.widthMultiplier,
+                                            boxShadows: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(
+                                                    0.3),
+                                                spreadRadius: 1 *
+                                                    SizeConfig.heightMultiplier,
+                                                blurRadius: 2 *
+                                                    SizeConfig.heightMultiplier,
+                                                offset: Offset(0,
+                                                    10), // changes position of shadow
+                                              ),
+                                            ],
+                                            backgroundColor: kshadeColor1,
+
+                                          ).show(context);
+
+                                        }
+                                      }
+                                      catch(e){print(e);
+                                      await Flushbar(
                                         titleText: Text(
-                                          'User Updated',
+                                          'Error',
                                           style: TextStyle(
                                             fontFamily: 'Manrope',
-                                            fontSize: 2.0 * SizeConfig.heightMultiplier,
+                                            fontSize: 2.0 *
+                                                SizeConfig.heightMultiplier,
                                             color: const Color(0xffffffff),
                                             fontWeight: FontWeight.w600,
                                           ),
                                           textAlign: TextAlign.left,
                                         ),
                                         messageText: Text(
-                                          'You successfully updated User\'s details.',
+                                          'Something went wrong.',
                                           style: TextStyle(
                                             fontFamily: 'Manrope',
-                                            fontSize: 1.3 * SizeConfig.heightMultiplier,
+                                            fontSize: 1.3 *
+                                                SizeConfig.heightMultiplier,
                                             color: const Color(0xffffffff),
                                             fontWeight: FontWeight.w300,
                                           ),
                                           textAlign: TextAlign.left,
                                         ),
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                                            vertical: 12.0,
+                                            horizontal: 5.1 *
+                                                SizeConfig.widthMultiplier),
                                         icon: Icon(
-                                          Icons.check,
-                                          size: 3.94 * SizeConfig.heightMultiplier,
+                                          Icons.clear,
+                                          size: 3.94 *
+                                              SizeConfig.heightMultiplier,
                                           color: Colors.white,
                                         ),
                                         duration: Duration(seconds: 2),
-                                        flushbarPosition: FlushbarPosition.TOP,
+                                        flushbarPosition: FlushbarPosition
+                                            .TOP,
                                         borderColor: Colors.transparent,
                                         shouldIconPulse: false,
-                                        maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                                        maxWidth: 91.8 *
+                                            SizeConfig.widthMultiplier,
                                         boxShadows: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(0.3),
-                                            spreadRadius: 1 * SizeConfig.heightMultiplier,
-                                            blurRadius: 2 * SizeConfig.heightMultiplier,
-                                            offset: Offset(0, 10), // changes position of shadow
+                                            color: Colors.black.withOpacity(
+                                                0.3),
+                                            spreadRadius: 1 *
+                                                SizeConfig.heightMultiplier,
+                                            blurRadius: 2 *
+                                                SizeConfig.heightMultiplier,
+                                            offset: Offset(0,
+                                                10), // changes position of shadow
                                           ),
                                         ],
                                         backgroundColor: kshadeColor1,
 
-                                      ).show(context);
-                                        ctrlFirstName.dispose();
-                                        ctrlSurame.dispose();
-                                        ctrlMobile.dispose();
-                                        ctrlUserName.dispose();
-                                        ctrlPassword.dispose();
-                                        ctrlCnfPassword.dispose();
-                                      Navigator.pop(context);
-                                      }
-                                      else {
-                                        await Flushbar(
-                                          titleText: Text(
-                                            'Error',
-                                            style: TextStyle(
-                                              fontFamily: 'Manrope',
-                                              fontSize: 2.0 *
-                                                  SizeConfig.heightMultiplier,
-                                              color: const Color(0xffffffff),
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          messageText: Text(
-                                            _errorMessage,
-                                            style: TextStyle(
-                                              fontFamily: 'Manrope',
-                                              fontSize: 1.3 *
-                                                  SizeConfig.heightMultiplier,
-                                              color: const Color(0xffffffff),
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 12.0,
-                                              horizontal: 5.1 *
-                                                  SizeConfig.widthMultiplier),
-                                          icon: Icon(
-                                            Icons.clear,
-                                            size: 3.94 *
-                                                SizeConfig.heightMultiplier,
-                                            color: Colors.white,
-                                          ),
-                                          duration: Duration(seconds: 2),
-                                          flushbarPosition: FlushbarPosition
-                                              .TOP,
-                                          borderColor: Colors.transparent,
-                                          shouldIconPulse: false,
-                                          maxWidth: 91.8 *
-                                              SizeConfig.widthMultiplier,
-                                          boxShadows: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(
-                                                  0.3),
-                                              spreadRadius: 1 *
-                                                  SizeConfig.heightMultiplier,
-                                              blurRadius: 2 *
-                                                  SizeConfig.heightMultiplier,
-                                              offset: Offset(0,
-                                                  10), // changes position of shadow
-                                            ),
-                                          ],
-                                          backgroundColor: kshadeColor1,
+                                      ).show(context);}
 
-                                        ).show(context);
-                                      }
                                     }
 
 
@@ -656,7 +700,7 @@ var _editFormKey = GlobalKey<FormState>();
                                           BorderRadius.circular(2.9 *SizeConfig.heightMultiplier)),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        'Update',
+                                        'Add',
                                         style: TextStyle(
                                           fontFamily: 'Manrope',
                                           fontSize: 2.0 *SizeConfig.heightMultiplier,
@@ -714,6 +758,5 @@ var _editFormKey = GlobalKey<FormState>();
           ),
         ),
       );
-
   }
 }

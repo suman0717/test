@@ -512,7 +512,7 @@ class _HomeState extends State<Home> {
               color: kshadeColor1,
               shape: RoundedRectangleBorder(
                   borderRadius:
-                      BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
+                  BorderRadius.circular(6.65 * SizeConfig.widthMultiplier)),
               child: InkWell(
                 child: IconButton(
                   iconSize: 4 * SizeConfig.heightMultiplier,

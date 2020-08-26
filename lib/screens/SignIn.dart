@@ -667,7 +667,7 @@ class _XDSignInState extends State<XDSignIn> {
                   elevation: 6.0,
                   onPressed: () {
                     QuickLaunchLink().hitLink(
-                        'mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');
+                        'mailto:$supportEmaill +?subject=Need%20Help&body=Hi%20Support');
                   },
                 ),
                 SizedBox(
