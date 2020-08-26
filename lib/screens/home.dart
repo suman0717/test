@@ -23,9 +23,6 @@ import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
-// Last modified
-//String selectedlocation;
-//var _formkey = GlobalKey<FormState>();
 
 class Home extends StatefulWidget {
   @override
@@ -33,17 +30,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-//  String _unMaskedMobile;
-//  bool termsAndConsdditions = true;
-//  String _country = 'Australia';
-//  var ctrlMobile = TextEditingController();
-//  var ctrllocation = TextEditingController();
-//
-//  var mobileMaskUSA = MaskTextInputFormatter(
-//      mask: "(###) ###-####", filter: {"#": RegExp(r'[0-9]')});
-//  var mobileMaskAustralia = MaskTextInputFormatter(
-//      mask: "####-###-###", filter: {"#": RegExp(r'[0-9]')});
-//  bool _isWaiting = false;
   int selectedIndex = 2;
   int selectedAppIndex = 2;
 
@@ -58,144 +44,6 @@ class _HomeState extends State<Home> {
     TandC(kURLTerms),
     ManageUser(),
   ];
-
-  @override
-//  void initState() {
-//    getSharedPref().whenComplete(() {
-//      setState(() {});
-//      print("success");
-//    }).catchError((error, stackTrace) {
-//      print("outer: $error");
-//    });
-//
-//    super.initState();
-//  }
-
-//  Future<bool> getSharedPref() async {
-//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-//    print(locationListTemp);
-//    print('old list');
-//    if (sharedPreferences.getStringList('loc') == null) {
-//      locationListTemp = [''];
-//    } else {
-//      locationListTemp = (sharedPreferences.getStringList('loc'));
-//    }
-//    print('shared list');
-//    print(sharedPreferences.get('loc'));
-//    print('new list');
-//    print(locationListTemp);
-//    return true;
-//  }
-
-//  void showAlert() {
-//    showDialog(
-//      context: context,
-//      barrierDismissible: false,
-//      builder: (BuildContext context) {
-//        return CustomAlertDialog();
-//      },
-//    );
-//  }
-
-//  void showRequestFeedbackInfo() {
-//    showDialog(
-//        context: context,
-//        builder: (BuildContext context) {
-//          return AlertDialog(
-//            elevation: 5.0,
-//            title: Text(
-//              'Feedback Instructions',
-//              textAlign: TextAlign.center,
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 3.0 * SizeConfig.heightMultiplier,
-//                fontWeight: FontWeight.w600,
-//              ),
-//            ),
-//            content: Container(
-//              child: Column(
-//                mainAxisSize: MainAxisSize.min,
-//                children: [
-//                  Text(
-//                    'AUS Number Format 0412-343-567',
-//                    textAlign: TextAlign.center,
-//                    style: TextStyle(
-//                      fontFamily: 'Manrope',
-//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-//                      fontWeight: FontWeight.w600,
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: 1 * SizeConfig.heightMultiplier,
-//                  ),
-//                  Text(
-//                    'USA Number Format (555)555-1234',
-//                    textAlign: TextAlign.center,
-//                    style: TextStyle(
-//                      fontFamily: 'Manrope',
-//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-//                      fontWeight: FontWeight.w600,
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-//          );
-//        },);
-//  }
-
-//  bool validateMobile(String number) {
-//    print(number);
-//    if (number == null) {
-//      validationOnRequestFeedback('Please provide Mobile Number');
-//      return false;
-//    } else if (number.length != 10) {
-//      validationOnRequestFeedback('Please provide the Correct Number');
-//      return false;
-//    } else if (!(number.startsWith('0'))) {
-//      validationOnRequestFeedback('Number should starts with 0');
-//      return false;
-//    } else
-//      return true;
-//  }
-
-//  void validationOnRequestFeedback(String errormsg) {
-//    showDialog(
-//        context: context,
-//        builder: (BuildContext context) {
-//          return AlertDialog(
-//            elevation: 5.0,
-//            title: Text(
-//              'Error:',
-//              textAlign: TextAlign.center,
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 3.0 * SizeConfig.heightMultiplier,
-//                fontWeight: FontWeight.w600,
-//              ),
-//            ),
-//            content: Container(
-//              child: Column(
-//                mainAxisSize: MainAxisSize.min,
-//                children: [
-//                  Text(
-//                    errormsg,
-//                    textAlign: TextAlign.center,
-//                    style: TextStyle(
-//                      fontFamily: 'Manrope',
-//                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-//                      fontWeight: FontWeight.w600,
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: 1 * SizeConfig.heightMultiplier,
-//                  ),
-//                ],
-//              ),
-//            ),
-//          );
-//        });
-//  }
 
   void Logout() async {
     print(locationListTemp.length);
@@ -218,7 +66,7 @@ class _HomeState extends State<Home> {
           isEditable=false;}
         else{
           QuickLaunchLink().hitLink(
-              'mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');
+              'mailto:$supportEmaill?subject=Need%20Help&body=Hi%20Support');
         }
       }
       else{

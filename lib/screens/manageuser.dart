@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
-
 class ManageUser extends StatefulWidget {
   @override
   _ManageUserState createState() => _ManageUserState();
@@ -133,7 +132,6 @@ class _ManageUserState extends State<ManageUser> {
       color: Color(0xff3ba838),
       opacity: 0.1,
       child: Scaffold(
-
         extendBodyBehindAppBar: true,
         body: Column(
           children: [
@@ -151,7 +149,6 @@ class _ManageUserState extends State<ManageUser> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-
                   Text(
                     'MANAGE USERS',
                     style: TextStyle(
@@ -162,21 +159,35 @@ class _ManageUserState extends State<ManageUser> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                    SizedBox(
-                      height: 3.3 * SizeConfig.heightMultiplier,
-                    ),
+                  SizedBox(
+                    height: 3.3 * SizeConfig.heightMultiplier,
+                  ),
                 ],
               ),
             ),
+            SizedBox(
+              height: 10.0,
+            ),
+            ListTile(
+              leading: SizedBox(width: 12 * SizeConfig.widthMultiplier),
+              title: Text(
+                'User Name',
+                style: TextStyle(
+                  fontFamily: 'Manrope',
+                  fontSize: 15,
+                  color: const Color(0xffa1a1a1),
+                ),
+                textAlign: TextAlign.left,
+              ),
+              trailing: SizedBox(width: 25.51 * SizeConfig.widthMultiplier,child: IconButton(icon: (Icon(Icons.person_add,color: kshadeColor1,)), onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>AddNewUser()));
+              }),)
+            ),
             Expanded(
-              child: Padding(
-                padding:
-                    EdgeInsets.only(top: 2.63 * SizeConfig.heightMultiplier),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: filteredcustomListManageUser,
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: filteredcustomListManageUser,
                 ),
               ),
             ),
@@ -237,8 +248,7 @@ class UserDetails extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) =>
+              MaterialPageRoute(builder: (context) =>
                     EditUserDetails(
                   firstName: first_Name,
                   surname: surName,
@@ -249,7 +259,7 @@ class UserDetails extends StatelessWidget {
                   confirm_Password: pwd,
                   id: id,
                 ),
-              ),
+                  ),
             );
           },
           elevation: 5.0,

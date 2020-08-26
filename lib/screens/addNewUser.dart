@@ -8,6 +8,7 @@ import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/home.dart';
 import 'package:http/http.dart' as http;
 import 'package:radreviews/screens/manageuser.dart';
+import 'package:radreviews/screens/manageuser_prior.dart';
 import 'package:radreviews/screens/myaccount.dart';
 import 'package:radreviews/screens/negFeedback.dart';
 import 'package:radreviews/screens/settings.dart';
@@ -563,7 +564,7 @@ var _AddFormKey = GlobalKey<FormState>();
                                             backgroundColor: kshadeColor1,
 
                                           ).show(context);
-                                          Navigator.of(context).pop();
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ManageUserNew()));
                                         }
                                         else {
                                           await Flushbar(

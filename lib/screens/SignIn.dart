@@ -659,15 +659,19 @@ class _XDSignInState extends State<XDSignIn> {
                 ),
                 RawMaterialButton(
                   child: Container(
-                    child: SvgPicture.string(
-                      _svg_731xhc,
-                      allowDrawingOutsideViewBox: true,
+                    child: FittedBox(
+                      child: SizedBox(width: 9.2 * SizeConfig.widthMultiplier,height: 9.2 * SizeConfig.widthMultiplier,
+                        child: SvgPicture.string(
+                          _svg_731xhc,
+                          allowDrawingOutsideViewBox: true,
+                        ),
+                      ),
                     ),
                   ),
                   elevation: 6.0,
                   onPressed: () {
                     QuickLaunchLink().hitLink(
-                        'mailto:$supportEmaill +?subject=Need%20Help&body=Hi%20Support');
+                        'mailto:$supportEmaill?subject=Need%20Help&body=Hi%20Support');
                   },
                 ),
                 SizedBox(
