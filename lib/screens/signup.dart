@@ -168,7 +168,7 @@ class _SignupState extends State<Signup> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Create an acocount',
+                          'Create an account',
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 2.36 * SizeConfig.heightMultiplier,
@@ -349,20 +349,15 @@ class _SignupState extends State<Signup> {
                           child: TextFormField(controller: ctrlBusinessContactNumber,
                               validator: (String value){
                                 if(value.isEmpty){
-                                  return 'Mobile number must be provided';
+                                  return 'Number must be provided';
                                 }
                                 else if(!(value.startsWith('0'))){
                                   return 'Number should starts with 0';
                                 }
-                                else if(value.length!=12){
+                                else if(value.length>=8){
                                   return 'Please provide the Correct Number';
                                 }
                               },
-                              inputFormatters: [
-                                _country == 'Australia'
-                                    ? mobileMaskAustralia
-                                    : mobileMaskUSA
-                              ],
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
