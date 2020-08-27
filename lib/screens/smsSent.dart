@@ -3,14 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/feedbackState.dart';
-import 'package:radreviews/screens/home.dart';
-import 'package:radreviews/screens/myaccount.dart';
-import 'package:radreviews/screens/negFeedback.dart';
-import 'package:radreviews/screens/settings.dart';
-import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +38,12 @@ class _SMSSentState extends State<SMSSent> {
   int len;
 
   Future<List<Widget>> getSmsSent() async {
+    IconData posOutIconData;
+    Widget posOutIcon;
+    Color _posOutIconColor;
+    IconData negOutIconData;
+    Widget negOutIcon;
+    Color _negOutIconColor;
     setState(() {
       _waiting=true;
     });
@@ -54,38 +53,41 @@ class _SMSSentState extends State<SMSSent> {
     List jsonRes = jsonData['response'];
     print(jsonRes.length);
     len = jsonRes.length;
-    IconData posOutIcon;
-    Color _posOutIconColor;
-    IconData negOutIcon;
-    Color _negOutIconColor;
+
 
     for (int i = 0; i < jsonRes.length; i++) {
       print(i);
       print(jsonRes[i]["Mobile_validated"]);
       if(jsonRes[i]["SMS_Pos_Submit_Needs"]==circlethin){
-        posOutIcon=FontAwesomeIcons.dotCircle;
+        posOutIconData=FontAwesomeIcons.dotCircle;
         _posOutIconColor = Colors.grey;
+        posOutIcon=CustomIcons().CircleIconGrey();
       }
       else if(jsonRes[i]["SMS_Pos_Submit_Needs"]==posThumbThick){
-        posOutIcon=FontAwesomeIcons.thumbsUp;
+        posOutIconData=FontAwesomeIcons.thumbsUp;
         _posOutIconColor = kshadeColor1;
+        posOutIcon=CustomIcons().ThumbsUpRegular();
       }
       else if(jsonRes[i]["SMS_Pos_Submit_Needs"]==posThumbThickGrey){
-        posOutIcon=FontAwesomeIcons.solidThumbsUp;
+        posOutIconData=FontAwesomeIcons.solidThumbsUp;
         _posOutIconColor = Colors.grey;
+        posOutIcon=CustomIcons().ThumbsUpSolid();
       }
 
       if(jsonRes[i]["SMS_Neg_Submit_Needs"]==circlethin){
-        negOutIcon=FontAwesomeIcons.dotCircle;
+        negOutIconData=FontAwesomeIcons.dotCircle;
         _negOutIconColor = Colors.grey;
+        negOutIcon=CustomIcons().CircleIconGrey();
       }
       else if(jsonRes[i]["SMS_Neg_Submit_Needs"]==negThumbThick){
-        negOutIcon=FontAwesomeIcons.thumbsDown;
+        negOutIconData=FontAwesomeIcons.thumbsDown;
         _negOutIconColor = kshadeColor1;
+        negOutIcon=CustomIcons().ThumbsDownRegular();
       }
       else if(jsonRes[i]["SMS_Neg_Submit_Needs"]==negThumbThickGrey){
-        negOutIcon=FontAwesomeIcons.solidThumbsDown;
+        negOutIconData=FontAwesomeIcons.solidThumbsDown;
         _negOutIconColor = Colors.grey;
+        negOutIcon=CustomIcons().ThumbsDownRegular();
       }
 
       var _txt = CustomListTile(
@@ -93,10 +95,13 @@ class _SMSSentState extends State<SMSSent> {
           requestedon: jsonRes[i]["Requested_On"].toString(),
           smsID: jsonRes[i]["SMS_ID"].toString(),
           smsClickCount: jsonRes[i]["SMSOpenClicks"],
-          posIcon: posOutIcon,
-          negIcon: negOutIcon,
+          posIconData: posOutIconData,
+          negIconData: negOutIconData,
           negIconColor: _negOutIconColor,
-          posIconColor: _posOutIconColor
+          posIconColor: _posOutIconColor,
+          negIcon: negOutIcon,
+          posIcon: posOutIcon,
+
       );
       custom_listTile.add(_txt);
     }
@@ -119,166 +124,6 @@ class _SMSSentState extends State<SMSSent> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-//      appBar: AppBar(
-//        backgroundColor: Colors.transparent,
-//        elevation: 0,
-//        actions: [
-//          PopupMenuButton(
-//            offset: Offset(0, 200),
-//            icon: Icon(Icons.more_horiz),
-//            onSelected: (value) {
-//              if(value==1){
-//                Navigator.push(context, MaterialPageRoute(builder: (context)=>Settings()));
-//              }
-//              else if(value==2){
-//                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyAccount()));
-//              }
-//              else if(value==3){
-//                Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackStats()));
-//              }
-//              else if(value==4){
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => SMSSent(),
-//                  ),
-//                );
-//              }
-//              else if(value==5){
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => NegFeedback(),
-//                  ),
-//                );
-//              }
-//              else if(value==6){
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => TandC(kURLTerms),
-//                  ),
-//                );
-//              }
-//              else if(value==7){
-//                Logout();
-//              };
-//            },
-//            itemBuilder: (context) => [
-//              PopupMenuItem(
-//                child: Text(
-//                  'Settings',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 1,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'My Account',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 2,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'Feedback Stats',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 3,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'Feedback SMS Sent',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 4,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'Feedback Negative',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 5,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'Terms & Conditions',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 6,
-//              ),
-//              PopupMenuItem(height: 1,
-//                child: PopupMenuDivider(height: 1,
-//                ),),
-//              PopupMenuItem(
-//                child: Text(
-//                  'Logout',
-//                  style: TextStyle(
-//                    fontFamily: 'Manrope',
-//                    fontSize: 11,
-//                    color: const Color(0xff363636),
-//                    fontWeight: FontWeight.w500,
-//                  ),
-//                  textAlign: TextAlign.left,
-//                ),
-//                value: 7,
-//              ),
-//            ],
-//          ),
-//        ],
-//      ),
-
       body: ModalProgressHUD(
         inAsyncCall: _waiting,
         color: Color(0xff3ba838),
@@ -339,13 +184,15 @@ class CustomListTile extends StatefulWidget {
   String smsID;
   String requestedon;
   int smsClickCount;
-  IconData posIcon;
+  IconData posIconData;
+  Widget posIcon;
   Color posIconColor = kshadeColor1;
   Color negIconColor = kshadeColor1;
-  IconData negIcon;
+  IconData negIconData;
+  Widget negIcon;
   IconData customEnvelope = FontAwesomeIcons.envelope;
 
-  CustomListTile({this.mobileValidated, this.smsID, this.requestedon,this.smsClickCount,this.negIcon,this.negIconColor,this.posIcon,this.posIconColor});
+  CustomListTile({this.mobileValidated, this.smsID, this.requestedon,this.smsClickCount,this.negIconData,this.negIcon,this.negIconColor,this.posIconData,this.posIcon,this.posIconColor});
 
   @override
   _CustomListTileState createState() => _CustomListTileState();
@@ -390,28 +237,10 @@ class _CustomListTileState extends State<CustomListTile> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                  icon: Icon(widget.smsClickCount==0
-                      ?widget.customEnvelope
-                      :FontAwesomeIcons.envelopeOpen,
-                    color: widget.smsClickCount==0
-                        ? Colors.grey
-                        : kshadeColor1,
-                  ),
-                  onPressed: () {
-                    setState(() {
-//                      if (widget.smsClickCount==0) {
-//                        widget.customEnvelope = FontAwesomeIcons.envelopeOpen;
-//                        widget.smsClickCount++;
-//                      }
-                    });
-                    ;
-                  }),
-              IconButton(icon: Icon(widget.posIcon,color: widget.posIconColor,), onPressed: (){
-
-              }),
-              IconButton(icon: Icon(widget.negIcon,color: widget.negIconColor,), onPressed: (){
-
-              }),
+                  icon: widget.smsClickCount==0?CustomIcons().EnvelopeClose():CustomIcons().EnvelopeOpen(),
+                  onPressed: () {}),
+              IconButton(icon: widget.posIcon, onPressed: (){}),
+              IconButton(icon: widget.negIcon, onPressed: (){}),
             ],
           ),
         ),
