@@ -494,54 +494,112 @@ class _NegFeedbackListTileState extends State<NegFeedbackListTile> {
                       print('object');
                       waiting=true;
                     });
-                    await http.get(kURLBase+ 'REST/REVIEWS/App_Email_Me?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
-                    setState(() {
-                      waiting=false;
-                    });
-                    Flushbar(
-                      titleText: Text(
-                        'Email Sent',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 2.0 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
+                    await http.get(kURLBase+ 'REST/REVIEWS/App_Email_Me1?CUID=$curClientUserID&Neg_Review_ID=${widget.id}');
+                    try{
+                      setState(() {
+                        waiting=false;
+                      });
+                      Flushbar(
+                        titleText: Text(
+                          'Email Sent',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 2.0 * SizeConfig.heightMultiplier,
+                            color: const Color(0xffffffff),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      messageText: Text(
-                        'Email has been sent to your registered email address.',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 1.3 * SizeConfig.heightMultiplier,
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w300,
+                        messageText: Text(
+                          'Email has been sent to your registered email address.',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 1.3 * SizeConfig.heightMultiplier,
+                            color: const Color(0xffffffff),
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-                      icon: Icon(
-                        Icons.check,
-                        size: 3.94 * SizeConfig.heightMultiplier,
-                        color: Colors.white,
-                      ),
-                      duration: Duration(seconds: 2),
-                      flushbarPosition: FlushbarPosition.TOP,
-                      borderColor: Colors.transparent,
-                      shouldIconPulse: false,
-                      maxWidth: 91.8 * SizeConfig.widthMultiplier,
-                      boxShadows: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1 * SizeConfig.heightMultiplier,
-                          blurRadius: 2 * SizeConfig.heightMultiplier,
-                          offset: Offset(0, 10), // changes position of shadow
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+                        icon: Icon(
+                          Icons.check,
+                          size: 3.94 * SizeConfig.heightMultiplier,
+                          color: Colors.white,
                         ),
-                      ],
-                      backgroundColor: kshadeColor1,
+                        duration: Duration(seconds: 2),
+                        flushbarPosition: FlushbarPosition.TOP,
+                        borderColor: Colors.transparent,
+                        shouldIconPulse: false,
+                        maxWidth: 91.8 * SizeConfig.widthMultiplier,
+                        boxShadows: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1 * SizeConfig.heightMultiplier,
+                            blurRadius: 2 * SizeConfig.heightMultiplier,
+                            offset: Offset(0, 10), // changes position of shadow
+                          ),
+                        ],
+                        backgroundColor: kshadeColor1,
 
-                    ).show(context);
+                      ).show(context);
+                    }
+                    catch(e){
+                      await Flushbar(
+                        titleText: Text(
+                          'Error',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 2.0 *
+                                SizeConfig.heightMultiplier,
+                            color: const Color(0xffffffff),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        messageText: Text(
+                          'Something went wrong.',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 1.3 *
+                                SizeConfig.heightMultiplier,
+                            color: const Color(0xffffffff),
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0,
+                            horizontal: 5.1 *
+                                SizeConfig.widthMultiplier),
+                        icon: Icon(
+                          Icons.clear,
+                          size: 3.94 *
+                              SizeConfig.heightMultiplier,
+                          color: Colors.white,
+                        ),
+                        duration: Duration(seconds: 2),
+                        flushbarPosition: FlushbarPosition.TOP,
+                        borderColor: Colors.transparent,
+                        shouldIconPulse: false,
+                        maxWidth:
+                        91.8 * SizeConfig.widthMultiplier,
+                        boxShadows: [
+                          BoxShadow(
+                            color:
+                            Colors.black.withOpacity(0.3),
+                            spreadRadius:
+                            1 * SizeConfig.heightMultiplier,
+                            blurRadius:
+                            2 * SizeConfig.heightMultiplier,
+                            offset: Offset(0,
+                                10), // changes position of shadow
+                          ),
+                        ],
+                        backgroundColor: kshadeColor1,
+                      ).show(context);
+                    }
+
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.53* SizeConfig.heightMultiplier)),
@@ -606,10 +664,61 @@ class _NegFeedbackCheckboxState extends State<NegFeedbackCheckbox> {
     print(widget.id);
     print(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
     http.Response _response = await http.get(kURLBase+ 'REST/REVIEWS/App_Is_Actioned?Neg_Review_ID=${widget.id}&Ticked1=${widget.isActioned==true?'Actioned':'Not Actioned'}');
+    try{
     var _data = _response.body;
     print(_data);
     setState(() {
       waiting=false;
     });
+    }
+    catch(e){
+      setState(() {
+        waiting=false;
+      });
+      Flushbar(
+        titleText: Text(
+          'Email Sent',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 2.0 * SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        messageText: Text(
+          'Email has been sent to your registered email address.',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 1.3 * SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w300,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        padding: EdgeInsets.symmetric(
+            vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
+        icon: Icon(
+          Icons.check,
+          size: 3.94 * SizeConfig.heightMultiplier,
+          color: Colors.white,
+        ),
+        duration: Duration(seconds: 2),
+        flushbarPosition: FlushbarPosition.TOP,
+        borderColor: Colors.transparent,
+        shouldIconPulse: false,
+        maxWidth: 91.8 * SizeConfig.widthMultiplier,
+        boxShadows: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            spreadRadius: 1 * SizeConfig.heightMultiplier,
+            blurRadius: 2 * SizeConfig.heightMultiplier,
+            offset: Offset(0, 10), // changes position of shadow
+          ),
+        ],
+        backgroundColor: kshadeColor1,
+
+      ).show(context);
+    }
   }
 }

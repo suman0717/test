@@ -21,13 +21,17 @@ class _SMSSentState extends State<SMSSent> {
   @override
   void initState() {
     setState(() {
-      _waiting=true;
+      _waiting = true;
     });
     getSmsSent().whenComplete(() {
-      setState(() {_waiting=false;});
+      setState(() {
+        _waiting = false;
+      });
       print("success");
     }).catchError((error, stackTrace) {
-      setState(() {_waiting=false;});
+      setState(() {
+        _waiting = false;
+      });
       print("outer: $error");
     });
 
@@ -45,63 +49,57 @@ class _SMSSentState extends State<SMSSent> {
     Widget negOutIcon;
     Color _negOutIconColor;
     setState(() {
-      _waiting=true;
+      _waiting = true;
     });
-    var data = await http.get(
-        kURLBase+'REST/REVIEWS/App_GetSmsSent?Client=$curClientID');
+    var data = await http
+        .get(kURLBase + 'REST/REVIEWS/App_GetSmsSent?Client=$curClientID');
     var jsonData = json.decode(data.body);
     List jsonRes = jsonData['response'];
     print(jsonRes.length);
     len = jsonRes.length;
 
-
     for (int i = 0; i < jsonRes.length; i++) {
       print(i);
       print(jsonRes[i]["Mobile_validated"]);
-      if(jsonRes[i]["SMS_Pos_Submit_Needs"]==circlethin){
-        posOutIconData=FontAwesomeIcons.dotCircle;
+      if (jsonRes[i]["SMS_Pos_Submit_Needs"] == circlethin) {
+        posOutIconData = FontAwesomeIcons.dotCircle;
         _posOutIconColor = Colors.grey;
-        posOutIcon=CustomIcons().CircleIconGrey();
-      }
-      else if(jsonRes[i]["SMS_Pos_Submit_Needs"]==posThumbThick){
-        posOutIconData=FontAwesomeIcons.thumbsUp;
+        posOutIcon = CustomIcons().CircleIconGrey();
+      } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThick) {
+        posOutIconData = FontAwesomeIcons.thumbsUp;
         _posOutIconColor = kshadeColor1;
-        posOutIcon=CustomIcons().ThumbsUpRegular();
-      }
-      else if(jsonRes[i]["SMS_Pos_Submit_Needs"]==posThumbThickGrey){
-        posOutIconData=FontAwesomeIcons.solidThumbsUp;
+        posOutIcon = CustomIcons().ThumbsUpRegular();
+      } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThickGrey) {
+        posOutIconData = FontAwesomeIcons.solidThumbsUp;
         _posOutIconColor = Colors.grey;
-        posOutIcon=CustomIcons().ThumbsUpSolid();
+        posOutIcon = CustomIcons().ThumbsUpSolid();
       }
 
-      if(jsonRes[i]["SMS_Neg_Submit_Needs"]==circlethin){
-        negOutIconData=FontAwesomeIcons.dotCircle;
+      if (jsonRes[i]["SMS_Neg_Submit_Needs"] == circlethin) {
+        negOutIconData = FontAwesomeIcons.dotCircle;
         _negOutIconColor = Colors.grey;
-        negOutIcon=CustomIcons().CircleIconGrey();
-      }
-      else if(jsonRes[i]["SMS_Neg_Submit_Needs"]==negThumbThick){
-        negOutIconData=FontAwesomeIcons.thumbsDown;
+        negOutIcon = CustomIcons().CircleIconGrey();
+      } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThick) {
+        negOutIconData = FontAwesomeIcons.thumbsDown;
         _negOutIconColor = kshadeColor1;
-        negOutIcon=CustomIcons().ThumbsDownRegular();
-      }
-      else if(jsonRes[i]["SMS_Neg_Submit_Needs"]==negThumbThickGrey){
-        negOutIconData=FontAwesomeIcons.solidThumbsDown;
+        negOutIcon = CustomIcons().ThumbsDownRegular();
+      } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThickGrey) {
+        negOutIconData = FontAwesomeIcons.solidThumbsDown;
         _negOutIconColor = Colors.grey;
-        negOutIcon=CustomIcons().ThumbsDownRegular();
+        negOutIcon = CustomIcons().ThumbsDownRegular();
       }
 
       var _txt = CustomListTile(
-          mobileValidated: jsonRes[i]["Mobile_validated"].toString(),
-          requestedon: jsonRes[i]["Requested_On"].toString(),
-          smsID: jsonRes[i]["SMS_ID"].toString(),
-          smsClickCount: jsonRes[i]["SMSOpenClicks"],
-          posIconData: posOutIconData,
-          negIconData: negOutIconData,
-          negIconColor: _negOutIconColor,
-          posIconColor: _posOutIconColor,
-          negIcon: negOutIcon,
-          posIcon: posOutIcon,
-
+        mobileValidated: jsonRes[i]["Mobile_validated"].toString(),
+        requestedon: jsonRes[i]["Requested_On"].toString(),
+        smsID: jsonRes[i]["SMS_ID"].toString(),
+        smsClickCount: jsonRes[i]["SMSOpenClicks"],
+        posIconData: posOutIconData,
+        negIconData: negOutIconData,
+        negIconColor: _negOutIconColor,
+        posIconColor: _posOutIconColor,
+        negIcon: negOutIcon,
+        posIcon: posOutIcon,
       );
       custom_listTile.add(_txt);
     }
@@ -163,10 +161,10 @@ class _SMSSentState extends State<SMSSent> {
             Expanded(
               child: Padding(
                 padding:
-                EdgeInsets.only(top: 2.63 * SizeConfig.heightMultiplier),
+                    EdgeInsets.only(top: 2.63 * SizeConfig.heightMultiplier),
                 child: SingleChildScrollView(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
-
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: custom_listTile,
                   ),
                 ),
@@ -192,14 +190,23 @@ class CustomListTile extends StatefulWidget {
   Widget negIcon;
   IconData customEnvelope = FontAwesomeIcons.envelope;
 
-  CustomListTile({this.mobileValidated, this.smsID, this.requestedon,this.smsClickCount,this.negIconData,this.negIcon,this.negIconColor,this.posIconData,this.posIcon,this.posIconColor});
+  CustomListTile(
+      {this.mobileValidated,
+      this.smsID,
+      this.requestedon,
+      this.smsClickCount,
+      this.negIconData,
+      this.negIcon,
+      this.negIconColor,
+      this.posIconData,
+      this.posIcon,
+      this.posIconColor});
 
   @override
   _CustomListTileState createState() => _CustomListTileState();
 }
 
 class _CustomListTileState extends State<CustomListTile> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -212,7 +219,7 @@ class _CustomListTileState extends State<CustomListTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'ID:'+ widget.smsID,
+              'ID:' + widget.smsID,
               style: TextStyle(
                 fontFamily: 'Manrope',
                 fontSize: 15,
@@ -237,10 +244,12 @@ class _CustomListTileState extends State<CustomListTile> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                  icon: widget.smsClickCount==0?CustomIcons().EnvelopeClose():CustomIcons().EnvelopeOpen(),
+                  icon: widget.smsClickCount == 0
+                      ? CustomIcons().EnvelopeClose()
+                      : CustomIcons().EnvelopeOpen(),
                   onPressed: () {}),
-              IconButton(icon: widget.posIcon, onPressed: (){}),
-              IconButton(icon: widget.negIcon, onPressed: (){}),
+              IconButton(icon: widget.posIcon, onPressed: () {}),
+              IconButton(icon: widget.negIcon, onPressed: () {}),
             ],
           ),
         ),

@@ -1,15 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/home.dart';
-import 'package:radreviews/screens/myaccount.dart';
-import 'package:radreviews/screens/negFeedback.dart';
-import 'package:radreviews/screens/settings.dart';
-import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

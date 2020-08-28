@@ -8,7 +8,6 @@ import 'package:radreviews/constants.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/editmyaccount.dart';
 import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/homenew.dart';
 import 'package:radreviews/screens/manageuser.dart';
@@ -272,7 +271,8 @@ class _HomeState extends State<Home> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
+            icon:
+            Icon(
               Feather.settings,
               size: 2.0 * SizeConfig.heightMultiplier,
             ),
