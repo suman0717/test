@@ -2,7 +2,6 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/constants.dart';
-import 'package:radreviews/screens/SignIn.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:radreviews/size_config.dart';
@@ -120,18 +119,6 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     ctrlPassword.text = password;
     ctrlCnfPassword.text = password;
     return true;
-  }
-
-  void Logout() async {
-    print(locationListTemp.length);
-    locationListTemp = ['No Location'];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(locationListTemp.length);
-    print(sharedPreferences.get('curuser'));
-    await sharedPreferences.clear();
-    print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
   }
 
   var _editFormKey = GlobalKey<FormState>();

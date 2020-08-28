@@ -10,7 +10,7 @@ void main() async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
   runApp(
-    MaterialApp(
+    MaterialApp(debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
         accentColor: Colors.white,
             primaryColor: kshadeColor1,

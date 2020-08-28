@@ -14,7 +14,6 @@ import 'package:radreviews/screens/homenew.dart';
 import 'package:radreviews/screens/otp_forgotPassword.dart';
 import 'package:radreviews/screens/registration_success.dart';
 import 'package:radreviews/screens/signup.dart';
-import 'package:radreviews/screens/test.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -282,7 +281,8 @@ class _XDSignInState extends State<XDSignIn> {
   GetUserLogin(String urlString) async {
     print(urlString);
     http.Response response = await http.get(urlString);
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    try{
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String data = response.body;
     serverUsername = jsonDecode(data)['UserName'];
     serverPassword = jsonDecode(data)['Decrypted_Password'];
@@ -389,42 +389,64 @@ class _XDSignInState extends State<XDSignIn> {
     print(locationListTemp.length);
     sharedPreferences.setStringList('loc', locationListTemp);
     print(sharedPreferences.get('loc'));
+    }
+    catch(e){
+      await Flushbar(
+        titleText: Text(
+          'Error',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 2.0 *
+                SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        messageText: Text(
+          'Something went wrong.',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 1.3 *
+                SizeConfig.heightMultiplier,
+            color: const Color(0xffffffff),
+            fontWeight: FontWeight.w300,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        padding: EdgeInsets.symmetric(
+            vertical: 12.0,
+            horizontal: 5.1 *
+                SizeConfig.widthMultiplier),
+        icon: Icon(
+          Icons.clear,
+          size: 3.94 *
+              SizeConfig.heightMultiplier,
+          color: Colors.white,
+        ),
+        duration: Duration(seconds: 2),
+        flushbarPosition: FlushbarPosition.TOP,
+        borderColor: Colors.transparent,
+        shouldIconPulse: false,
+        maxWidth:
+        91.8 * SizeConfig.widthMultiplier,
+        boxShadows: [
+          BoxShadow(
+            color:
+            Colors.black.withOpacity(0.3),
+            spreadRadius:
+            1 * SizeConfig.heightMultiplier,
+            blurRadius:
+            2 * SizeConfig.heightMultiplier,
+            offset: Offset(0,
+                10), // changes position of shadow
+          ),
+        ],
+        backgroundColor: kshadeColor1,
+      ).show(context);
+      print(e);
+    }
   }
-//
-//  List<String> suggestions = [
-//    "Apple",
-//    "Armidillo",
-//    "Actual",
-//    "Actuary",
-//    "America",
-//    "Argentina",
-//    "Australia",
-//    "Antarctica",
-//    "Blueberry",
-//    "Cheese",
-//    "Danish",
-//    "Eclair",
-//    "Fudge",
-//    "Granola",
-//    "Hazelnut",
-//    "Ice Cream",
-//    "Jely",
-//    "Kiwi Fruit",
-//    "Lamb",
-//    "Macadamia",
-//    "Nachos",
-//    "Oatmeal",
-//    "Palm Oil",
-//    "Quail",
-//    "Rabbit",
-//    "Salad",
-//    "T-Bone Steak",
-//    "Urid Dal",
-//    "Vanilla",
-//    "Waffles",
-//    "Yam",
-//    "Zest"
-//  ];
 
   List<String> added = [];
   String currentText = "";
@@ -558,14 +580,14 @@ class _XDSignInState extends State<XDSignIn> {
                           if (username.toLowerCase() == serverUsername.toLowerCase() &&
                               password == serverPassword) {
                             if (accountStatus == 'Active') {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Home(),
                                 ),
                               );
                             } else {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Success(),

@@ -172,19 +172,6 @@ class _HomeNewState extends State<HomeNew> {
         });
   }
 
-  void Logout() async {
-    print(locationListTemp.length);
-    locationListTemp = ['No Location'];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(locationListTemp.length);
-    print(sharedPreferences.get('curuser'));
-    await sharedPreferences.clear();
-    print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

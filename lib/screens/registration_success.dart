@@ -159,12 +159,8 @@ class _SuccessState extends State<Success> {
                         height: 5.65 * SizeConfig.heightMultiplier,
                         child: RaisedButton(color: kshadeColor1,
                           onPressed: () async {
-
-
-                            QuickLaunchLink().hitLink('mailto:support@ethink.solutions?subject=Need%20Help&body=Hi%20Support');
-
-
-                          },
+                            QuickLaunchLink().hitLink('mailto:$supportEmaill?subject=Need%20Help&body=Hi%20Support');
+                            },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.63 * SizeConfig.heightMultiplier)),
                           padding: EdgeInsets.all(0.0),

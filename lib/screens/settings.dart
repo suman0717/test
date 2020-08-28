@@ -2,16 +2,10 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/constants.dart';
 import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/feedbackState.dart';
 import 'package:radreviews/screens/home.dart';
 import 'package:http/http.dart' as http;
-import 'package:radreviews/screens/myaccount.dart';
-import 'package:radreviews/screens/negFeedback.dart';
-import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsandconditins.dart';
 import 'dart:convert';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -104,7 +98,7 @@ class _SettingsState extends State<Settings> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Feedback URL = <Feedback_URL>\nClient Name = <Client_Name>',
+                    'Feedback URL = <Feedback_Url>\nClient Name = <Client_Name>',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Manrope',

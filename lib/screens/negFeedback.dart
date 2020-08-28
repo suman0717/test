@@ -4,16 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/bottomBar.dart';
-import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/feedbackState.dart';
-import 'package:radreviews/screens/home.dart';
-import 'package:radreviews/screens/myaccount.dart';
-import 'package:radreviews/screens/settings.dart';
-import 'package:radreviews/screens/smsSent.dart';
-import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -163,18 +154,6 @@ class _NegFeedbackState extends State<NegFeedback> {
     });
     return customListTileNegFeedback;
 
-  }
-
-  void Logout() async {
-    print(locationListTemp.length);
-    locationListTemp = ['No Location'];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(locationListTemp.length);
-    print(sharedPreferences.get('curuser'));
-    await sharedPreferences.clear();
-    print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
   }
 
   @override

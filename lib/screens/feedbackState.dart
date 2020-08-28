@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:radreviews/constants.dart';
-import 'package:radreviews/screens/SignIn.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 String totalSmsSent='';
 String totalSmsOpened='';
@@ -53,17 +51,6 @@ class _FeedbackStatsState extends State<FeedbackStats> {
 
     return true;
 
-  }
-  void Logout() async {
-
-    locationListTemp = ['No Location'];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    print(sharedPreferences.get('curuser'));
-    await sharedPreferences.clear();
-    print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
   }
 
   @override

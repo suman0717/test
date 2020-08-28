@@ -1,11 +1,8 @@
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:radreviews/alert.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:radreviews/constants.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:radreviews/screens/SignIn.dart';
 import 'package:radreviews/screens/feedbackState.dart';
@@ -17,9 +14,6 @@ import 'package:radreviews/screens/settings.dart';
 import 'package:radreviews/screens/smsSent.dart';
 import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 
@@ -52,8 +46,7 @@ class _HomeState extends State<Home> {
     print(sharedPreferences.get('curuser'));
     await sharedPreferences.clear();
     print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>XDSignIn()), (route) => false);
   }
 
   void _onItemTapped(int index) {
@@ -383,129 +376,4 @@ class _HomeState extends State<Home> {
       body: _children[selectedAppIndex],
     );
   }
-
-//  void RequestFeedback(String mob, String loc) async {
-//    if (loc != null && loc != 'No Location' && termsAndConsdditions == true) {
-//      bool _validate = validateMobile(mob);
-//      if (_validate == true) {
-//        print(loc);
-//        setState(() {
-//          _isWaiting = true;
-//        });
-//
-//        String _tempMobile = '61' + mob.substring(1, mob.length);
-//        print(kURLBase +
-//            'REST/REVIEWS/RequestFeedback?Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-//        http.Response response = await http.get(kURLBase +
-//            'REST/REVIEWS/RequestFeedback?CUID=$curClientUserID&Client=$curClientID&Mobile=$_tempMobile&Location_Name=$loc');
-//        var _smsString = response.body;
-//        String _smsID = jsonDecode(_smsString)['SMSID'];
-//        print(_smsString);
-//        print(_smsID);
-//        if (_smsID != null) {
-//          setState(() {
-//            _unMaskedMobile = '';
-//            ctrlMobile.text = '';
-//            selectedlocation = null;
-//            _isWaiting = false;
-//          });
-//          Flushbar(
-//            titleText: Text(
-//              'Request Sent',
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 2.0 * SizeConfig.heightMultiplier,
-//                color: const Color(0xffffffff),
-//                fontWeight: FontWeight.w600,
-//              ),
-//              textAlign: TextAlign.left,
-//            ),
-//            messageText: Text(
-//              'You successfully sent your feedback request.',
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 1.3 * SizeConfig.heightMultiplier,
-//                color: const Color(0xffffffff),
-//                fontWeight: FontWeight.w300,
-//              ),
-//              textAlign: TextAlign.left,
-//            ),
-//            padding: EdgeInsets.symmetric(
-//                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-//            icon: Icon(
-//              Icons.check,
-//              size: 3.94 * SizeConfig.heightMultiplier,
-//              color: Colors.white,
-//            ),
-//            duration: Duration(seconds: 3),
-//            flushbarPosition: FlushbarPosition.TOP,
-//            borderColor: Colors.transparent,
-//            shouldIconPulse: false,
-//            maxWidth: 91.8 * SizeConfig.widthMultiplier,
-//            boxShadows: [
-//              BoxShadow(
-//                color: Colors.black.withOpacity(0.3),
-//                spreadRadius: 1 * SizeConfig.heightMultiplier,
-//                blurRadius: 2 * SizeConfig.heightMultiplier,
-//                offset: Offset(0, 10), // changes position of shadow
-//              ),
-//            ],
-//            backgroundColor: kshadeColor1,
-//          ).show(context);
-//        } else {
-//          setState(() {
-//            _isWaiting = false;
-//          });
-//          Flushbar(
-//            titleText: Text(
-//              'Failed !',
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 2.0 * SizeConfig.heightMultiplier,
-//                color: const Color(0xffffffff),
-//                fontWeight: FontWeight.w600,
-//              ),
-//              textAlign: TextAlign.left,
-//            ),
-//            messageText: Text(
-//              'Something went wrong.',
-//              style: TextStyle(
-//                fontFamily: 'Manrope',
-//                fontSize: 1.3 * SizeConfig.heightMultiplier,
-//                color: const Color(0xffffffff),
-//                fontWeight: FontWeight.w300,
-//              ),
-//              textAlign: TextAlign.left,
-//            ),
-//            padding: EdgeInsets.symmetric(
-//                vertical: 12.0, horizontal: 5.1 * SizeConfig.widthMultiplier),
-//            icon: Icon(
-//              Icons.clear,
-//              size: 3.94 * SizeConfig.heightMultiplier,
-//              color: Colors.white,
-//            ),
-//            duration: Duration(seconds: 3),
-//            flushbarPosition: FlushbarPosition.TOP,
-//            borderColor: Colors.transparent,
-//            shouldIconPulse: false,
-//            maxWidth: 91.8 * SizeConfig.widthMultiplier,
-//            boxShadows: [
-//              BoxShadow(
-//                color: Colors.black.withOpacity(0.3),
-//                spreadRadius: 1 * SizeConfig.heightMultiplier,
-//                blurRadius: 2 * SizeConfig.heightMultiplier,
-//                offset: Offset(0, 10), // changes position of shadow
-//              ),
-//            ],
-//            backgroundColor: kshadeColor1,
-//          ).show(context);
-//        }
-//      }
-//    } else if (termsAndConsdditions == false) {
-//      validationOnRequestFeedback(
-//          'Please confirm you are authorised to send this SMS Message');
-//    } else if (loc == null || loc == 'No Location') {
-//      validationOnRequestFeedback('Location Undefined');
-//    }
-//  }
 }

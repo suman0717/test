@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/screens/SignIn.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -104,18 +102,6 @@ class _SMSSentState extends State<SMSSent> {
       custom_listTile.add(_txt);
     }
     return custom_listTile;
-  }
-
-  void Logout() async {
-    print(locationListTemp.length);
-    locationListTemp = ['No Location'];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(locationListTemp.length);
-    print(sharedPreferences.get('curuser'));
-    await sharedPreferences.clear();
-    print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
   }
 
   @override

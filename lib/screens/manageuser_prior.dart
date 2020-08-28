@@ -1,18 +1,12 @@
-import 'dart:convert';
-import 'dart:async';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/bottomBar.dart';
 import 'package:radreviews/linkOpener.dart';
 import 'package:radreviews/screens/SignIn.dart';
-import 'package:radreviews/screens/addNewUser.dart';
 import 'package:radreviews/screens/editUserDetails.dart';
 import 'package:radreviews/screens/feedbackState.dart';
-import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/homenew.dart';
 import 'package:radreviews/screens/manageuser.dart';
 import 'package:radreviews/screens/myaccount.dart';
@@ -23,8 +17,6 @@ import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
-import 'package:http/http.dart' as http;
-
 
 class ManageUserNew extends StatefulWidget {
   @override
@@ -58,8 +50,7 @@ class _ManageUserNewState extends State<ManageUserNew> {
     print(sharedPreferences.get('curuser'));
     await sharedPreferences.clear();
     print(sharedPreferences.get('curuser'));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => XDSignIn()));
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>XDSignIn()), (route) => false);
   }
 
   void _onItemTappeduser(int index) {
