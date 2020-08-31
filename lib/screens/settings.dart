@@ -414,7 +414,8 @@ class _SettingsState extends State<Settings> {
 //                            height: 5.65 * SizeConfig.heightMultiplier,
                               ),
                             ],
-                          ),),
+                          ),
+                        ),
                         SizedBox(height: 4 * SizeConfig.heightMultiplier,),
                         Row(mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                           children: [

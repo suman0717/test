@@ -232,7 +232,7 @@ class _XDSignInState extends State<XDSignIn> {
                                 size: 3.94 * SizeConfig.heightMultiplier,
                                 color: Colors.white,
                               ),
-                              duration: Duration(seconds: 3),
+                              duration: Duration(seconds: 5),
                               flushbarPosition: FlushbarPosition.TOP,
                               borderColor: Colors.transparent,
                               shouldIconPulse: false,
@@ -247,7 +247,7 @@ class _XDSignInState extends State<XDSignIn> {
                               ],
                               backgroundColor: kshadeColor1,
                             ).show(context);
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EnterOTP()));}
