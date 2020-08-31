@@ -352,3 +352,13 @@ class CustomIcons {
     );
   }
 }
+
+ String CurrentTime(){
+    var date = DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+
+    var formattedDate = "${dateParse.day}/${dateParse.month}/${dateParse.year} ${dateParse.hour}:${dateParse.minute}";
+    print(formattedDate.toString());
+    String currentTime = formattedDate.toString();
+    return currentTime;
+  }
