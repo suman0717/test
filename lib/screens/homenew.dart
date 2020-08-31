@@ -103,15 +103,15 @@ class _HomeNewState extends State<HomeNew> {
                 SizedBox(
                   height: 1 * SizeConfig.heightMultiplier,
                 ),
-                Text(
-                  'USA Number Format (555)555-1234',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 1.9 * SizeConfig.heightMultiplier,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                // Text(
+                //   'USA Number Format (555)555-1234',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     fontFamily: 'Manrope',
+                //     fontSize: 1.9 * SizeConfig.heightMultiplier,
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                // ),
               ],
             ),
           ),
