@@ -333,7 +333,6 @@ class _HomeNewState extends State<HomeNew> {
                       ),
                       Container(
                         width: 68.2 * SizeConfig.widthMultiplier,
-                        height: 5.7 * SizeConfig.heightMultiplier,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -492,7 +491,6 @@ class _HomeNewState extends State<HomeNew> {
                         ),
                         Container(
                           width: 68.2 * SizeConfig.widthMultiplier,
-                          height: 5.7 * SizeConfig.heightMultiplier,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,

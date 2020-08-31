@@ -58,6 +58,7 @@ class _SMSSentState extends State<SMSSent> {
 
     for (int i = 0; i < jsonRes.length; i++) {
       print(i);
+      print(jsonRes[i]["SMS_Pos_Submit_Needs"]);
       print(jsonRes[i]["Mobile_validated"]);
       if (jsonRes[i]["SMS_Pos_Submit_Needs"] == circlethin) {
         posOutIconData = FontAwesomeIcons.dotCircle;
@@ -66,11 +67,11 @@ class _SMSSentState extends State<SMSSent> {
       } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThick) {
         posOutIconData = FontAwesomeIcons.thumbsUp;
         _posOutIconColor = kshadeColor1;
-        posOutIcon = CustomIcons().ThumbsUpRegular();
+        posOutIcon = CustomIcons().ThumbsUpSolid();
       } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThickGrey) {
         posOutIconData = FontAwesomeIcons.solidThumbsUp;
         _posOutIconColor = Colors.grey;
-        posOutIcon = CustomIcons().ThumbsUpSolid();
+        posOutIcon = CustomIcons().ThumbsUpRegular();
       }
 
       if (jsonRes[i]["SMS_Neg_Submit_Needs"] == circlethin) {
