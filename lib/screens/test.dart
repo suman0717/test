@@ -1,80 +1,56 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-class Todo {
-  final String title;
-  final String description;
-
-  Todo(this.title, this.description);
-}
-
-void main() {
-  runApp(MaterialApp(
-    title: 'Passing Data',
-    home: TodosScreen(
-      todos: List.generate(
-        20,
-            (i) => Todo(
-          'Todo $i',
-          'A description of what needs to be done for Todo $i',
-        ),
-      ),
-    ),
-  ));
-}
-
-class TodosScreen extends StatelessWidget {
-  final List<Todo> todos;
-
-  TodosScreen({Key key, @required this.todos}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Todos'),
-      ),
-      body: ListView.builder(
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(todos[index].title),
-            // When a user taps the ListTile, navigate to the DetailScreen.
-            // Notice that you're not only creating a DetailScreen, you're
-            // also passing the current todo through to it.
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailScreen(todo: todos[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  // Declare a field that holds the Todo.
-  final Todo todo;
-
-  // In the constructor, require a Todo.
-  DetailScreen({Key key, @required this.todo}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Use the Todo to create the UI.
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(todo.title),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(todo.description),
-      ),
-    );
-  }
-}
+// Future<List<Widget>> getNegFeedback() async {
+//   List jsonRes;
+//   setState(() {
+//     waiting=true;
+//   });
+//   var data = await http.get(
+//       kURLBase+'REST/REVIEWS/App_NegFeedback?Client=$curClientID&Ticked1=All&Name=All');
+//   var jsonData = json.decode(data.body);
+//   if(jsonData['response'] != null){
+//     filterNameList=['All'];
+//     print('not null');
+//     jsonRes = jsonData['response'];
+//     print(jsonRes);
+//     print(jsonRes.length);
+//     len = jsonRes.length;
+//
+//
+//     for (int i = 0; i < jsonRes.length; i++) {
+//       print(i);
+//       print(jsonRes[i]["EXT_ID"]);
+//       if(!(filterNameList.contains(jsonRes[i]["Name"]))){
+//         filterNameList.add(jsonRes[i]["Name"]);
+//       }
+//
+//       var _txt = NegFeedbackListTile(
+//         name: jsonRes[i]["Name"],
+//         actioned: jsonRes[i]["Ticked1"],
+//         email: jsonRes[i]["EmailAddress"],
+//         id: jsonRes[i]["EXT_ID"],
+//         mobile: jsonRes[i]["Mobile"],
+//         SMSSentDateTime: jsonRes[i]["SMSSentDateTime"],
+//         message: jsonRes[i]["Message"],
+//       );
+//       customListTileNegFeedback.add(_txt);
+//       filteredCustomListTileNegFeedback.add(_txt);
+//     }
+//   }
+//   else{
+//     filterNameList=['All'];
+//     filterNameList.add(jsonData['Name']);
+//     var _txt = NegFeedbackListTile(
+//       name: jsonData['Name'],
+//       actioned: jsonData['Ticked1'],
+//       email: jsonData['EmailAddress'],
+//       id: jsonData['EXT_ID'],
+//       mobile: jsonData['Mobile'],
+//       SMSSentDateTime: jsonData['SMSSentDateTime'],
+//       message: jsonData["Message"],
+//     );
+//     customListTileNegFeedback.add(_txt);
+//     filteredCustomListTileNegFeedback.add(_txt);
+//   }
+//   print(filterNameList);
+//   return customListTileNegFeedback;
+//
+// }

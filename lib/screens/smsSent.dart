@@ -40,65 +40,67 @@ class _SMSSentState extends State<SMSSent> {
   int len;
 
   Future<List<Widget>> getSmsSent() async {
-    IconData posOutIconData;
     Widget posOutIcon;
-    Color _posOutIconColor;
-    IconData negOutIconData;
+
     Widget negOutIcon;
-    Color _negOutIconColor;
+
     setState(() {
       _waiting = true;
     });
     var data = await http
         .get(kURLBase + 'REST/REVIEWS/App_GetSmsSent?Client=$curClientID');
     var jsonData = json.decode(data.body);
-    List jsonRes = jsonData['response'];
-    print(jsonRes.length);
-    len = jsonRes.length;
+    if (jsonData['response'] != null) {
+      List jsonRes = jsonData['response'];
+      print(jsonRes.length);
+      len = jsonRes.length;
 
-    for (int i = 0; i < jsonRes.length; i++) {
-      print(i);
-      print(jsonRes[i]["SMS_Pos_Submit_Needs"]);
-      print(jsonRes[i]["Mobile_validated"]);
-      if (jsonRes[i]["SMS_Pos_Submit_Needs"] == circlethin) {
-        posOutIconData = FontAwesomeIcons.dotCircle;
-        _posOutIconColor = Colors.grey;
-        posOutIcon = CustomIcons().CircleIconGrey();
-      } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThick) {
-        posOutIconData = FontAwesomeIcons.thumbsUp;
-        _posOutIconColor = kshadeColor1;
-        posOutIcon = CustomIcons().ThumbsUpSolid();
-      } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThickGrey) {
-        posOutIconData = FontAwesomeIcons.solidThumbsUp;
-        _posOutIconColor = Colors.grey;
-        posOutIcon = CustomIcons().ThumbsUpRegular();
+      for (int i = 0; i < jsonRes.length; i++) {
+        print(i);
+        print(jsonRes[i]["SMS_Pos_Submit_Needs"]);
+        print(jsonRes[i]["Mobile_validated"]);
+        if (jsonRes[i]["SMS_Pos_Submit_Needs"] == circlethin) {
+          posOutIcon = CustomIcons().CircleIconGrey();
+        } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThick) {
+          posOutIcon = CustomIcons().ThumbsUpSolid();
+        } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThickGrey) {
+          posOutIcon = CustomIcons().ThumbsUpRegular();
+        }
+
+        if (jsonRes[i]["SMS_Neg_Submit_Needs"] == circlethin) {
+          negOutIcon = CustomIcons().CircleIconGrey();
+        } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThick) {
+          negOutIcon = CustomIcons().ThumbsDownRegular();
+        } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThickGrey) {
+          negOutIcon = CustomIcons().ThumbsDownRegular();
+        }
+
+        var _txt = CustomListTile(
+          mobileValidated: jsonRes[i]["Mobile_validated"].toString(),
+          requestedon: jsonRes[i]["Requested_On"].toString(),
+          smsID: jsonRes[i]["SMS_ID"].toString(),
+          smsClickCount: jsonRes[i]["SMSOpenClicks"],
+          negIcon: negOutIcon,
+          posIcon: posOutIcon,
+        );
+        custom_listTile.add(_txt);
       }
-
-      if (jsonRes[i]["SMS_Neg_Submit_Needs"] == circlethin) {
-        negOutIconData = FontAwesomeIcons.dotCircle;
-        _negOutIconColor = Colors.grey;
-        negOutIcon = CustomIcons().CircleIconGrey();
-      } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThick) {
-        negOutIconData = FontAwesomeIcons.thumbsDown;
-        _negOutIconColor = kshadeColor1;
-        negOutIcon = CustomIcons().ThumbsDownRegular();
-      } else if (jsonRes[i]["SMS_Neg_Submit_Needs"] == negThumbThickGrey) {
-        negOutIconData = FontAwesomeIcons.solidThumbsDown;
-        _negOutIconColor = Colors.grey;
-        negOutIcon = CustomIcons().ThumbsDownRegular();
-      }
-
+    } else {
       var _txt = CustomListTile(
-        mobileValidated: jsonRes[i]["Mobile_validated"].toString(),
-        requestedon: jsonRes[i]["Requested_On"].toString(),
-        smsID: jsonRes[i]["SMS_ID"].toString(),
-        smsClickCount: jsonRes[i]["SMSOpenClicks"],
-        posIconData: posOutIconData,
-        negIconData: negOutIconData,
-        negIconColor: _negOutIconColor,
-        posIconColor: _posOutIconColor,
-        negIcon: negOutIcon,
-        posIcon: posOutIcon,
+        mobileValidated: jsonData["Mobile_validated"].toString(),
+        requestedon: jsonData["Requested_On"].toString(),
+        smsID: jsonData["SMS_ID"].toString(),
+        smsClickCount: jsonData["SMSOpenClicks"],
+        negIcon: jsonData["SMS_Neg_Submit_Needs"] == circlethin
+            ? negOutIcon = CustomIcons().CircleIconGrey()
+            : jsonData["SMS_Neg_Submit_Needs"] == negThumbThickGrey
+                ? negOutIcon = CustomIcons().ThumbsDownRegular()
+                : negOutIcon = CustomIcons().ThumbsDownRegular(),
+        posIcon: jsonData["SMS_Pos_Submit_Needs"] == circlethin
+            ? posOutIcon = CustomIcons().CircleIconGrey()
+            : jsonData["SMS_Pos_Submit_Needs"] == posThumbThickGrey
+                ? posOutIcon = CustomIcons().ThumbsUpRegular()
+                : posOutIcon = CustomIcons().ThumbsUpSolid(),
       );
       custom_listTile.add(_txt);
     }
