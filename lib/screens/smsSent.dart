@@ -56,9 +56,6 @@ class _SMSSentState extends State<SMSSent> {
       len = jsonRes.length;
 
       for (int i = 0; i < jsonRes.length; i++) {
-        print(i);
-        print(jsonRes[i]["SMS_Pos_Submit_Needs"]);
-        print(jsonRes[i]["Mobile_validated"]);
         if (jsonRes[i]["SMS_Pos_Submit_Needs"] == circlethin) {
           posOutIcon = CustomIcons().CircleIconGrey();
         } else if (jsonRes[i]["SMS_Pos_Submit_Needs"] == posThumbThick) {
@@ -77,7 +74,7 @@ class _SMSSentState extends State<SMSSent> {
 
         var _txt = CustomListTile(
           mobileValidated: jsonRes[i]["Mobile_validated"].toString(),
-          requestedon: jsonRes[i]["Requested_On"].toString(),
+          requestedon: GetBrisbaneTime(jsonRes[i]["Requested_On"].toString()),
           smsID: jsonRes[i]["SMS_ID"].toString(),
           smsClickCount: jsonRes[i]["SMSOpenClicks"],
           negIcon: negOutIcon,
@@ -88,7 +85,7 @@ class _SMSSentState extends State<SMSSent> {
     } else {
       var _txt = CustomListTile(
         mobileValidated: jsonData["Mobile_validated"].toString(),
-        requestedon: jsonData["Requested_On"].toString(),
+        requestedon: GetBrisbaneTime(jsonData["Requested_On"].toString()),
         smsID: jsonData["SMS_ID"].toString(),
         smsClickCount: jsonData["SMSOpenClicks"],
         negIcon: jsonData["SMS_Neg_Submit_Needs"] == circlethin
