@@ -641,42 +641,42 @@ class _XDSignInState extends State<XDSignIn> {
                 SizedBox(
                   height: 7.23 * SizeConfig.heightMultiplier,
                 ),
-                //This code was commented for Apple,for Android we need to uncomment this
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => Signup(),
-                //       ),
-                //     );
-                //   },
-                //   child: Text.rich(
-                //     TextSpan(
-                //       style: TextStyle(
-                //         fontFamily: 'Manrope',
-                //         fontSize: 2.23 * SizeConfig.heightMultiplier,
-                //         color: const Color(0xff1a1a1a),
-                //       ),
-                //       children: [
-                //         TextSpan(
-                //           text: 'Don\'t have an account?',
-                //           style: TextStyle(
-                //             fontWeight: FontWeight.w300,
-                //           ),
-                //         ),
-                //         TextSpan(
-                //             text: ' Sign Up',
-                //             style: TextStyle(
-                //               fontFamily: 'Manrope',
-                //               fontSize: 2.23 * SizeConfig.heightMultiplier,
-                //               color: Colors.blue,
-                //             )),
-                //       ],
-                //     ),
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
+                // This code was commented for Apple,for Android we need to uncomment this
+                 GestureDetector(
+                   onTap: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                         builder: (context) => Signup(),
+                       ),
+                     );
+                   },
+                   child: Text.rich(
+                     TextSpan(
+                       style: TextStyle(
+                         fontFamily: 'Manrope',
+                         fontSize: 2.23 * SizeConfig.heightMultiplier,
+                         color: const Color(0xff1a1a1a),
+                       ),
+                       children: [
+                         TextSpan(
+                           text: 'Don\'t have an account?',
+                           style: TextStyle(
+                             fontWeight: FontWeight.w300,
+                           ),
+                         ),
+                         TextSpan(
+                             text: ' Sign Up',
+                             style: TextStyle(
+                               fontFamily: 'Manrope',
+                               fontSize: 2.23 * SizeConfig.heightMultiplier,
+                               color: Colors.blue,
+                             )),
+                       ],
+                     ),
+                     textAlign: TextAlign.center,
+                   ),
+                 ),
                 SizedBox(
                   height: 5.92 * SizeConfig.heightMultiplier,
                 ),
