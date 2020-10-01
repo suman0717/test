@@ -1,6 +1,7 @@
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const kTextFieldDecoration = InputDecoration(fillColor: Color(0xffF5F5F5),filled: true,
   hintStyle: TextStyle(
@@ -369,3 +370,16 @@ String GetBrisbaneTime(String pstTime){
   String currentTime = formattedDate.toString();
   return currentTime;
 }
+
+  Future<void> launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }

@@ -16,6 +16,7 @@ import 'package:radreviews/screens/registration_success.dart';
 import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io' show File, Platform;
 
 List<String> locationListTemp = [''];
 class XDSignIn extends StatefulWidget {
@@ -459,248 +460,239 @@ class _XDSignInState extends State<XDSignIn> {
       backgroundColor: const Color(0xffffffff),
       body: ModalProgressHUD(
         inAsyncCall: _waiting,
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10.0 * SizeConfig.heightMultiplier,
-                ),
-                Image.asset(
-                  'images/radcolored.png',
-                  width: 24.3 * SizeConfig.widthMultiplier,
-                  height: 18.2 * SizeConfig.heightMultiplier,
-                ),
-                SizedBox(
-                  height: 5.3 * SizeConfig.heightMultiplier,
-                ),
-                Text(
-                  'Sign in to your account',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 2.3 * SizeConfig.heightMultiplier,
-                    color: const Color(0xff1a1a1a),
+        child: GestureDetector(onTap:  () {
+          FocusScope.of(context).unfocus();
+        },
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 10.0 * SizeConfig.heightMultiplier,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-//            SimpleAutoCompleteTextField(
-//
-//              key: key,
-//              decoration: kTextFieldDecorationNoback.copyWith(hintText: 'user'),
-//              controller: TextEditingController(text: username,),
-//              suggestions: suggestions,
-//              textChanged: (text) => currentText = text,
-//              clearOnSubmit: true,
-//              textSubmitted: (text) => setState(() {
-//                if (text != "") {
-//                  added.add(text);
-//                  print(text);
-//                  username=text;
-//                }
-//              }),
-//            ),
-                SizedBox(
-                  height: 6.3 * SizeConfig.heightMultiplier,
-                ),
-                Container(
-                  width: 68.2 * SizeConfig.widthMultiplier,
-                  height: 5.65 * SizeConfig.heightMultiplier,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      username = value;
-                    },
+                  Image.asset(
+                    'images/radcolored.png',
+                    width: 24.3 * SizeConfig.widthMultiplier,
+                    height: 18.2 * SizeConfig.heightMultiplier,
+                  ),
+                  SizedBox(
+                    height: 5.3 * SizeConfig.heightMultiplier,
+                  ),
+                  Text(
+                    'Sign in to your account',
                     style: TextStyle(
                       fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
+                      fontSize: 2.3 * SizeConfig.heightMultiplier,
+                      color: const Color(0xff1a1a1a),
                     ),
-                    decoration: kTextFieldDecorationNoback.copyWith(
-                    hintText: 'Username',
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 1.5 * SizeConfig.heightMultiplier,
-                        horizontal: 20.0),
-                  ),
-                  ),
-                ),
-                SizedBox(
-                  height: 1.9 * SizeConfig.heightMultiplier,
-                ),
-                Container(
-                  width: 68.2 * SizeConfig.widthMultiplier,
-                  height: 5.65 * SizeConfig.heightMultiplier,
-                  child: TextField(
-                    obscureText: true,
                     textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 1.9 * SizeConfig.heightMultiplier,
-                    ),
-                    decoration: kTextFieldDecorationNoback.copyWith(
-                      hintText: 'Password',
+                  ),
+                  SizedBox(
+                    height: 6.3 * SizeConfig.heightMultiplier,
+                  ),
+                  Container(
+                    width: 68.2 * SizeConfig.widthMultiplier,
+                    height: 5.65 * SizeConfig.heightMultiplier,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                        username = value;
+                      },
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 1.9 * SizeConfig.heightMultiplier,
+                      ),
+                      decoration: kTextFieldDecorationNoback.copyWith(
+                      hintText: 'Username',
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 1.5 * SizeConfig.heightMultiplier,
                           horizontal: 20.0),
                     ),
+                    ),
                   ),
-                ),
-                Visibility(
-                    visible: message != '',
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        message,
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 1.5 * SizeConfig.heightMultiplier),
+                  SizedBox(
+                    height: 1.9 * SizeConfig.heightMultiplier,
+                  ),
+                  Container(
+                    width: 68.2 * SizeConfig.widthMultiplier,
+                    height: 5.65 * SizeConfig.heightMultiplier,
+                    child: TextField(
+                      obscureText: true,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 1.9 * SizeConfig.heightMultiplier,
                       ),
-                    )),
-                SizedBox(
-                  height: 5.3 * SizeConfig.heightMultiplier,
-                ),
-                Container(
-                  width: 68.2 * SizeConfig.widthMultiplier,
-                  height: 5.65 * SizeConfig.heightMultiplier,
-                  child:
-                  RaisedButton(color: kshadeColor1,
-                    onPressed: () async {
-                      setState(() {
-                        _waiting = true;
-                      });
-                      if (username != null && password != null) {
-                        await GetUserLogin(kURLBase +
-                            'REST/REVIEWS/App_GetUserDetails?UserName=$username&Temp_pdw=$password');
+                      decoration: kTextFieldDecorationNoback.copyWith(
+                        hintText: 'Password',
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 1.5 * SizeConfig.heightMultiplier,
+                            horizontal: 20.0),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                      visible: message != '',
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 1.5 * SizeConfig.heightMultiplier),
+                        ),
+                      )),
+                  SizedBox(
+                    height: 5.3 * SizeConfig.heightMultiplier,
+                  ),
+                  Container(
+                    width: 68.2 * SizeConfig.widthMultiplier,
+                    height: 5.65 * SizeConfig.heightMultiplier,
+                    child:
+                    RaisedButton(color: kshadeColor1,
+                      onPressed: () async {
+                        setState(() {
+                          _waiting = true;
+                        });
+                        if (username != null && password != null) {
+                          await GetUserLogin(kURLBase +
+                              'REST/REVIEWS/App_GetUserDetails?UserName=$username&Temp_pdw=$password');
+                          setState(() {
+                            _waiting = false;
+                          });
+                          if(username != null && serverUsername != null){
+                            if (username.toLowerCase() == serverUsername.toLowerCase() &&
+                                password == serverPassword) {
+                              if (accountStatus == 'Active') {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Home(),
+                                  ),
+                                );
+                              } else {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Success(),
+                                  ),
+                                );
+                              }
+                            }}
+                          else {
+                            message = '*Username or Password is Incorrect';
+                          }
+                        }
                         setState(() {
                           _waiting = false;
                         });
-                        if(username != null && serverUsername != null){
-                          if (username.toLowerCase() == serverUsername.toLowerCase() &&
-                              password == serverPassword) {
-                            if (accountStatus == 'Active') {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ),
-                              );
-                            } else {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Success(),
-                                ),
-                              );
-                            }
-                          }}
-                        else {
-                          message = '*Username or Password is Incorrect';
-                        }
-                      }
-                      setState(() {
-                        _waiting = false;
-                      });
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              2.63 * SizeConfig.heightMultiplier)),
+                      padding: EdgeInsets.all(0.0),
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 2.0 * SizeConfig.heightMultiplier,
+                          color: const Color(0xffffffff),
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3.95 * SizeConfig.heightMultiplier,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      print('Forgot Password Tapped');
+//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+                      ShowForgotPassword();
                     },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            2.63 * SizeConfig.heightMultiplier)),
-                    padding: EdgeInsets.all(0.0),
                     child: Text(
-                      'Sign In',
+                      'Forgot your password?',
                       style: TextStyle(
                         fontFamily: 'Manrope',
-                        fontSize: 2.0 * SizeConfig.heightMultiplier,
-                        color: const Color(0xffffffff),
-                        fontWeight: FontWeight.w600,
+                        fontSize: 2.23 * SizeConfig.heightMultiplier,
+                        color: kshadeColor1,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 3.95 * SizeConfig.heightMultiplier,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    print('Forgot Password Tapped');
-//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
-                    ShowForgotPassword();
-                  },
-                  child: Text(
-                    'Forgot your password?',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 2.23 * SizeConfig.heightMultiplier,
-                      color: kshadeColor1,
-                    ),
-                    textAlign: TextAlign.center,
+                  SizedBox(
+                    height: 7.23 * SizeConfig.heightMultiplier,
                   ),
-                ),
-                SizedBox(
-                  height: 7.23 * SizeConfig.heightMultiplier,
-                ),
-                // This code was commented for Apple,for Android we need to uncomment this
-                 GestureDetector(
-                   onTap: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) => Signup(),
-                       ),
-                     );
-                   },
-                   child: Text.rich(
-                     TextSpan(
-                       style: TextStyle(
-                         fontFamily: 'Manrope',
-                         fontSize: 2.23 * SizeConfig.heightMultiplier,
-                         color: const Color(0xff1a1a1a),
-                       ),
-                       children: [
-                         TextSpan(
-                           text: 'Don\'t have an account?',
-                           style: TextStyle(
-                             fontWeight: FontWeight.w300,
+                  // This code was commented for Apple,for Android we need to uncomment this
+
+                   Visibility(visible: Platform.isAndroid,
+                     child: GestureDetector(
+                       onTap: () {
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                             builder: (context) => Signup(),
                            ),
-                         ),
+                         );
+                       },
+                       child: Text.rich(
                          TextSpan(
-                             text: ' Sign Up',
-                             style: TextStyle(
-                               fontFamily: 'Manrope',
-                               fontSize: 2.23 * SizeConfig.heightMultiplier,
-                               color: Colors.blue,
-                             )),
-                       ],
+                           style: TextStyle(
+                             fontFamily: 'Manrope',
+                             fontSize: 2.23 * SizeConfig.heightMultiplier,
+                             color: const Color(0xff1a1a1a),
+                           ),
+                           children: [
+                             TextSpan(
+                               text: 'Don\'t have an account?',
+                               style: TextStyle(
+                                 fontWeight: FontWeight.w300,
+                               ),
+                             ),
+                             TextSpan(
+                                 text: ' Sign Up',
+                                 style: TextStyle(
+                                   fontFamily: 'Manrope',
+                                   fontSize: 2.23 * SizeConfig.heightMultiplier,
+                                   color: Colors.blue,
+                                 )),
+                           ],
+                         ),
+                         textAlign: TextAlign.center,
+                       ),
                      ),
-                     textAlign: TextAlign.center,
                    ),
-                 ),
-                SizedBox(
-                  height: 5.92 * SizeConfig.heightMultiplier,
-                ),
-                RawMaterialButton(
-                  child: Container(
-                    child: FittedBox(
-                      child: SizedBox(width: 9.2 * SizeConfig.widthMultiplier,height: 9.2 * SizeConfig.widthMultiplier,
-                        child: SvgPicture.string(
-                          _svg_731xhc,
-                          allowDrawingOutsideViewBox: true,
+                  SizedBox(
+                    height: 5.92 * SizeConfig.heightMultiplier,
+                  ),
+                  RawMaterialButton(
+                    child: Container(
+                      child: FittedBox(
+                        child: SizedBox(width: 9.2 * SizeConfig.widthMultiplier,height: 9.2 * SizeConfig.widthMultiplier,
+                          child: SvgPicture.string(
+                            _svg_731xhc,
+                            allowDrawingOutsideViewBox: true,
+                          ),
                         ),
                       ),
                     ),
+                    elevation: 6.0,
+                    onPressed: () {
+                      QuickLaunchLink().hitLink(
+                          'mailto:$supportEmaill?subject=Need%20Help&body=Hi%20Support');
+                    },
                   ),
-                  elevation: 6.0,
-                  onPressed: () {
-                    QuickLaunchLink().hitLink(
-                        'mailto:$supportEmaill?subject=Need%20Help&body=Hi%20Support');
-                  },
-                ),
-                SizedBox(
-                  height: 2.63 * SizeConfig.heightMultiplier,
-                ),
-              ],
+                  SizedBox(
+                    height: 2.63 * SizeConfig.heightMultiplier,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -717,3 +709,192 @@ void SignIn(String uid, String pwd) {
     print('$uid-$pwd');
   }
 }
+
+// import 'dart:async';
+//
+// import 'package:flutter/material.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// List<String> locationListTemp = [''];
+// class XDSignIn extends StatefulWidget {
+//   XDSignIn({Key key, this.title}) : super(key: key);
+//   final String title;
+//
+//   @override
+//   _XDSignInState createState() => _XDSignInState();
+// }
+//
+// class _XDSignInState extends State<XDSignIn> {
+//   Future<void> _launched;
+//   String _phone = '';
+//
+//   Future<void> _launchInBrowser(String url) async {
+//     if (await canLaunch(url)) {
+//       await launch(
+//         url,
+//         forceSafariVC: false,
+//         forceWebView: false,
+//         headers: <String, String>{'my_header_key': 'my_header_value'},
+//       );
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+//
+//   Future<void> _launchInWebViewOrVC(String url) async {
+//     if (await canLaunch(url)) {
+//       await launch(
+//         url,
+//         // forceSafariVC: true,
+//         // forceWebView: true,
+//         //
+//         //
+//         // headers: <String, String>{'my_header_key': 'my_header_value'},
+//       );
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+//
+//   Future<void> _launchInWebViewWithJavaScript(String url) async {
+//     if (await canLaunch(url)) {
+//       await launch(
+//         url,
+//         forceSafariVC: true,
+//         forceWebView: true,
+//         enableJavaScript: true,
+//       );
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+//
+//   Future<void> _launchInWebViewWithDomStorage(String url) async {
+//     if (await canLaunch(url)) {
+//       await launch(
+//         url,
+//         forceSafariVC: true,
+//         forceWebView: true,
+//         enableDomStorage: true,
+//       );
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+//
+//   Future<void> _launchUniversalLinkIos(String url) async {
+//     if (await canLaunch(url)) {
+//       final bool nativeAppLaunchSucceeded = await launch(
+//         url,
+//         forceSafariVC: false,
+//         universalLinksOnly: true,
+//       );
+//       if (!nativeAppLaunchSucceeded) {
+//         await launch(
+//           url,
+//           forceSafariVC: true,
+//         );
+//       }
+//     }
+//   }
+//
+//   Widget _launchStatus(BuildContext context, AsyncSnapshot<void> snapshot) {
+//     if (snapshot.hasError) {
+//       return Text('Error: ${snapshot.error}');
+//     } else {
+//       return const Text('');
+//     }
+//   }
+//
+//   Future<void> _makePhoneCall(String url) async {
+//     if (await canLaunch(url)) {
+//       await launch(url);
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     const String toLaunch = 'https://radreviews.online/app/RAD/Terms.pdf';
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('test'),
+//       ),
+//       body: ListView(
+//         children: <Widget>[
+//           Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               Padding(
+//                 padding: const EdgeInsets.all(16.0),
+//                 child: TextField(
+//                     onChanged: (String text) => _phone = text,
+//                     decoration: const InputDecoration(
+//                         hintText: 'Input the phone number to launch')),
+//               ),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   _launched = _makePhoneCall('tel:$_phone');
+//                 }),
+//                 child: const Text('Make phone call'),
+//               ),
+//               const Padding(
+//                 padding: EdgeInsets.all(16.0),
+//                 child: Text(toLaunch),
+//               ),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   _launched = _launchInBrowser(toLaunch);
+//                 }),
+//                 child: const Text('Launch in browser'),
+//               ),
+//               const Padding(padding: EdgeInsets.all(16.0)),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   print(toLaunch);
+//                   print('toLaunch');
+//                   _launched = _launchInWebViewOrVC(toLaunch);
+//                 }),
+//                 child: const Text('Launch in app'),
+//               ),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//
+//                   _launched = _launchInWebViewWithJavaScript(toLaunch);
+//                 }),
+//                 child: const Text('Launch in app(JavaScript ON)'),
+//               ),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   _launched = _launchInWebViewWithDomStorage(toLaunch);
+//                 }),
+//                 child: const Text('Launch in app(DOM storage ON)'),
+//               ),
+//               const Padding(padding: EdgeInsets.all(16.0)),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   _launched = _launchUniversalLinkIos(toLaunch);
+//                 }),
+//                 child: const Text(
+//                     'Launch a universal link in a native app, fallback to Safari.(Youtube)'),
+//               ),
+//               const Padding(padding: EdgeInsets.all(16.0)),
+//               RaisedButton(
+//                 onPressed: () => setState(() {
+//                   _launched = _launchInWebViewOrVC(toLaunch);
+//                   Timer(const Duration(seconds: 5), () {
+//                     print('Closing WebView after 5 seconds...');
+//                     closeWebView();
+//                   });
+//                 }),
+//                 child: const Text('Launch in app + close after 5 seconds'),
+//               ),
+//               const Padding(padding: EdgeInsets.all(16.0)),
+//               FutureBuilder<void>(future: _launched, builder: _launchStatus),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

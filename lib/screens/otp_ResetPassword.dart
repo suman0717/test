@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:radreviews/constants.dart';

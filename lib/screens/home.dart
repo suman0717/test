@@ -16,6 +16,7 @@ import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
+import 'dart:io' show File, Platform;
 
 class Home extends StatefulWidget {
   @override
@@ -95,9 +96,15 @@ class _HomeState extends State<Home> {
               } else if (value == 5) {
                 _onItemTapped(6);
               } else if (value == 6) {
-                setState(() {
-                  _onItemTapped(7);
-                });
+                  if(Platform.isIOS){
+                    setState(() {
+                      _onItemTapped(7);
+                    });
+                    print('ios');
+                  }
+                  else{
+                    launchInBrowser(kURLTerms);
+                  }
               } else if (value == 7) {
                 Logout();
               }

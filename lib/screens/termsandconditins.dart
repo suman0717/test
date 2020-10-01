@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:radreviews/size_config.dart';
@@ -17,23 +16,13 @@ class TandC extends StatefulWidget {
   _TandCState createState() => _TandCState();
 }
 
-bool _waiting = false;
-
 class _TandCState extends State<TandC> {
   void initState() {
-    setState(() {
-      _waiting = true;
-    });
+
     loadPdf().whenComplete(() {
-      setState(() {
-        _waiting = false;
-      });
-      print("success");
+
     }).catchError((error, stackTrace) {
-      setState(() {
-        _waiting = false;
-      });
-      print("outer: $error");
+
     });
 
     super.initState();
@@ -75,6 +64,7 @@ class _TandCState extends State<TandC> {
     await writeCounter(await fetchPost());
     await existsFile();
     path = (await _localFile).path;
+    print(path);
     return true;
   }
 

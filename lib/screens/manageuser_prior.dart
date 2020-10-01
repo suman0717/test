@@ -17,6 +17,7 @@ import 'package:radreviews/screens/termsandconditins.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
+import 'dart:io' show File, Platform;
 
 class ManageUserNew extends StatefulWidget {
   @override
@@ -103,9 +104,15 @@ class _ManageUserNewState extends State<ManageUserNew> {
                 } else if (value == 5) {
                   _onItemTappeduser(6);
                 } else if (value == 6) {
-                  setState(() {
-                    _onItemTappeduser(7);
-                  });
+                  if(Platform.isIOS){
+                    setState(() {
+                      _onItemTappeduser(7);
+                    });
+                    print('ios');
+                  }
+                  else{
+                    launchInBrowser(kURLTerms);
+                  }
                 } else if (value == 7) {
                   Logout();
                 }

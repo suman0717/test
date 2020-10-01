@@ -1,17 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/services.dart';
 import 'package:radreviews/constants.dart';
-import 'package:radreviews/linkOpener.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:radreviews/screens/home.dart';
 import 'package:radreviews/screens/otp_ResetPassword.dart';
-import 'package:radreviews/screens/registration_success.dart';
-import 'package:radreviews/screens/signup.dart';
 import 'package:radreviews/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

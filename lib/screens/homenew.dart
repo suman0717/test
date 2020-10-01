@@ -180,200 +180,101 @@ class _HomeNewState extends State<HomeNew> {
       backgroundColor: const Color(0xffffffff),
       body: ModalProgressHUD(
         inAsyncCall: _isWaiting,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(-0.12, 1.05),
-                        end: Alignment(-0.14, -0.78),
-                        colors: [kshadeColor2, kshadeColor1],
-                        stops: [0.0, 1.0],
+        child: GestureDetector(onTap:  () {
+          FocusScope.of(context).unfocus();
+        },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(-0.12, 1.05),
+                          end: Alignment(-0.14, -0.78),
+                          colors: [kshadeColor2, kshadeColor1],
+                          stops: [0.0, 1.0],
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          height: 4 * SizeConfig.heightMultiplier,
-                        ),
-                        Image.asset(
-                          'images/radwhite.png',
-                          width: 26.5 * SizeConfig.imageSizeMultipier,
-                          height: 20.4 * SizeConfig.heightMultiplier,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xffF5F8FB),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          child: MaterialButton(
-                            elevation: 10.0,
-                            onPressed: () {
-                              RequestFeedback(
-                                  _unMaskedMobile, selectedlocation);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    1.31 * SizeConfig.heightMultiplier)),
-                            child: Ink(
-                                decoration: BoxDecoration(
-                                    color: kshadeColor1,
-                                    borderRadius: BorderRadius.circular(
-                                        4 * SizeConfig.heightMultiplier)),
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth:
-                                          68.2 * SizeConfig.widthMultiplier,
-                                      minHeight:
-                                          5.7 * SizeConfig.heightMultiplier),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Request',
-                                    style: TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontSize:
-                                          1.97 * SizeConfig.heightMultiplier,
-                                      color: const Color(0xffffffff),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 6 * SizeConfig.heightMultiplier,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Visibility(
-              visible: locationListTemp.length > 1,
-              replacement: Container(
-                margin: EdgeInsets.only(top: 60.0),
-                width: 82.5 * SizeConfig.imageSizeMultipier,
-                height: 41.2 * SizeConfig.heightMultiplier,
-                child: Card(
-                  color: Colors.white,
-                  elevation: 20.0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            'Request Feedback',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 2.4 * SizeConfig.heightMultiplier,
-                              color: const Color(0xff363636),
-                              fontWeight: FontWeight.w500,
-                              height: 1.5,
-                            ),
-                            textAlign: TextAlign.left,
+                          SizedBox(
+                            height: 4 * SizeConfig.heightMultiplier,
                           ),
-                          IconButton(
-                              icon: Icon(
-                                Icons.help_outline,
-                                color: kshadeColor1,
-                                size: 3.3 * SizeConfig.heightMultiplier,
-                              ),
-                              onPressed: () {
-                                showRequestFeedbackInfo();
-                              })
+                          Image.asset(
+                            'images/radwhite.png',
+                            width: 26.5 * SizeConfig.imageSizeMultipier,
+                            height: 20.4 * SizeConfig.heightMultiplier,
+                          ),
                         ],
                       ),
-                      Container(
-                        width: 68.2 * SizeConfig.widthMultiplier,
-                        height: 5.7 * SizeConfig.heightMultiplier,
-                        child: TextField(
-//                            TODO Implement Dynamic ISD Code Selection, Use Quizler app concept
-                          controller: ctrlMobile,
-                          inputFormatters: [
-                            _country == 'Australia'
-                                ? mobileMaskAustralia
-                                : mobileMaskUSA
-                          ],
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) {
-                            _unMaskedMobile = (_country == 'Australia'
-                                    ? mobileMaskAustralia
-                                    : mobileMaskUSA)
-                                .getUnmaskedText();
-                            print(_unMaskedMobile);
-                          },
-                          style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 2.0 * SizeConfig.heightMultiplier),
-                          decoration: kTextFieldDecorationNoback.copyWith(
-                            hintText: 'Mobile Number. . . ',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 1.5 * SizeConfig.heightMultiplier,
-                                horizontal: 20.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 68.2 * SizeConfig.widthMultiplier,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                                activeColor: kshadeColor1,
-                                value: termsAndConsdditions,
-                                onChanged: (bool newvalue) {
-                                  setState(() {
-                                    termsAndConsdditions = newvalue;
-                                  });
-                                  print(newvalue);
-//                        TODO
-                                }),
-                            Flexible(
-                              child: Text(
-                                'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
-                                style: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 1.1 * SizeConfig.heightMultiplier,
-                                  color: const Color(0xff363636),
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xffF5F8FB),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            height: 5.7 * SizeConfig.heightMultiplier,
+                            child: MaterialButton(
+                              elevation: 10.0,
+                              onPressed: () {
+                                RequestFeedback(
+                                    _unMaskedMobile, selectedlocation);
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      1.31 * SizeConfig.heightMultiplier)),
+                              child: Ink(
+                                  decoration: BoxDecoration(
+                                      color: kshadeColor1,
+                                      borderRadius: BorderRadius.circular(
+                                          4 * SizeConfig.heightMultiplier)),
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                        maxWidth:
+                                            68.2 * SizeConfig.widthMultiplier,
+                                        minHeight:
+                                            5.7 * SizeConfig.heightMultiplier),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Request',
+                                      style: TextStyle(
+                                        fontFamily: 'Manrope',
+                                        fontSize:
+                                            1.97 * SizeConfig.heightMultiplier,
+                                        color: const Color(0xffffffff),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 6 * SizeConfig.heightMultiplier,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              child: Container(
-                margin: EdgeInsets.only(top: 60.0),
-                width: 82.5 * SizeConfig.imageSizeMultipier,
-                height: 41.2 * SizeConfig.heightMultiplier,
-                child: Form(
-                  key: _formkey,
+              Visibility(
+                visible: locationListTemp.length > 1,
+                replacement: Container(
+                  margin: EdgeInsets.only(top: 60.0),
+                  width: 82.5 * SizeConfig.imageSizeMultipier,
+                  height: 41.2 * SizeConfig.heightMultiplier,
                   child: Card(
                     color: Colors.white,
                     elevation: 20.0,
@@ -409,6 +310,7 @@ class _HomeNewState extends State<HomeNew> {
                           width: 68.2 * SizeConfig.widthMultiplier,
                           height: 5.7 * SizeConfig.heightMultiplier,
                           child: TextField(
+//                            TODO Implement Dynamic ISD Code Selection, Use Quizler app concept
                             controller: ctrlMobile,
                             inputFormatters: [
                               _country == 'Australia'
@@ -432,64 +334,6 @@ class _HomeNewState extends State<HomeNew> {
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 1.5 * SizeConfig.heightMultiplier,
                                   horizontal: 20.0),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 68.2 * SizeConfig.widthMultiplier,
-                          height: 5.7 * SizeConfig.heightMultiplier,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                4 * SizeConfig.heightMultiplier),
-                            border: Border.all(
-                                color: Color(0xffe8e8e8), width: 1.0),
-                          ),
-                          child: Center(
-                            child: DropdownButton<String>(
-                              onTap: () {
-                                FocusManager.instance.primaryFocus.unfocus();
-                              },
-                              items:
-                                  locationListTemp.map((String dropdownitem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitem,
-                                  child: Text(
-                                    dropdownitem,
-                                    style: TextStyle(
-                                        fontFamily: 'Manrope',
-                                        fontSize:
-                                            1.84 * SizeConfig.heightMultiplier),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String newselectedcountry) {
-                                setState(() {
-                                  selectedlocation = newselectedcountry;
-                                  print(selectedlocation);
-                                });
-                              },
-                              value: selectedlocation,
-                              hint: Text(
-                                'Location',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize:
-                                        2.0 * SizeConfig.heightMultiplier),
-                              ),
-                              underline: Container(
-                                height: 1.0,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0)),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 2.5 * SizeConfig.heightMultiplier,
-                              ),
                             ),
                           ),
                         ),
@@ -527,9 +371,169 @@ class _HomeNewState extends State<HomeNew> {
                     ),
                   ),
                 ),
+                child: Container(
+                  margin: EdgeInsets.only(top: 60.0),
+                  width: 82.5 * SizeConfig.imageSizeMultipier,
+                  height: 41.2 * SizeConfig.heightMultiplier,
+                  child: Form(
+                    key: _formkey,
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 20.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Request Feedback',
+                                style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 2.4 * SizeConfig.heightMultiplier,
+                                  color: const Color(0xff363636),
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.5,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.help_outline,
+                                    color: kshadeColor1,
+                                    size: 3.3 * SizeConfig.heightMultiplier,
+                                  ),
+                                  onPressed: () {
+                                    showRequestFeedbackInfo();
+                                  })
+                            ],
+                          ),
+                          Container(
+                            width: 68.2 * SizeConfig.widthMultiplier,
+                            height: 5.7 * SizeConfig.heightMultiplier,
+                            child: TextField(
+                              controller: ctrlMobile,
+                              inputFormatters: [
+                                _country == 'Australia'
+                                    ? mobileMaskAustralia
+                                    : mobileMaskUSA
+                              ],
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.phone,
+                              onChanged: (value) {
+                                _unMaskedMobile = (_country == 'Australia'
+                                        ? mobileMaskAustralia
+                                        : mobileMaskUSA)
+                                    .getUnmaskedText();
+                                print(_unMaskedMobile);
+                              },
+                              style: TextStyle(
+                                  fontFamily: 'Manrope',
+                                  fontSize: 2.0 * SizeConfig.heightMultiplier),
+                              decoration: kTextFieldDecorationNoback.copyWith(
+                                hintText: 'Mobile Number. . . ',
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 1.5 * SizeConfig.heightMultiplier,
+                                    horizontal: 20.0),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 68.2 * SizeConfig.widthMultiplier,
+                            height: 5.7 * SizeConfig.heightMultiplier,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  4 * SizeConfig.heightMultiplier),
+                              border: Border.all(
+                                  color: Color(0xffe8e8e8), width: 1.0),
+                            ),
+                            child: Center(
+                              child: DropdownButton<String>(
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus.unfocus();
+                                },
+                                items:
+                                    locationListTemp.map((String dropdownitem) {
+                                  return DropdownMenuItem<String>(
+                                    value: dropdownitem,
+                                    child: Text(
+                                      dropdownitem,
+                                      style: TextStyle(
+                                          fontFamily: 'Manrope',
+                                          fontSize:
+                                              1.84 * SizeConfig.heightMultiplier),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String newselectedcountry) {
+                                  setState(() {
+                                    selectedlocation = newselectedcountry;
+                                    print(selectedlocation);
+                                  });
+                                },
+                                value: selectedlocation,
+                                hint: Text(
+                                  'Location',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Manrope',
+                                      fontSize:
+                                          2.0 * SizeConfig.heightMultiplier),
+                                ),
+                                underline: Container(
+                                  height: 1.0,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0)),
+                                  ),
+                                ),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 2.5 * SizeConfig.heightMultiplier,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 68.2 * SizeConfig.widthMultiplier,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Checkbox(
+                                    activeColor: kshadeColor1,
+                                    value: termsAndConsdditions,
+                                    onChanged: (bool newvalue) {
+                                      setState(() {
+                                        termsAndConsdditions = newvalue;
+                                      });
+                                      print(newvalue);
+//                        TODO
+                                    }),
+                                Flexible(
+                                  child: Text(
+                                    'I certify that this recipient has opted in to receive communication. I further certify that I am an authorized Representative of $curbusinessName and I understand and accept Rad Reviews terms and conditions.',
+                                    style: TextStyle(
+                                      fontFamily: 'Manrope',
+                                      fontSize: 1.1 * SizeConfig.heightMultiplier,
+                                      color: const Color(0xff363636),
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
